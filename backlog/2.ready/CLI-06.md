@@ -21,10 +21,10 @@ Kombinationslogik beim Modell hängen (mehr Token, weniger reproduzierbar) und e
 keine Anleitung, wie die CLIs zu nutzen sind.
 
 ## Scope
-**1. `cli/rca/compound.py`** — Typer-Subkommando-Gruppe `compound`, registriert über
+**1. `cli/rdc/compound.py`** — Typer-Subkommando-Gruppe `compound`, registriert über
 die CLI-01-Registry. Mindestens:
 
-- **`rca compound phenotype-workup <HPO...>`** — orchestriert eine vollständige
+- **`rdc compound phenotype-workup <HPO...>`** — orchestriert eine vollständige
   Phänotyp-Abklärung aus einer HPO-Liste:
   1. DDx: ruft die Funktionen hinter `pubcasefinder rank` und `phen2gene genes`
      (CLI-05) auf.
@@ -50,11 +50,11 @@ Eigenschaften:
   (welche Quellen einen Kandidaten stützen).
 
 **2. `docs/cli-guide.md`** — deutscher Nutzungs-Guide für Claude Code:
-- Tabelle „Frage → Befehl": welcher `rca`-Befehl für welche Recherche-Frage (Literatur,
+- Tabelle „Frage → Befehl": welcher `rdc`-Befehl für welche Recherche-Frage (Literatur,
   Varianten-Bewertung, Phänotyp→Krankheit, DDx, kombinierte Abklärung).
 - **Alle Subkommandos** aus CLI-02…06 gelistet, jeweils mit einem **Beispielaufruf**
   und einer knappen Erklärung der Ausgabe.
-- Hinweis auf die History (`rca history list/search`) als Recherche-Speicher.
+- Hinweis auf die History (`rdc history list/search`) als Recherche-Speicher.
 - Hinweis: Ausgabe ist Recherche-Hilfe, **keine Diagnose**; Quellen-IDs immer
   mitführen (verweist auf `config/assistant-instructions.md` aus KB-04, sofern
   vorhanden).
@@ -67,8 +67,8 @@ nach Konsens/Rang sortiert wird.
 
 ## Files
 ```
-cli/rca/compound.py            (NEU)
-cli/rca/main.py                (erweitert: Registrierung der compound-Gruppe)
+cli/rdc/compound.py            (NEU)
+cli/rdc/main.py                (erweitert: Registrierung der compound-Gruppe)
 docs/cli-guide.md              (NEU)
 cli/tests/test_compound.py     (NEU)
 ```
@@ -88,11 +88,11 @@ cli/tests/test_compound.py     (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/compound.py cli/tests/test_compound.py`
+- [ ] `python -m py_compile cli/rdc/compound.py cli/tests/test_compound.py`
       ohne Fehler.
 - [ ] `pytest cli/tests/test_compound.py` grün — keine echten Netzwerk-Calls
       (Quellen-Funktionen gemockt bzw. `httpx.MockTransport`).
-- [ ] CLI startbar: `rca compound --help` listet `phenotype-workup`.
+- [ ] CLI startbar: `rdc compound --help` listet `phenotype-workup`.
 - [ ] **Kombinations-/Dedup-Logik getestet:** zwei Quellen, die dieselbe Krankheit
       (gleiche OMIM/ORPHA-ID) liefern, ergeben **einen** Ergebnis-Eintrag; das Ranking
       ordnet Kandidaten mit Mehrfach-Quellen-Konsens nach oben.
@@ -101,11 +101,11 @@ cli/tests/test_compound.py     (NEU)
 - [ ] **`docs/cli-guide.md` listet alle Subkommandos mit Beispiel:** enthält je einen
       Beispielaufruf für `pubmed`, `europepmc`, `variant`, `monarch`, `orphanet`,
       `pubcasefinder`, `phen2gene`, `compound`. Prüfbar z. B.:
-      `for c in pubmed europepmc variant monarch orphanet pubcasefinder phen2gene compound; do grep -q "rca $c" docs/cli-guide.md || { echo "fehlt: $c"; exit 1; }; done`
+      `for c in pubmed europepmc variant monarch orphanet pubcasefinder phen2gene compound; do grep -q "rdc $c" docs/cli-guide.md || { echo "fehlt: $c"; exit 1; }; done`
 - [ ] **Negativ-Check (keine Parsing-Duplikate):** `compound.py` importiert die
       Quellen-Funktionen statt sie neu zu implementieren —
-      `grep -qE 'from +(\.|rca\.)sources' cli/rca/compound.py` und
-      `! grep -nE 'httpx\.(get|post|Client\()' cli/rca/compound.py`.
+      `grep -qE 'from +(\.|rdc\.)sources' cli/rdc/compound.py` und
+      `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/compound.py`.
 
 ## Out of scope
 - **Neue Quellen-Anbindungen:** Compound baut nur auf CLI-02…05 auf, fügt keine

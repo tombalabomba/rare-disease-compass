@@ -43,7 +43,7 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 READY_DIR="$REPO_ROOT/backlog/2.ready"
 LOG_DIR="$REPO_ROOT/.agent-loop-logs"
-LOCK_FILE="/tmp/rare-case-assistant-agent-loop.lock"
+LOCK_FILE="/tmp/rare-disease-compass-agent-loop.lock"
 MARKER="$REPO_ROOT/backlog/.STOP_GATE"
 
 MAX_ITERATIONS="${MAX_ITERATIONS:-30}"

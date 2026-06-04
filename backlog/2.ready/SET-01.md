@@ -26,7 +26,7 @@ verbindlich beschreibt. Pflicht-Abschnitte (als Markdown-Überschriften, exakt s
 benannt, damit die Acceptance per `grep` greift):
 
 - **`## Fallakten-Ablage`** — wo die Fallakte liegt: ein lokaler Ordner **außerhalb**
-  des Repos. Empfohlen ein eigener Top-Level-Ordner (z. B. `~/rca-fall-mustermann/`),
+  des Repos. Empfohlen ein eigener Top-Level-Ordner (z. B. `~/rdc-fall-mustermann/`),
   niemals ein Unterordner des geklonten Repos. Begründung: das Repo ist öffentlich,
   die Akte ist es nie.
 - **`## Datentrennung (lokal & optional geteilt)`** — die Zwei-Rollen-Nutzung: die **pseudonymisierte**
@@ -41,7 +41,7 @@ benannt, damit die Acceptance per `grep` greift):
   Code wird **im Fall-Ordner** (nicht im Repo) gestartet bzw. der Fall-Ordner als
   zusätzliches Arbeitsverzeichnis aufgenommen; eine `CLAUDE.md` **im Fall-Ordner**
   lädt die Assistenten-Persona (Inhalt aus KB-04, `config/assistant-instructions.md`).
-  Die installierten `rca`-CLIs sind global verfügbar und werden über die Shell
+  Die installierten `rdc`-CLIs sind global verfügbar und werden über die Shell
   aufgerufen.
 - Ein **Beispiel-Layout** (ASCII-Baum in einem Code-Block), das Repo-Ordner und
   Fall-Ordner nebeneinander zeigt und sichtbar macht, dass der Fall-Ordner außerhalb
@@ -71,8 +71,8 @@ docs/project-layout.md   (NEU)
        grep -q '## Claude-Code-Konfig' docs/project-layout.md`
 - [ ] Persona-Hinweis vorhanden: die Datei nennt eine `CLAUDE.md` im Fall-Ordner:
       `grep -q 'CLAUDE.md' docs/project-layout.md`
-- [ ] CLI-Bezug vorhanden: die Doku benennt die `rca`-CLIs:
-      `grep -q 'rca' docs/project-layout.md`
+- [ ] CLI-Bezug vorhanden: die Doku benennt die `rdc`-CLIs:
+      `grep -q 'rdc' docs/project-layout.md`
 - [ ] Beispiel-Layout vorhanden: mindestens ein Code-Block (Fenced):
       `grep -q '```' docs/project-layout.md`
 - [ ] **Negativ-Check (Datenschutz):** die Doku rät NICHT, die Akte ins Repo zu
@@ -86,7 +86,7 @@ docs/project-layout.md   (NEU)
       `! grep -qE '[0-9]{2}\.[0-9]{2}\.[0-9]{4}' docs/project-layout.md`
 
 ## Out of scope
-- **CLI-Installation:** wie `rca` auf eine Maschine kommt, ist SET-02
+- **CLI-Installation:** wie `rdc` auf eine Maschine kommt, ist SET-02
   (`scripts/install.sh` + `docs/install.md`).
 - **Inhalt der Persona:** die Assistenten-Instruktionen selbst sind KB-04
   (`config/assistant-instructions.md`). SET-01 verweist nur darauf.

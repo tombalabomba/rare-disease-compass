@@ -1,4 +1,4 @@
-# CLAUDE.md — rare-case-assistant
+# CLAUDE.md — RareDiseaseCompass
 
 Projekt-Konventionen, die **immer** gelten. Vor jeder Ticket-Bearbeitung lesen.
 

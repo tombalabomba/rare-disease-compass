@@ -20,13 +20,13 @@ nicht stillschweigend zu falschen API-Calls führen. Ohne dieses Ticket fehlt de
 System der DDx-Kern; mit ihm wird das Ranking in der History gespeichert.
 
 ## Scope
-**`cli/rca/sources/ddx.py`** — Typer-Subkommando-Gruppe, registriert über die
+**`cli/rdc/sources/ddx.py`** — Typer-Subkommando-Gruppe, registriert über die
 CLI-01-Registry. Befehle:
 
-- **`rca pubcasefinder rank <HPO...>`** — sendet die HPO-Liste an die
+- **`rdc pubcasefinder rank <HPO...>`** — sendet die HPO-Liste an die
   PubCaseFinder-REST-API und liefert eine **gerankte Liste seltener Krankheiten**
   (Krankheit + ID wie OMIM/ORPHA + Score/Rang). Optionen: `--limit`, `--json`.
-- **`rca phen2gene genes <HPO...>`** — sendet die HPO-Liste an die Phen2Gene-API und
+- **`rdc phen2gene genes <HPO...>`** — sendet die HPO-Liste an die Phen2Gene-API und
   liefert **gerankte Kandidatengene** (Gen-Symbol + Score/Rang). Optionen:
   `--limit`, `--json`.
 
@@ -45,15 +45,15 @@ Eigenschaften:
 
 ## Files
 ```
-cli/rca/sources/__init__.py    (NEU, falls noch nicht vorhanden)
-cli/rca/sources/ddx.py         (NEU)
-cli/rca/main.py                (erweitert: Registrierung der ddx-Gruppen)
+cli/rdc/sources/__init__.py    (NEU, falls noch nicht vorhanden)
+cli/rdc/sources/ddx.py         (NEU)
+cli/rdc/main.py                (erweitert: Registrierung der ddx-Gruppen)
 cli/tests/test_ddx.py          (NEU)
 ```
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
 - [x] **Files in `Scope`/`Files`**: `ddx.py` und der Test sind NEU.
-      `cli/rca/sources/__init__.py` ggf. aus CLI-02/03/04 schon vorhanden — defensiv
+      `cli/rdc/sources/__init__.py` ggf. aus CLI-02/03/04 schon vorhanden — defensiv
       mit aufgeführt. `main.py` existiert nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
       sobald CLI-01 in `backlog/3.done/`. Unabhängig von CLI-02/03/04.
@@ -65,12 +65,12 @@ cli/tests/test_ddx.py          (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/sources/ddx.py cli/tests/test_ddx.py`
+- [ ] `python -m py_compile cli/rdc/sources/ddx.py cli/tests/test_ddx.py`
       ohne Fehler.
 - [ ] `pytest cli/tests/test_ddx.py` grün — alle HTTP-Calls über
       `httpx.MockTransport` (kein echter Netzwerk-Call).
-- [ ] CLI startbar: `rca pubcasefinder --help` (listet `rank`) und
-      `rca phen2gene --help` (listet `genes`).
+- [ ] CLI startbar: `rdc pubcasefinder --help` (listet `rank`) und
+      `rdc phen2gene --help` (listet `genes`).
 - [ ] **HPO-Validierung lehnt Müll ab (Test):** gültige IDs (`HP:0001250`) werden
       akzeptiert; ungültige (`HP:123`, `0001250`, `foo`, `""`) werfen einen Fehler /
       führen zu Exit ≠ 0 und **keinem** HTTP-Call (MockTransport-Trefferzähler bleibt
@@ -81,7 +81,7 @@ cli/tests/test_ddx.py          (NEU)
 - [ ] **History-Eintrag getestet:** nach einem (gemockten) `rank` existiert ein
       History-Eintrag mit `source` `pubcasefinder` und der HPO-Liste in den Params.
 - [ ] **Negativ-Check:** keine eigene HTTP-Implementierung —
-      `! grep -nE 'httpx\.(get|post|Client\()' cli/rca/sources/ddx.py`.
+      `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/sources/ddx.py`.
 
 ## Out of scope
 - **HPO-Term-Auflösung/-Vorschläge** (Symptomtext → HPO-ID): hier wird nur die

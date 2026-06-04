@@ -1,4 +1,4 @@
-# Projektplan — rare-case-assistant
+# Projektplan — RareDiseaseCompass
 
 Die Gesamtübersicht für Mensch und Loop. Jeder frische Loop-Lauf liest diese
 Datei zur Orientierung, bevor er ein Ticket zieht (hält den Kontext klein).

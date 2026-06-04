@@ -24,23 +24,23 @@ Kern an (kein proprietäres Printing-Press-Laufzeit-Paket, siehe `CLAUDE.md` und
 ## Scope
 Ein installierbares Python-Paket `cli/` mit folgendem Aufbau:
 
-**1. `cli/pyproject.toml`** — Paket-Definition (PEP 621). Name `rca`, Python `>=3.11`,
+**1. `cli/pyproject.toml`** — Paket-Definition (PEP 621). Name `rdc`, Python `>=3.11`,
 Dependencies exakt `typer`, `httpx`, `pydantic`. Console-Script-Entrypoint
-`rca = "rca.main:app"`, sodass `pipx install ./cli` bzw. `pip install -e ./cli` den
-Befehl `rca` bereitstellt. Optionale Dev-Dependency-Gruppe mit `pytest`, `ruff`,
+`rdc = "rdc.main:app"`, sodass `pipx install ./cli` bzw. `pip install -e ./cli` den
+Befehl `rdc` bereitstellt. Optionale Dev-Dependency-Gruppe mit `pytest`, `ruff`,
 `mypy`. Build-Backend (z. B. `hatchling` oder `setuptools`) konfiguriert.
 
-**2. `cli/rca/__init__.py`** — Paket-Init mit `__version__`-String.
+**2. `cli/rdc/__init__.py`** — Paket-Init mit `__version__`-String.
 
-**3. `cli/rca/main.py`** — die Typer-`app` (Top-Level). Eine **Registry**-Funktion,
+**3. `cli/rdc/main.py`** — die Typer-`app` (Top-Level). Eine **Registry**-Funktion,
 über die Folge-Tickets ihre Subkommando-Gruppen (`typer.Typer()`-Instanzen)
 anhängen: z. B. eine Funktion `register(name: str, sub: typer.Typer, help: str)`
 oder eine zentrale Liste, die `main.py` beim Import auflöst. CLI-01 registriert
 **noch keine** echten Quellen — die Gruppen sind leer/kommen in CLI-02…06 dazu.
-Ein eingebautes `rca history`-Subkommando (Gruppe) mit `list` und `search` als
+Ein eingebautes `rdc history`-Subkommando (Gruppe) mit `list` und `search` als
 sichtbare, sofort nutzbare Funktion auf der History (siehe Punkt 5).
 
-**4. `cli/rca/http_client.py`** — zentraler HTTP-Zugriff über `httpx`. Eine Klasse
+**4. `cli/rdc/http_client.py`** — zentraler HTTP-Zugriff über `httpx`. Eine Klasse
 oder Factory, die einen konfigurierten `httpx.Client` kapselt mit:
 - **User-Agent** (projektspezifischer String inkl. Kontakt-/Repo-Hinweis).
 - **Timeout** (sinnvoller Default, überschreibbar).
@@ -54,17 +54,17 @@ oder Factory, die einen konfigurierten `httpx.Client` kapselt mit:
   (`httpx.BaseTransport`), damit Tests `httpx.MockTransport` einspeisen können —
   **keine echten Netzwerk-Calls im Test**.
 
-**5. `cli/rca/history.py`** — SQLite-History. Funktionen:
+**5. `cli/rdc/history.py`** — SQLite-History. Funktionen:
 - `connect(path)` öffnet/erstellt die DB; akzeptiert `":memory:"` für Tests.
 - Schema-Init (Tabelle `queries`: id, timestamp, source, command, params (JSON),
   result_summary, result_count, raw (optional JSON)).
 - `save_query(...)` speichert eine Abfrage + Ergebnis.
 - `list_queries(limit, source=None)` listet zeitlich absteigend.
 - `search_queries(term)` durchsucht über Quelle/Command/Params/Summary (LIKE).
-- Default-DB-Pfad liegt **außerhalb** des Repos (z. B. unter `~/.rca/history.db`
+- Default-DB-Pfad liegt **außerhalb** des Repos (z. B. unter `~/.rdc/history.db`
   oder via Env `RCA_HISTORY_DB`), ist also gitignored (`*.db` greift bereits).
 
-**6. `cli/rca/output.py`** — agenten-freundliche Formatierung: knappe Tabellen und
+**6. `cli/rdc/output.py`** — agenten-freundliche Formatierung: knappe Tabellen und
 JSON-Lines. Mindestens `print_table(rows, headers)` und `print_jsonl(records)`.
 Jede Ausgabe trägt Quellen-IDs (PMID, RCV, OMIM/ORPHA etc.) mit; ein
 `--json`/`--format`-Schalter (global oder pro Befehl) wählt zwischen Tabelle und
@@ -86,11 +86,11 @@ HTTP-Client Cache/Rate-Limit/Retry handhabt, Hinweis auf `--help`.
 ## Files
 ```
 cli/pyproject.toml            (NEU)
-cli/rca/__init__.py           (NEU)
-cli/rca/main.py               (NEU)
-cli/rca/http_client.py        (NEU)
-cli/rca/history.py            (NEU)
-cli/rca/output.py             (NEU)
+cli/rdc/__init__.py           (NEU)
+cli/rdc/main.py               (NEU)
+cli/rdc/http_client.py        (NEU)
+cli/rdc/history.py            (NEU)
+cli/rdc/output.py             (NEU)
 cli/README.md                 (NEU)
 cli/tests/__init__.py         (NEU)
 cli/tests/test_http_client.py (NEU)
@@ -111,12 +111,12 @@ cli/tests/test_history.py     (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/*.py cli/tests/*.py` ohne Fehler.
+- [ ] `python -m py_compile cli/rdc/*.py cli/tests/*.py` ohne Fehler.
 - [ ] `pytest cli/tests/` grün — HTTP-Tests nutzen ausschließlich
       `httpx.MockTransport` (kein echter Netzwerk-Call), History-Tests nutzen
       in-memory SQLite (`":memory:"`).
-- [ ] CLI startbar und Hilfe vorhanden: `rca --help` (bzw.
-      `python -m rca.main --help` aus `cli/`) listet die `history`-Gruppe; die
+- [ ] CLI startbar und Hilfe vorhanden: `rdc --help` (bzw.
+      `python -m rdc.main --help` aus `cli/`) listet die `history`-Gruppe; die
       Quellen-Gruppen sind noch leer (kommen in CLI-02…06).
 - [ ] Cache-Verhalten getestet: zweiter Request derselben URL trifft den
       MockTransport **nicht** erneut (Hit-Zähler im Test).
@@ -139,7 +139,7 @@ cli/tests/test_history.py     (NEU)
   reicht für CLI-01; eine ausgefeiltere Cache-Schicht wäre ein eigenes Ticket.
 
 ## Notes
-- **History-DB nie ins Repo.** Default-Pfad außerhalb des Repos (`~/.rca/` oder
+- **History-DB nie ins Repo.** Default-Pfad außerhalb des Repos (`~/.rdc/` oder
   `RCA_HISTORY_DB`-Env). `.gitignore:36-40` sperrt `*.db`/`*.sqlite`/`.cache/` —
   trotzdem nie eine DB-Datei unter den getrackten Pfaden anlegen.
 - **Tests mocken HTTP zwingend.** `httpx.MockTransport` in den Client injizieren;

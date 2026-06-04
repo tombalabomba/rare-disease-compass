@@ -20,17 +20,17 @@ fehlt dem System die Varianten-Bewertung neben der Genetik-Pipeline (Exomiser,
 `genetics`-Epic).
 
 ## Scope
-**`cli/rca/sources/variant.py`** — Typer-Subkommando-Gruppe, registriert über die
+**`cli/rdc/sources/variant.py`** — Typer-Subkommando-Gruppe, registriert über die
 CLI-01-Registry. Befehle:
 
-- **`rca variant lookup <variant>`** — fragt **MyVariant.info** ab (Endpoint
+- **`rdc variant lookup <variant>`** — fragt **MyVariant.info** ab (Endpoint
   `/v1/variant/<id>` bzw. die Query-API) und liefert kompakt:
   ClinVar-**klinische Bedeutung** (z. B. Pathogenic/Likely pathogenic/VUS/Benign),
   zugehörige RCV-/Variation-IDs, betroffenes Gen, und die **gnomAD-Allelfrequenz**
   (exome/genome, sofern vorhanden). Eingabe akzeptiert die von MyVariant
   unterstützten Kennungen (HGVS, rsID). Optionen: `--fields` (Feld-Auswahl
   durchreichen), `--json`.
-- **`rca variant clinvar <variant>`** — fokussiert auf die ClinVar-Sicht: klinische
+- **`rdc variant clinvar <variant>`** — fokussiert auf die ClinVar-Sicht: klinische
   Signifikanz, Review-Status, Condition(s)/Phänotyp, RCV-IDs. Ebenfalls über
   MyVariant.info (ClinVar-Feldsatz) oder direkt über die ClinVar-Quelle, mit denselben
   Output-/History-Konventionen.
@@ -48,15 +48,15 @@ Eigenschaften:
 
 ## Files
 ```
-cli/rca/sources/__init__.py    (NEU, falls CLI-02 es nicht schon anlegte)
-cli/rca/sources/variant.py     (NEU)
-cli/rca/main.py                (erweitert: Registrierung der variant-Gruppe)
+cli/rdc/sources/__init__.py    (NEU, falls CLI-02 es nicht schon anlegte)
+cli/rdc/sources/variant.py     (NEU)
+cli/rdc/main.py                (erweitert: Registrierung der variant-Gruppe)
 cli/tests/test_variant.py      (NEU)
 ```
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
 - [x] **Files in `Scope`/`Files`**: `variant.py` und der Test sind NEU.
-      `cli/rca/sources/` wird hier oder in CLI-02 angelegt (beide hängen nur an
+      `cli/rdc/sources/` wird hier oder in CLI-02 angelegt (beide hängen nur an
       CLI-01, daher das `__init__.py` defensiv mit aufführen). `main.py` existiert
       nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
@@ -68,11 +68,11 @@ cli/tests/test_variant.py      (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/sources/variant.py cli/tests/test_variant.py`
+- [ ] `python -m py_compile cli/rdc/sources/variant.py cli/tests/test_variant.py`
       ohne Fehler.
 - [ ] `pytest cli/tests/test_variant.py` grün — alle HTTP-Calls über
       `httpx.MockTransport` (kein echter Netzwerk-Call).
-- [ ] CLI startbar: `rca variant --help` listet `lookup` und `clinvar`.
+- [ ] CLI startbar: `rdc variant --help` listet `lookup` und `clinvar`.
 - [ ] **Parsing von Pathogenität getestet:** aus einer gemockten MyVariant-Response
       wird die ClinVar-Signifikanz korrekt extrahiert (inkl. RCV-ID).
 - [ ] **Parsing von Frequenz getestet:** die gnomAD-Allelfrequenz wird korrekt
@@ -81,7 +81,7 @@ cli/tests/test_variant.py      (NEU)
 - [ ] **History-Eintrag getestet:** nach einem (gemockten) `lookup` existiert ein
       History-Eintrag mit `source` `variant`.
 - [ ] **Negativ-Check:** keine eigene HTTP-Implementierung —
-      `! grep -nE 'httpx\.(get|post|Client\()' cli/rca/sources/variant.py`.
+      `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/sources/variant.py`.
 
 ## Out of scope
 - **VCF-Verarbeitung / lokale Genom-Priorisierung:** das ist Exomiser

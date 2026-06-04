@@ -1,4 +1,4 @@
-# rare-case-assistant
+# RareDiseaseCompass
 
 Ein lokaler, datenschutzfreundlicher KI-Recherche-Assistent für komplexe und
 seltene Krankheitsfälle — gedacht als **„Dex für seltene Erkrankungen"**. Er

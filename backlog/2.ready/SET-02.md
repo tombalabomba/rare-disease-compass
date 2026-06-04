@@ -11,7 +11,7 @@ commit_type: feat(setup)
 # SET-02 — CLI-Installer & API-Key-Konfiguration
 
 ## Why
-Damit ein Nutzer die `rca`-CLIs überhaupt nutzen kann, müssen sie einmalig auf
+Damit ein Nutzer die `rdc`-CLIs überhaupt nutzen kann, müssen sie einmalig auf
 seiner Maschine installiert werden. Ohne ein definiertes Installations-Skript macht
 das jeder anders (falsche Python-Version, fehlende `pipx`, Keys im Repo). SET-02
 liefert ein idempotentes Shell-Skript, das das `cli/`-Paket installiert, die
@@ -30,13 +30,13 @@ Zwei neue Dateien — Installer-Skript + Anleitung:
 - **Installations-Backend wählen:** bevorzugt `pipx` (isolierte CLI-Installation);
   fällt auf `pip --user` zurück, wenn `pipx` fehlt. Installiert das `cli/`-Paket aus
   dem Repo (Pfad relativ zum Skript ermittelt, nicht hartkodiert auf das CWD).
-- **Idempotenz:** prüft **vor** der Installation, ob das `rca`-Kommando schon
-  verfügbar ist (`command -v rca`); wenn ja, meldet das und überspringt die
+- **Idempotenz:** prüft **vor** der Installation, ob das `rdc`-Kommando schon
+  verfügbar ist (`command -v rdc`); wenn ja, meldet das und überspringt die
   Neuinstallation (bzw. bietet ein Upgrade an, ohne zu erzwingen). Mehrfaches
   Ausführen darf nichts kaputt machen und keinen Fehler werfen.
 - **Beispiel-Konfig anlegen:** legt — falls noch nicht vorhanden — eine
   **Beispiel**-Konfig für optionale API-Keys im User-Konfig-Verzeichnis an
-  (z. B. `~/.config/rca/config.toml.example` oder `~/.config/rca/env.example`),
+  (z. B. `~/.config/rdc/config.toml.example` oder `~/.config/rdc/env.example`),
   mit auskommentierten Platzhaltern (`NCBI_API_KEY=__HIER_DEINEN_KEY__`) und einem
   deutschen Kommentar, dass die Keys **optional** sind und niemals ins Repo gehören.
   Überschreibt eine bestehende echte Konfig **nie**.
@@ -61,11 +61,11 @@ docs/install.md      (NEU)
       → `agent-loop.sh`); `docs/` existiert. `scripts/install.sh` existiert noch
       nicht.
 - [x] **`depends_on`-IDs**: `CLI-01` muss `done` sein — es liefert das
-      installierbare `cli/`-Paket (Typer-App, Befehl `rca`). Ohne dieses Paket hat
+      installierbare `cli/`-Paket (Typer-App, Befehl `rdc`). Ohne dieses Paket hat
       `install.sh` nichts zu installieren. Der Loop zieht SET-02 erst, wenn `CLI-01`
       in `backlog/3.done/` liegt. **Annahme an CLI-01:** das `cli/`-Paket ist als
       installierbares Python-Paket strukturiert (mit `pyproject.toml`/Entry-Point
-      `rca`). Der Installer ermittelt den Paketpfad relativ zum Skript und übergibt
+      `rdc`). Der Installer ermittelt den Paketpfad relativ zum Skript und übergibt
       ihn an `pipx install`/`pip install`; der exakte Paket-Root wird bei der
       Implementierung gegen das dann existierende `cli/` verifiziert (siehe Notes).
 - [x] **Externe Voraussetzungen**: keine Secrets, kein Server. `pipx`/`pip` sind
@@ -81,7 +81,7 @@ docs/install.md      (NEU)
 - [ ] Skript setzt strikte Fehlerbehandlung:
       `grep -qE '^\s*set -euo pipefail' scripts/install.sh`
 - [ ] Idempotenz-Prüfung vorhanden (prüft vor Installation):
-      `grep -q 'command -v rca' scripts/install.sh`
+      `grep -q 'command -v rdc' scripts/install.sh`
 - [ ] Python-Versions-Prüfung vorhanden (referenziert 3.11):
       `grep -q '3.11' scripts/install.sh`
 - [ ] Installations-Backend referenziert (`pipx` mit `pip`-Fallback):
@@ -101,7 +101,7 @@ docs/install.md      (NEU)
        grep -qiE 'ncbi|api-?key' docs/install.md`
 
 ## Out of scope
-- **Implementierung der CLIs selbst:** der Befehl `rca` und seine Subkommandos
+- **Implementierung der CLIs selbst:** der Befehl `rdc` und seine Subkommandos
   entstehen im `cli`-Epic (CLI-01…06). SET-02 installiert nur das fertige Paket.
 - **Echter Installations-Lauf / Netzwerk:** die Acceptance prüft das Skript
   statisch (`shellcheck`, `bash -n`). Ein realer `pipx install`-Lauf ist
@@ -114,8 +114,8 @@ docs/install.md      (NEU)
 ## Notes
 - **Braucht das `cli/`-Paket aus CLI-01.** Vor der Implementierung das dann
   existierende `cli/` ansehen: Paket-Root, `pyproject.toml`, Entry-Point-Name
-  (`rca`). Den Installpfad daraus ableiten, nicht raten. Liegt der Entry-Point
-  anders als `rca`, das Idempotenz-/`command -v`-Kommando entsprechend anpassen —
+  (`rdc`). Den Installpfad daraus ableiten, nicht raten. Liegt der Entry-Point
+  anders als `rdc`, das Idempotenz-/`command -v`-Kommando entsprechend anpassen —
   Single source of truth ist das tatsächliche Paket.
 - **`set -euo pipefail` als erste echte Zeile** nach der Shebang/Kommentaren.
   `shellcheck` muss clean sein: Variablen quoten, `[[ ]]` statt `[ ]` wo sinnvoll,
@@ -124,6 +124,6 @@ docs/install.md      (NEU)
   "${BASH_SOURCE[0]}")" && pwd)`), damit der Installer unabhängig vom CWD läuft —
   der Agent-Loop und Nutzer rufen aus unterschiedlichen Verzeichnissen auf.
 - **Datenschutz:** echte Keys nie ins Repo. Die Beispiel-Konfig gehört ins
-  User-Home (`~/.config/rca/`), nicht in den Repo-Baum. `.env`/`*.key` sind ohnehin
+  User-Home (`~/.config/rdc/`), nicht in den Repo-Baum. `.env`/`*.key` sind ohnehin
   via `.gitignore` gesperrt — die Beispiel-Datei trotzdem klar als `.example`
   benennen.

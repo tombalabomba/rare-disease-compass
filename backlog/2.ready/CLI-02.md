@@ -19,15 +19,15 @@ hat das System keine Literatur-Anbindung; mit ihm landet jede Suche in der
 SQLite-History und wird über die Zeit durchsuchbar (`docs/architektur.md`).
 
 ## Scope
-**`cli/rca/sources/literature.py`** — eine Typer-Subkommando-Gruppe, die sich über
-die Registry aus CLI-01 in `rca` einhängt. Befehle:
+**`cli/rdc/sources/literature.py`** — eine Typer-Subkommando-Gruppe, die sich über
+die Registry aus CLI-01 in `rdc` einhängt. Befehle:
 
-- **`rca pubmed search <query>`** — sucht via NCBI E-utilities `esearch`
+- **`rdc pubmed search <query>`** — sucht via NCBI E-utilities `esearch`
   (db=pubmed), liefert PMIDs; optional direkt `esummary`/`efetch` für Titel, Autoren,
   Jahr, Journal. Optionen: `--retmax` (Trefferzahl), `--json`.
-- **`rca pubmed fetch <pmid...>`** — holt Detaildaten (Titel, Abstract sofern
+- **`rdc pubmed fetch <pmid...>`** — holt Detaildaten (Titel, Abstract sofern
   verfügbar, Autoren, Jahr, DOI) zu einer oder mehreren PMIDs via `efetch`/`esummary`.
-- **`rca europepmc search <query>`** — sucht über die Europe-PMC-REST-Suche
+- **`rdc europepmc search <query>`** — sucht über die Europe-PMC-REST-Suche
   (`/search`), liefert Titel, Autoren, Jahr, Quelle, PMID/PMCID/DOI. Optionen:
   `--page-size`, `--json`.
 
@@ -46,16 +46,16 @@ Eigenschaften:
 
 ## Files
 ```
-cli/rca/sources/__init__.py        (NEU, falls noch nicht vorhanden)
-cli/rca/sources/literature.py      (NEU)
-cli/rca/main.py                    (erweitert: Registrierung der literature-Gruppe)
+cli/rdc/sources/__init__.py        (NEU, falls noch nicht vorhanden)
+cli/rdc/sources/literature.py      (NEU)
+cli/rdc/main.py                    (erweitert: Registrierung der literature-Gruppe)
 cli/tests/test_literature.py       (NEU)
 ```
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
 - [x] **Files in `Scope`/`Files`**: `literature.py` und der Test sind NEU.
-      `cli/rca/sources/` wird mit CLI-02 angelegt (CLI-01 legt es nicht zwingend an).
-      `cli/rca/main.py` existiert nach CLI-01 (done) und wird um die Registrierung
+      `cli/rdc/sources/` wird mit CLI-02 angelegt (CLI-01 legt es nicht zwingend an).
+      `cli/rdc/main.py` existiert nach CLI-01 (done) und wird um die Registrierung
       erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Registry (`main.register`), httpx-Client
       (mit `transport`-Injection), History (`save_query`) und Output. Erst nutzbar,
@@ -67,11 +67,11 @@ cli/tests/test_literature.py       (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/sources/literature.py cli/tests/test_literature.py`
+- [ ] `python -m py_compile cli/rdc/sources/literature.py cli/tests/test_literature.py`
       ohne Fehler.
 - [ ] `pytest cli/tests/test_literature.py` grün — alle HTTP-Interaktionen über
       `httpx.MockTransport` (kein echter Netzwerk-Call).
-- [ ] CLI startbar: `rca pubmed --help` und `rca europepmc --help` listen die
+- [ ] CLI startbar: `rdc pubmed --help` und `rdc europepmc --help` listen die
       Subkommandos (`search`, `fetch` bzw. `search`).
 - [ ] **Query-Param-Bildung getestet:** die reine Param-Funktion erzeugt die
       erwarteten E-utilities-Params (db, term, retmax …); mit gesetztem
@@ -81,7 +81,7 @@ cli/tests/test_literature.py       (NEU)
 - [ ] **History-Eintrag getestet:** nach einer (gemockten) Suche enthält die
       in-memory-History einen Eintrag mit `source` `pubmed`/`europepmc`.
 - [ ] **Negativ-Check:** keine eigene HTTP-Implementierung —
-      `! grep -nE 'httpx\.(get|post|Client\()' cli/rca/sources/literature.py`
+      `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/sources/literature.py`
       (HTTP läuft über den CLI-01-Client).
 
 ## Out of scope

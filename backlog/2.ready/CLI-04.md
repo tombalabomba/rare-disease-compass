@@ -20,17 +20,17 @@ von HPO-IDs Krankheiten ableiten und Orphanet-Einträge nachschlagen — mit Que
 Phänotyp→Krankheit-Verbindung.
 
 ## Scope
-**`cli/rca/sources/graph.py`** — Typer-Subkommando-Gruppe, registriert über die
+**`cli/rdc/sources/graph.py`** — Typer-Subkommando-Gruppe, registriert über die
 CLI-01-Registry. Befehle:
 
-- **`rca monarch diseases-by-phenotypes <HPO...>`** — nimmt eine **Liste von
+- **`rdc monarch diseases-by-phenotypes <HPO...>`** — nimmt eine **Liste von
   HPO-IDs** und fragt die Monarch-API ab, welche Krankheiten am besten zum
   Phänotyp-Profil passen. Liefert Krankheit (MONDO/OMIM/ORPHA-ID + Name) und, falls
   die API es gibt, einen Score/Rang. Optionen: `--limit`, `--json`.
-- **`rca monarch gene-to-diseases <gene>`** — nimmt ein Gen (Symbol oder ID) und
+- **`rdc monarch gene-to-diseases <gene>`** — nimmt ein Gen (Symbol oder ID) und
   liefert die assoziierten Krankheiten (Krankheits-IDs + Namen) aus dem
   Monarch-Graphen.
-- **`rca orphanet lookup <term-or-id>`** — schlägt einen Orphanet-Eintrag nach
+- **`rdc orphanet lookup <term-or-id>`** — schlägt einen Orphanet-Eintrag nach
   (ORPHA-Code oder Suchbegriff) und liefert Name, ORPHA-Code, ggf. assoziierte
   Gene/OMIM-Querverweise.
 
@@ -46,15 +46,15 @@ Eigenschaften:
 
 ## Files
 ```
-cli/rca/sources/__init__.py    (NEU, falls noch nicht vorhanden)
-cli/rca/sources/graph.py       (NEU)
-cli/rca/main.py                (erweitert: Registrierung der graph-Gruppe)
+cli/rdc/sources/__init__.py    (NEU, falls noch nicht vorhanden)
+cli/rdc/sources/graph.py       (NEU)
+cli/rdc/main.py                (erweitert: Registrierung der graph-Gruppe)
 cli/tests/test_graph.py        (NEU)
 ```
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
 - [x] **Files in `Scope`/`Files`**: `graph.py` und der Test sind NEU.
-      `cli/rca/sources/__init__.py` ggf. aus CLI-02/03 schon da — defensiv mit
+      `cli/rdc/sources/__init__.py` ggf. aus CLI-02/03 schon da — defensiv mit
       aufgeführt. `main.py` existiert nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
       sobald CLI-01 in `backlog/3.done/`. Unabhängig von CLI-02/03.
@@ -66,12 +66,12 @@ cli/tests/test_graph.py        (NEU)
 
 ## Acceptance
 - [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rca/sources/graph.py cli/tests/test_graph.py`
+- [ ] `python -m py_compile cli/rdc/sources/graph.py cli/tests/test_graph.py`
       ohne Fehler.
 - [ ] `pytest cli/tests/test_graph.py` grün — alle HTTP-Calls über
       `httpx.MockTransport` (kein echter Netzwerk-Call).
-- [ ] CLI startbar: `rca monarch --help` (listet `diseases-by-phenotypes`,
-      `gene-to-diseases`) und `rca orphanet --help` (listet `lookup`).
+- [ ] CLI startbar: `rdc monarch --help` (listet `diseases-by-phenotypes`,
+      `gene-to-diseases`) und `rdc orphanet --help` (listet `lookup`).
 - [ ] **HPO-Listen-Serialisierung getestet:** mehrere HPO-IDs (`HP:0001250
       HP:0001263`) werden in das erwartete Query-Format überführt (reine Funktion,
       ohne HTTP).
@@ -81,7 +81,7 @@ cli/tests/test_graph.py        (NEU)
 - [ ] **History-Eintrag getestet:** nach einer (gemockten) `diseases-by-phenotypes`-
       Abfrage existiert ein History-Eintrag mit `source` `monarch`.
 - [ ] **Negativ-Check:** keine eigene HTTP-Implementierung —
-      `! grep -nE 'httpx\.(get|post|Client\()' cli/rca/sources/graph.py`.
+      `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/sources/graph.py`.
 
 ## Out of scope
 - **HPO-ID-Validierung** (Format `HP:nnnnnnn` ablehnen bei Müll): zentral in CLI-05
