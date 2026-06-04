@@ -150,7 +150,7 @@ app.add_typer(history_app, name="history")
 # Quellen-Gruppen registrieren sich über die Registry. ``literature`` importiert
 # ``main`` nur lazy (in den Befehls-Funktionen), daher entsteht hier kein
 # Import-Zyklus.
-from .sources import literature  # noqa: E402
+from .sources import literature, variant  # noqa: E402
 
 register(
     "pubmed",
@@ -161,6 +161,11 @@ register(
     "europepmc",
     literature.europepmc_app,
     "Europe-PMC-Literatursuche (REST).",
+)
+register(
+    "variant",
+    variant.variant_app,
+    "Varianten-Bewertung (MyVariant.info: ClinVar + gnomAD).",
 )
 
 

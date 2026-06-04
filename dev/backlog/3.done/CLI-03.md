@@ -1,7 +1,7 @@
 ---
 id: CLI-03
 title: Varianten-Quelle (ClinVar / gnomAD / MyVariant)
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: cli
