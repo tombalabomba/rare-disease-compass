@@ -1,7 +1,7 @@
 ---
 id: SET-02
 title: CLI-Installer & API-Key-Konfiguration
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: setup
