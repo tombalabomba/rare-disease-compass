@@ -1,7 +1,7 @@
 ---
 id: EXP-05
 title: Erweiterbarkeit (eigene Skills, updatefest)
-status: todo
+status: done
 depends_on: [EXP-02]
 stop_after: false
 epic: experience
