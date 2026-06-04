@@ -40,6 +40,34 @@ def test_findings_redigiert_keinen_vollwert() -> None:
     assert all("Mustermann" not in s for s in snippets)
 
 
+# -- Erweiterte Muster (Regressionsschutz für die geschlossenen Lücken) -------
+
+
+def test_erkennt_iso_datum() -> None:
+    # ISO-Format YYYY-MM-DD wurde vorher übersehen.
+    kinds = {f.kind for f in pii_guard.scan_text("Kontrolle am 2018-03-14.")}
+    assert "geburtsdatum" in kinds
+
+
+def test_erkennt_internationale_telefonnummer_ohne_fuehrende_null() -> None:
+    kinds = {f.kind for f in pii_guard.scan_text("Mobil: +49 171 1234567")}
+    assert "telefon" in kinds
+
+
+def test_erkennt_deutsche_adresse() -> None:
+    kinds = {
+        f.kind
+        for f in pii_guard.scan_text("Musterstraße 12, 80331 München")
+    }
+    assert "adresse" in kinds
+
+
+def test_hpo_id_ist_kein_telefon() -> None:
+    # HPO-IDs dürfen NICHT als Telefonnummer fehlalarmieren.
+    kinds = {f.kind for f in pii_guard.scan_text("Symptom HP:0002028 seit 2 Jahren")}
+    assert "telefon" not in kinds
+
+
 # -- Exit-Code-Verhalten ------------------------------------------------------
 
 

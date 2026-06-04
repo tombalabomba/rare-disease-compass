@@ -37,11 +37,14 @@ class Finding:
 # Jeder Eintrag: (kind, kompiliertes Pattern). Reihenfolge ist stabil, damit die
 # Findings deterministisch sortiert sind.
 _PATTERNS: list[tuple[str, re.Pattern[str]]] = [
-    # Geburtsdatum DD.MM.YYYY und DD/MM/YYYY (Jahr 1900–2099, plausibler Tag/Monat).
+    # Datum (konservativ als "geburtsdatum" gemeldet): DD.MM.YYYY, DD/MM/YYYY,
+    # DD-MM-YYYY UND ISO YYYY-MM-DD (Jahr 1900–2099). Ein Guard, der lieber zu
+    # viel meldet — jedes plausible Datum in einer Akte ist prüfenswert.
     (
         "geburtsdatum",
         re.compile(
-            r"\b(?:0[1-9]|[12]\d|3[01])[./](?:0[1-9]|1[0-2])[./](?:19|20)\d{2}\b"
+            r"\b(?:0[1-9]|[12]\d|3[01])[./-](?:0[1-9]|1[0-2])[./-](?:19|20)\d{2}\b"
+            r"|\b(?:19|20)\d{2}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])\b"
         ),
     ),
     # E-Mail-Adresse.
@@ -49,13 +52,30 @@ _PATTERNS: list[tuple[str, re.Pattern[str]]] = [
         "email",
         re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}\b"),
     ),
-    # Telefonnummer (DE/international). Verlangt eine Vorwahl mit Trennzeichen,
-    # damit HPO-IDs wie `HP:0002028` (keine Trennung) NICHT fehlalarmieren.
+    # Telefonnummer. Zwei Formen, beide mit Vorwahl/Trennzeichen, damit HPO-IDs
+    # wie `HP:0002028` (keine Trennung) NICHT fehlalarmieren:
+    #   1. national mit führender 0:  030 1234567, (089)/123 456
+    #   2. international mit +:        +49 171 1234567 (auch ohne führende 0)
     (
         "telefon",
         re.compile(
             r"(?:\+\d{1,3}[\s/\-]?)?\(?0\d{1,4}\)?[\s/\-]\d{3,}(?:[\s/\-]?\d+)*"
+            r"|\+\d{1,3}[\s/\-]?\d{2,4}[\s/\-]?\d{3,}(?:[\s/\-]?\d+)*"
         ),
+    ),
+    # Deutsche Adresse: Straße + Hausnummer (Schlüsselwörter case-insensitiv).
+    (
+        "adresse",
+        re.compile(
+            r"\b[A-Za-zÄÖÜäöüß]*(?:stra(?:ße|sse)|str\.|weg|platz|allee|gasse|ring)"
+            r"\s+\d{1,4}\b",
+            re.IGNORECASE,
+        ),
+    ),
+    # Deutsche Adresse: Postleitzahl (5-stellig) + Ort (großgeschrieben).
+    (
+        "adresse",
+        re.compile(r"\b\d{5}\s+[A-ZÄÖÜ][a-zäöüß]+\b"),
     ),
     # Deutsche Versichertennummer (KV-Nummer): 1 Buchstabe + 9 Ziffern.
     (

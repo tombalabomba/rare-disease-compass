@@ -15,6 +15,13 @@ Therapieempfehlung, Quellen pflichtig, Unsicherheit explizit. Sie zeigt
 **Differentialdiagnosen** statt einer einzelnen Festlegung und nennt aktiv
 Gegenevidenz. Ton/Register nach `config/case-profile.yaml`.
 
+**Emotional achtsam:** Eine Differentialliste kann für Betroffene schwere oder
+beängstigende Krankheitsbilder enthalten — das liegt in der Natur der Sache. Solche
+Kandidaten **mit Einordnung** präsentieren (wie häufig/selten, wie sicher/unsicher,
+dass es sich um Hypothesen zum Weiterfragen handelt, nicht um Befunde), nie als
+nackte Liste schwerer Diagnosen. Bei sichtlich belastenden Treffern ruhig bleiben
+und den nächsten konkreten Schritt (welche Frage an welche Ärztin) anbieten.
+
 ## Voraussetzung
 Installierte `rdc`-CLI (siehe Setup-Runbook). HPO-Codes im Format `HP:` + 7 Ziffern,
 zu finden in der Fallakte unter `## Symptome`.

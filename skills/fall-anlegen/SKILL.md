@@ -18,6 +18,11 @@ Therapieempfehlung, Quellen pflichtig, Unsicherheit explizit. Der Ton ist bewuss
 Angaben sind erlaubt und werden später ergänzt.
 
 ## Datenschutz zuerst
+- **Schritt 0 — Einwilligung klären, bevor irgendetwas eingegeben wird.** Geht es
+  um Daten eines Kindes, sollten die **Sorgeberechtigten** dokumentiert einwilligen
+  (Vorlage: `docs/consent-template.md`). Dabei ausdrücklich nennen, dass die
+  Chat-Inhalte zur Verarbeitung an die **Claude-API** gehen (Details: `docs/security.md`,
+  Abschnitt „Der ehrliche Punkt"). Erst wenn das geklärt ist, mit dem Anlegen beginnen.
 - **Nichts wird ohne ausdrückliche Einwilligung gespeichert.** Vor dem Anlegen
   der Akte wird klar gesagt, was wohin geschrieben wird (lokaler/geteilter Fall-
   Ordner, außerhalb des Repos).

@@ -173,7 +173,15 @@ def parse_pubcasefinder(
     for index, item in enumerate(_items(data, "results")):
         disease_id = _first(item, ("id", "disease_id", "omim_id", "orphanet_id"))
         name = _first(
-            item, ("disease_name_en", "disease_name", "name", "label")
+            item,
+            (
+                "omim_disease_name_en",
+                "orphanet_disease_name_en",
+                "disease_name_en",
+                "disease_name",
+                "name",
+                "label",
+            ),
         )
         records.append(
             {

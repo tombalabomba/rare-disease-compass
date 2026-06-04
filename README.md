@@ -46,6 +46,26 @@ auf) und zusammengesetzten Abfragen, die eine rohe API nicht direkt beantwortet.
 | Experience | Companion-Persona, Ton-Adaption, Skills-Schicht, Onboarding-Flow | `experience` |
 | Onboarding | Setup-Runbook, Nutzer-Guide, Einwilligungs-/Datenschutz-Vorlage | `onboarding` |
 
+## Angeschlossene Datenbanken
+
+Alle öffentlichen Quellen werden **live abgefragt** (nie kopiert, nie mit
+Patientendaten befüllt). Jede Abfrage landet zusätzlich in einer lokalen
+SQLite-History, die den „seit-letzter-Sitzung-neu"-Hinweis speist.
+
+| Datenbank | Wofür | Befehl | Auth |
+|---|---|---|---|
+| **PubMed** (NCBI E-utilities) | wissenschaftliche Literatur | `rdc pubmed` | optionaler API-Key |
+| **Europe PMC** | Literatur inkl. Volltext/Preprints | `rdc europepmc` | keine |
+| **ClinVar / gnomAD / MyVariant** | Bedeutung einer Genvariante + Häufigkeit in der Bevölkerung | `rdc variant` | optionaler API-Key |
+| **Monarch Initiative** | Krankheits-Graph (Phänotyp ↔ Gen ↔ Krankheit); integriert OMIM, Orphanet, GARD, NORD | `rdc monarch` | keine |
+| **Orphanet** | Referenz für seltene Krankheiten (Gene, Vererbung) | `rdc orphanet` | keine |
+| **PubCaseFinder** | phänotyp-getriebene Differentialdiagnose: HPO-Symptome → gerankte Krankheiten | `rdc pubcasefinder` | keine |
+| **Phen2Gene** | HPO-Symptome → Kandidatengene | `rdc phen2gene` | keine |
+| **Exomiser** | Genetik **lokal**: VCF + HPO → priorisierte Varianten/Krankheiten | `genetics/` (Docker) | lokal |
+
+Die Befehle lassen sich kombinieren (`rdc compound`), und Claude Code ruft sie im
+Gespräch selbstständig auf, je nach Frage. Details: [docs/architektur.md](docs/architektur.md).
+
 ## Repo-Struktur: Produkt vs. Bau-Werkzeug
 
 Klar getrennt, damit man sofort sieht, was man als Nutzer braucht und was nur dem

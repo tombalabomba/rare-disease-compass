@@ -43,6 +43,32 @@ _VARIANT_JSON = {
 # Query-API verpackt Treffer unter ``hits`` (z. B. rsID-Lookup).
 _QUERY_JSON = {"hits": [_VARIANT_JSON]}
 
+# Realistisch: eine rsID liefert mehrere Treffer; nur einer trägt die
+# Annotation. hits[0] ist hier LEER, der datentragende steht an Position 1.
+# (Regressionsschutz: blindes hits[0] lieferte sonst leere Felder.)
+_QUERY_MULTI_JSON = {
+    "hits": [
+        {"_id": "chr7:g.140453136dup"},
+        _VARIANT_JSON,
+    ]
+}
+
+
+def test_as_variant_picks_hit_with_payload() -> None:
+    """Bei mehreren Treffern wird der mit ClinVar/gnomAD gewählt, nicht hits[0]."""
+    picked = variant.as_variant(_QUERY_MULTI_JSON)
+    assert picked is _VARIANT_JSON
+    record = variant.parse_variant(picked)
+    assert record["clinical_significance"] == "Pathogenic"
+    assert record["gnomad_exome_af"] != variant.EMPTY
+
+
+def test_as_variant_fallback_when_no_payload() -> None:
+    """Trägt kein Treffer Annotation, bleibt der erste als Fallback."""
+    first = {"_id": "chr1:g.1del"}
+    picked = variant.as_variant({"hits": [first, {"_id": "chr1:g.2del"}]})
+    assert picked is first
+
 # VUS ohne gnomAD-Frequenz und mit ``rcv`` als Einzel-Objekt (kein Listentyp).
 _VUS_JSON = {
     "_id": "chr1:g.100A>G",

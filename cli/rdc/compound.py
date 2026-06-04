@@ -329,7 +329,13 @@ def _render_workup(result: Mapping[str, Any], *, json_: bool) -> None:
     as_json = json_ or main._state["format"] is main.OutputFormat.jsonl
 
     if not as_json:
-        typer.echo("# Differentialdiagnosen (Konsens über DDx + Graph)")
+        typer.echo("# Differentialdiagnosen (vereinigte Liste aus DDx + Graph)")
+        typer.echo(
+            "# Hinweis: `consensus` zählt stützende Quellen nur bei gleicher "
+            "ID-Form. PubCaseFinder (OMIM) und Monarch (MONDO) nutzen "
+            "unterschiedliche Vokabulare — ein quellenübergreifender Konsens "
+            "entsteht nur, wo die IDs zusammenfallen."
+        )
     main.render(
         list(result["diseases"]),
         DISEASE_HEADERS,

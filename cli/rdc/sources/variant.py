@@ -125,20 +125,44 @@ def _join_unique(values: list[str]) -> str:
     return "; ".join(seen)
 
 
+def _has_payload(hit: object) -> bool:
+    """Ob ein Treffer die gesuchten Annotationsblöcke (ClinVar/gnomAD) trägt."""
+    if not isinstance(hit, dict):
+        return False
+    return any(
+        key in hit for key in ("clinvar", "gnomad_exome", "gnomad_genome")
+    )
+
+
+def _pick_hit(hits: list[Any]) -> dict[str, Any]:
+    """Wählt aus mehreren Query-Treffern den datentragenden.
+
+    MyVariant liefert für eine rsID oft mehrere Repräsentationen derselben
+    Variante (del/dup/abweichende Normalisierung); nur eine trägt den ClinVar-/
+    gnomAD-Block. Blind ``hits[0]`` zu nehmen lieferte für bekannt pathogene
+    Varianten leere Felder. Wir nehmen daher den ersten Treffer **mit** Payload,
+    sonst den ersten überhaupt (Fallback).
+    """
+    for hit in hits:
+        if _has_payload(hit):
+            return hit  # type: ignore[return-value]
+    first = hits[0] if hits else {}
+    return first if isinstance(first, dict) else {}
+
+
 def as_variant(data: object) -> dict[str, Any]:
     """Holt das Variant-Objekt aus einer MyVariant-Antwort.
 
     Die Annotation-API liefert das Objekt direkt (oder eine Liste), die
-    Query-API verpackt Treffer unter ``hits``. Fehlt alles, ist es ``{}``.
+    Query-API verpackt Treffer unter ``hits``. Bei mehreren Treffern wird der
+    datentragende gewählt (siehe :func:`_pick_hit`). Fehlt alles, ist es ``{}``.
     """
     if isinstance(data, list):
-        first = data[0] if data else {}
-        return first if isinstance(first, dict) else {}
+        return _pick_hit(data)
     if isinstance(data, dict):
         hits = data.get("hits")
         if isinstance(hits, list):
-            first = hits[0] if hits else {}
-            return first if isinstance(first, dict) else {}
+            return _pick_hit(hits)
         return data
     return {}
 

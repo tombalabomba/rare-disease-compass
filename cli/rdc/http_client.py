@@ -124,7 +124,11 @@ class HttpClient:
                     raise
                 self._sleep(self._backoff(attempt))
                 continue
-            if response.status_code >= 500 and attempt < self.max_retries:
+            # 429 (Rate Limit) und 5xx sind transient → mit Backoff erneut
+            # versuchen. 4xx (außer 429) sind endgültig und werden zurückgegeben,
+            # damit die Quellen sie von "gefunden, aber leer" unterscheiden können.
+            retryable = response.status_code == 429 or response.status_code >= 500
+            if retryable and attempt < self.max_retries:
                 self._sleep(self._backoff(attempt))
                 continue
             return response
