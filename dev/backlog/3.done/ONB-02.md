@@ -1,7 +1,7 @@
 ---
 id: ONB-02
 title: Nutzer-Guide (Endnutzer)
-status: todo
+status: done
 depends_on: []
 stop_after: false
 epic: onboarding
