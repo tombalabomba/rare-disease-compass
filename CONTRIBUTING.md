@@ -33,5 +33,5 @@ Das Projekt wird über ein Ticket-Backlog gebaut. Siehe
 
 ## Lizenz
 
-Mit dem Beitrag stimmst du zu, dass dein Code unter der [MIT-Lizenz](LICENSE)
+Mit dem Beitrag stimmst du zu, dass dein Code unter der [GPL-3.0-Lizenz](LICENSE)
 veröffentlicht wird.

@@ -28,7 +28,7 @@ Siehe [README.md](README.md) und [docs/architektur.md](docs/architektur.md).
 ### Open Source
 - Das Repo ist (oder wird) öffentlich. Alles muss **generisch** sein, nicht an
   einen bestimmten Fall gebunden. Keine fallspezifischen Inhalte im Code/Doku.
-- Lizenz: MIT ([LICENSE](LICENSE)). Neue Dateien erben das.
+- Lizenz: GPL-3.0-or-later ([LICENSE](LICENSE)). Neue Dateien erben das.
 
 ### Code-Disziplin
 - Keine Stubs, keine Placeholders, keine `TODO`-Marker im Production-Code.

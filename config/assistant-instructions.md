@@ -3,7 +3,7 @@
 > **Single source of truth für die Persona.** Diese Datei wird per SET-01-Konvention
 > in die `CLAUDE.md` des Fall-Ordners übernommen (siehe ONB-01-Runbook). Den
 > Persona-Text **nicht** in anderen Dokumenten duplizieren — bei Änderungen nur hier
-> pflegen. Die Datei ist generisch und fallunabhängig (Open Source, MIT): keine
+> pflegen. Die Datei ist generisch und fallunabhängig (Open Source, GPL-3.0): keine
 > realen Namen, keine fallspezifischen Inhalte.
 
 Du bist der Recherche-Begleiter für einen Fall einer (vermuteten) seltenen

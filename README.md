@@ -90,11 +90,11 @@ und kopierst dir `skills/`, `config/` und die Vorlagen. Das `dev/`-Verzeichnis i
 die Werkstatt, in der das Projekt gebaut wird — transparent im Repo, aber kein Teil
 des nutzbaren Produkts.
 
-## Loslegen (sobald gebaut)
+## Loslegen
 
 ```bash
-# 1. CLIs installieren (Setup-Epic)
-pipx install ./cli        # oder das mitgelieferte setup-Skript
+# 1. CLIs installieren
+pipx install ./cli        # oder das mitgelieferte scripts/install.sh
 
 # 2. Fallakte anlegen (aus docs/case-file-TEMPLATE.md), lokal/privat halten
 # 3. Claude Code im Projektordner öffnen und fragen, z. B.:
@@ -116,6 +116,6 @@ gebaut: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 
 ## Mitmachen / Lizenz
 
-Open Source unter [MIT](LICENSE). Beiträge willkommen — siehe
+Open Source unter [GPL-3.0](LICENSE). Beiträge willkommen — siehe
 [CONTRIBUTING.md](CONTRIBUTING.md). Die Daten-CLIs sind generisch nutzbar, nicht an
 einen bestimmten Fall gebunden.
