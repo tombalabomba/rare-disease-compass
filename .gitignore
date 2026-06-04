@@ -1,0 +1,53 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# HARTE REGEL: In dieses Repo kommt NUR Software. NIE Patientendaten.
+# Alles unten ist gesperrt. Wer eine Ausnahme braucht, fügt eine explizite
+# Allowlist-Zeile mit `!` hinzu und dokumentiert WARUM in docs/security.md.
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Fallakte / Patientendaten / Genetik — niemals einchecken
+case-data/
+patient-data/
+*.vcf
+*.vcf.gz
+*.bam
+*.cram
+*.fastq
+*.fastq.gz
+*.ped
+exomiser-results/
+**/case-file*.md
+!docs/**/case-file-TEMPLATE.md   # nur das leere Template ist erlaubt
+!**/fixtures/case-file-FIXTURE*.md # synthetische Test-Fixtures (kein echter Mensch)
+
+# Secrets / Env
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+librechat-credentials*
+
+# Backups / Dumps
+*.dump
+*.sql.gz
+backups/
+
+# Loop-Logs & Marker
+.agent-loop-logs/
+backlog/.STOP_GATE
+
+# Build / deps
+node_modules/
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+
+# OS
+.DS_Store
