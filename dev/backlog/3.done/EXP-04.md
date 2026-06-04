@@ -1,7 +1,7 @@
 ---
 id: EXP-04
 title: Onboarding-Flow (/fall-anlegen)
-status: todo
+status: done
 depends_on: [KB-01, EXP-01]
 stop_after: false
 epic: experience
