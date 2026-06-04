@@ -1,7 +1,7 @@
 ---
 id: CLI-05
 title: Differentialdiagnose-Quelle (PubCaseFinder + Phen2Gene)
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: cli

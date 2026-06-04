@@ -150,7 +150,7 @@ app.add_typer(history_app, name="history")
 # Quellen-Gruppen registrieren sich über die Registry. ``literature`` importiert
 # ``main`` nur lazy (in den Befehls-Funktionen), daher entsteht hier kein
 # Import-Zyklus.
-from .sources import graph, literature, variant  # noqa: E402
+from .sources import ddx, graph, literature, variant  # noqa: E402
 
 register(
     "pubmed",
@@ -176,6 +176,16 @@ register(
     "orphanet",
     graph.orphanet_app,
     "Orphanet/Orphadata: Eintrag per ORPHA-Code oder Name nachschlagen.",
+)
+register(
+    "pubcasefinder",
+    ddx.pubcasefinder_app,
+    "Differentialdiagnose (PubCaseFinder): HPO-Profil → gerankte Krankheiten.",
+)
+register(
+    "phen2gene",
+    ddx.phen2gene_app,
+    "Differentialdiagnose (Phen2Gene): HPO-Profil → gerankte Kandidatengene.",
 )
 
 
