@@ -71,9 +71,9 @@ docs/runbook.md   (NEU)
 - [x] **Files in `Scope`/`Files`**: `docs/runbook.md` ist **NEU** — verifiziert,
       existiert noch nicht (`ls docs/` zeigt nur `architektur.md`, `security.md`).
 - [x] **`depends_on`-IDs**: INF-01, INF-03, KB-03, MCP-06 existieren als Tickets
-      (`backlog/2.ready/epic-infra/tickets/INF-01.md`,
-      `.../INF-03.md`, `backlog/2.ready/epic-knowledge/tickets/KB-03.md`,
-      `backlog/2.ready/epic-mcp/tickets/MCP-06.md`). Das Runbook dokumentiert deren
+      (`backlog/2.ready/INF-01.md`,
+      `.../INF-03.md`, `backlog/2.ready/KB-03.md`,
+      `backlog/2.ready/MCP-06.md`). Das Runbook dokumentiert deren
       Output (Compose-Stack, `librechat.yaml`, Ingestion-Skript, verdrahteter MCP) —
       darum müssen sie vor ONB-01 `done` sein.
 - [x] **Externe Voraussetzungen**: keine. Reine Doku, kein laufender Server, kein

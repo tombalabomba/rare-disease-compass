@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<title>rare-case-assistant — UI Mockup</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background: #0d1117; color: #e6edf3; padding: 28px; }
+  h2.section { font-size: 13px; text-transform: uppercase; letter-spacing: 1.5px; color: #7d8590; margin: 34px 0 12px; font-weight: 600; }
+  .frame { background: #161b22; border: 1px solid #30363d; border-radius: 12px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,.5); }
+  .callout { background: #1f6feb; color: #fff; font-size: 12.5px; padding: 7px 12px; border-radius: 8px; display: inline-block; font-weight: 600; box-shadow: 0 4px 14px rgba(31,111,235,.4); }
+  .arrow { color: #1f6feb; font-size: 22px; line-height: 1; }
+  /* browser chrome */
+  .chrome { background: #21262d; padding: 9px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid #30363d; }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .url { margin-left: 12px; background: #0d1117; border-radius: 6px; padding: 4px 12px; font-size: 12px; color: #7d8590; flex: 1; }
+  .lock { color: #3fb950; }
+
+  /* ---------- LOGIN ---------- */
+  .login-body { display: flex; align-items: center; justify-content: center; padding: 50px; background: radial-gradient(circle at 50% 0%, #1c2333, #0d1117); }
+  .login-card { background: #161b22; border: 1px solid #30363d; border-radius: 14px; padding: 36px 40px; width: 360px; text-align: center; }
+  .logo { width: 52px; height: 52px; border-radius: 12px; background: linear-gradient(135deg,#1f6feb,#388bfd); display: inline-flex; align-items: center; justify-content: center; font-size: 26px; margin-bottom: 16px; }
+  .login-card h1 { font-size: 19px; margin-bottom: 4px; }
+  .login-card p.sub { color: #7d8590; font-size: 13px; margin-bottom: 24px; }
+  .field { text-align: left; margin-bottom: 14px; }
+  .field label { font-size: 12px; color: #7d8590; display: block; margin-bottom: 5px; }
+  .field input { width: 100%; background: #0d1117; border: 1px solid #30363d; border-radius: 8px; padding: 10px 12px; color: #e6edf3; font-size: 14px; }
+  .btn { width: 100%; background: #238636; color: #fff; border: none; border-radius: 8px; padding: 11px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 6px; }
+  .login-note { font-size: 11px; color: #6e7681; margin-top: 18px; line-height: 1.5; }
+
+  /* ---------- APP ---------- */
+  .app { display: grid; grid-template-columns: 230px 1fr 290px; height: 620px; }
+  .sidebar { background: #0d1117; border-right: 1px solid #30363d; padding: 14px; display: flex; flex-direction: column; }
+  .newchat { background: #21262d; border: 1px solid #30363d; border-radius: 8px; padding: 9px; font-size: 13px; text-align: center; margin-bottom: 16px; color: #e6edf3; }
+  .proj { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #6e7681; margin: 8px 4px; }
+  .conv { padding: 8px 10px; border-radius: 7px; font-size: 13px; color: #adbac7; margin-bottom: 2px; }
+  .conv.active { background: #1f6feb22; color: #e6edf3; border: 1px solid #1f6feb55; }
+  .sidebar .spacer { flex: 1; }
+  .user-chip { display: flex; align-items: center; gap: 9px; font-size: 13px; padding: 8px; border-top: 1px solid #21262d; }
+  .avatar { width: 26px; height: 26px; border-radius: 50%; background: #6e40c9; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+
+  /* chat column */
+  .chat { display: flex; flex-direction: column; background: #161b22; }
+  .chat-head { padding: 13px 18px; border-bottom: 1px solid #30363d; display: flex; align-items: center; justify-content: space-between; }
+  .chat-head .title { font-size: 14px; font-weight: 600; }
+  .model-pill { font-size: 11px; background: #21262d; border: 1px solid #30363d; border-radius: 20px; padding: 4px 11px; color: #adbac7; }
+  .messages { flex: 1; overflow-y: auto; padding: 20px 22px; }
+  .msg { margin-bottom: 20px; }
+  .msg .who { font-size: 12px; color: #7d8590; margin-bottom: 6px; display: flex; align-items: center; gap: 7px; }
+  .bubble-u { background: #1f6feb18; border: 1px solid #1f6feb44; border-radius: 10px; padding: 11px 14px; font-size: 13.5px; line-height: 1.5; }
+  .bubble-a { font-size: 13.5px; line-height: 1.62; color: #cdd9e5; }
+  .bubble-a strong { color: #e6edf3; }
+  .sources { margin-top: 12px; border-left: 3px solid #3fb950; padding: 8px 0 8px 12px; background: #3fb95010; border-radius: 0 8px 8px 0; }
+  .sources .sh { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: #3fb950; margin-bottom: 6px; }
+  .src { font-size: 12px; color: #adbac7; margin-bottom: 3px; }
+  .src .tag { display: inline-block; background: #21262d; border-radius: 4px; padding: 1px 6px; font-size: 10.5px; color: #79c0ff; margin-right: 6px; }
+  .doctorq { margin-top: 12px; background: #1c2333; border: 1px solid #30363d; border-radius: 10px; padding: 11px 14px; }
+  .doctorq .sh { font-size: 11px; text-transform: uppercase; letter-spacing: .8px; color: #d29922; margin-bottom: 6px; }
+  .doctorq li { font-size: 12.5px; color: #cdd9e5; margin: 4px 0 4px 16px; }
+  .composer { border-top: 1px solid #30363d; padding: 12px 16px; }
+  .composer .box { background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 11px 14px; display: flex; align-items: center; gap: 10px; }
+  .composer .box .ph { flex: 1; color: #6e7681; font-size: 13px; }
+  .composer .clip { color: #7d8590; font-size: 17px; }
+
+  /* knowledge panel */
+  .panel { background: #0d1117; border-left: 1px solid #30363d; padding: 16px; }
+  .panel h3 { font-size: 13px; margin-bottom: 4px; }
+  .panel .desc { font-size: 11.5px; color: #6e7681; margin-bottom: 14px; line-height: 1.5; }
+  .upload { border: 1.5px dashed #1f6feb88; border-radius: 10px; padding: 16px; text-align: center; font-size: 12px; color: #79c0ff; background: #1f6feb10; margin-bottom: 16px; cursor: pointer; }
+  .upload .big { font-size: 22px; display: block; margin-bottom: 6px; }
+  .file { display: flex; align-items: center; gap: 9px; padding: 8px 9px; border-radius: 8px; background: #161b22; border: 1px solid #21262d; margin-bottom: 7px; }
+  .file .ic { font-size: 15px; }
+  .file .meta { flex: 1; }
+  .file .fn { font-size: 12.5px; color: #e6edf3; }
+  .file .fs { font-size: 10.5px; color: #6e7681; }
+  .file .ok { color: #3fb950; font-size: 13px; }
+  .tooltag { position: relative; }
+
+  /* flow strip */
+  .flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .step { background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 14px; }
+  .step .n { width: 24px; height: 24px; border-radius: 50%; background: #1f6feb; color: #fff; font-size: 12px; font-weight: 700; display: inline-flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .step h4 { font-size: 12.5px; margin-bottom: 4px; }
+  .step p { font-size: 11px; color: #7d8590; line-height: 1.45; }
+  .row { display: flex; align-items: center; gap: 14px; margin-bottom: 6px; }
+</style>
+</head>
+<body>
+
+  <div style="max-width:1180px;margin:0 auto;">
+    <h1 style="font-size:22px;margin-bottom:4px;">rare-case-assistant — so sieht es aus</h1>
+    <p style="color:#7d8590;font-size:13px;">Selbst gehostet auf deinem Hetzner-Server. Matze öffnet eine Web-Adresse, loggt sich ein, chattet. (Alle Beispieldaten sind erfunden.)</p>
+
+    <!-- LOGIN -->
+    <h2 class="section">1 · Login (fall.deine-domain.de)</h2>
+    <div class="frame">
+      <div class="chrome">
+        <span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span>
+        <span class="url"><span class="lock">🔒</span> https://fall.deine-domain.de</span>
+      </div>
+      <div class="login-body">
+        <div class="login-card">
+          <div class="logo">🧬</div>
+          <h1>Fall-Assistent</h1>
+          <p class="sub">Bitte anmelden</p>
+          <div class="field"><label>E-Mail</label><input value="matze@…" readonly></div>
+          <div class="field"><label>Passwort</label><input type="password" value="••••••••••" readonly></div>
+          <button class="btn">Anmelden</button>
+          <p class="login-note">Zugang nur für eingeladene Personen. Registrierung ist deaktiviert.<br>Geschützt mit Zwei-Faktor-Authentifizierung.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <h2 class="section">2 · Die App — links Chats, Mitte Gespräch, rechts die Krankenakte</h2>
+    <div class="row">
+      <span class="callout">Rechte Spalte → hier lädst du die Krankenakte hoch</span>
+      <span class="arrow">↘</span>
+    </div>
+    <div class="frame">
+      <div class="chrome">
+        <span class="dot" style="background:#ff5f56"></span><span class="dot" style="background:#ffbd2e"></span><span class="dot" style="background:#27c93f"></span>
+        <span class="url"><span class="lock">🔒</span> https://fall.deine-domain.de/c/fallakte-L</span>
+      </div>
+      <div class="app">
+
+        <!-- sidebar -->
+        <div class="sidebar">
+          <div class="newchat">＋  Neuer Chat</div>
+          <div class="proj">Projekt</div>
+          <div class="conv active">🧬 Fallakte L. (6 J.)</div>
+          <div class="proj" style="margin-top:14px;">Verlauf</div>
+          <div class="conv">Passende Krankheiten?</div>
+          <div class="conv">Gentest-Variante einordnen</div>
+          <div class="conv">Neue Studien 2026</div>
+          <div class="conv">Fragen für Termin Uniklinik</div>
+          <div class="spacer"></div>
+          <div class="user-chip"><span class="avatar">M</span> Matze<span style="margin-left:auto;color:#6e7681;">⚙</span></div>
+        </div>
+
+        <!-- chat -->
+        <div class="chat">
+          <div class="chat-head">
+            <span class="title">Fallakte L. (6 J.)</span>
+            <span class="model-pill">● Claude Opus 4.8</span>
+          </div>
+          <div class="messages">
+            <div class="msg">
+              <div class="who"><span class="avatar" style="width:20px;height:20px;font-size:10px;">M</span> Matze</div>
+              <div class="bubble-u">Welche seltenen Krankheiten passen am besten zu ihren Symptomen?</div>
+            </div>
+            <div class="msg">
+              <div class="who">🧬 Fall-Assistent</div>
+              <div class="bubble-a">
+                Auf Basis der hinterlegten Akte (chronische blutige Durchfälle seit dem 3. Lebensjahr,
+                Beginn vor dem 6. Geburtstag, normale Infektionsdiagnostik) ergibt der Abgleich mit den
+                Datenbanken ein klares Muster Richtung <strong>früh beginnender, möglicherweise monogener
+                Darmentzündung (VEO-IBD)</strong>. Die phänotypisch ähnlichsten Treffer:
+                <div class="sources">
+                  <div class="sh">Quellen (live abgefragt)</div>
+                  <div class="src"><span class="tag">PubCaseFinder</span> Top-Treffer: IL10-Rezeptor-Defekt, XIAP-Defizienz, CGD</div>
+                  <div class="src"><span class="tag">Monarch</span> Phänotyp HP:0002velvet „Hematochezia" → 14 assoziierte Gene</div>
+                  <div class="src"><span class="tag">PubMed</span> 3 Übersichtsarbeiten zu VEO-IBD bei &lt; 6 Jahren (2023–2025)</div>
+                </div>
+                <div class="doctorq">
+                  <div class="sh">Fragen für den nächsten Arzttermin</div>
+                  <ul>
+                    <li>Wurde der vorhandene Gentest gegen ein aktuelles VEO-IBD-Panel (~99 Gene) ausgewertet?</li>
+                    <li>Ist eine IL10-Rezeptor-Funktionsdiagnostik erfolgt?</li>
+                    <li>Käme eine Vorstellung am Zentrum für Seltene Erkrankungen infrage?</li>
+                  </ul>
+                </div>
+                <p style="margin-top:12px;font-size:11.5px;color:#6e7681;">⚕ Recherche-Unterstützung, keine Diagnose. Bitte mit den behandelnden Ärzt:innen besprechen.</p>
+              </div>
+            </div>
+          </div>
+          <div class="composer">
+            <div class="box"><span class="clip">📎</span><span class="ph">Frage stellen … (z. B. „Gibt es neue Studien zu Gen X?")</span><span style="color:#1f6feb;">➤</span></div>
+          </div>
+        </div>
+
+        <!-- knowledge panel -->
+        <div class="panel">
+          <h3>📁 Krankenakte</h3>
+          <p class="desc">Diese Dateien kennt der Assistent in <em>jedem</em> Chat. Privat, nur auf deinem Server.</p>
+          <div class="upload"><span class="big">⬆</span><strong>Dateien hochladen</strong><br><span style="color:#6e7681;">PDF, Bild, Text hierher ziehen</span></div>
+          <div class="file"><span class="ic">📄</span><div class="meta"><div class="fn">Koloskopie-Befund.pdf</div><div class="fs">verarbeitet · 2 Seiten</div></div><span class="ok">✓</span></div>
+          <div class="file"><span class="ic">📄</span><div class="meta"><div class="fn">Histologie.pdf</div><div class="fs">verarbeitet · 1 Seite</div></div><span class="ok">✓</span></div>
+          <div class="file"><span class="ic">📄</span><div class="meta"><div class="fn">Laborwerte_2025.pdf</div><div class="fs">verarbeitet · 4 Seiten</div></div><span class="ok">✓</span></div>
+          <div class="file"><span class="ic">🧬</span><div class="meta"><div class="fn">Gentest-Bericht.pdf</div><div class="fs">verarbeitet · 6 Seiten</div></div><span class="ok">✓</span></div>
+          <div class="file"><span class="ic">📝</span><div class="meta"><div class="fn">Fallakte_L.md</div><div class="fs">kuratiert von Thomas</div></div><span class="ok">✓</span></div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- FLOW -->
+    <h2 class="section">3 · Wie der Ablauf ist</h2>
+    <div class="flow">
+      <div class="step"><span class="n">1</span><h4>Daten holen</h4><p>Matze gibt dir die Unterlagen (Dropbox). Genetik-Rohdaten bleiben lokal.</p></div>
+      <div class="step"><span class="n">2</span><h4>Akte aufbereiten</h4><p>Du strukturierst sie HPO-codiert &amp; pseudonymisiert (Initialen).</p></div>
+      <div class="step"><span class="n">3</span><h4>Hochladen</h4><p>Dateien in die rechte Spalte ziehen → werden zur Wissensbasis.</p></div>
+      <div class="step"><span class="n">4</span><h4>Chatten</h4><p>Matze fragt frei. Claude kombiniert Akte + Live-Datenbanken, nennt Quellen.</p></div>
+      <div class="step"><span class="n">5</span><h4>Zum Arzt</h4><p>Konkrete Fragen &amp; Dossier für den nächsten Termin / das ZSE.</p></div>
+    </div>
+
+  </div>
+</body>
+</html>

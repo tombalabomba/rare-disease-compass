@@ -76,5 +76,5 @@ docs/mcp-biomcp.md      (NEU)
   Die in `epic-infra` gewählte Variante (Command vs. Container im Compose-Netz)
   übernehmen, damit beide Server-Einträge konsistent sind.
 - **Echter Test braucht laufenden LibreChat** → Smoke-Test manuell (in
-  `2.ready/epic-mcp/SMOKE-TEST.md` bzw. am Epic-Ende durch den Menschen): Tool in
+  `SMOKE-TEST.md (am Epic-Ende, vom Menschen)` bzw. am Epic-Ende durch den Menschen): Tool in
   einem Chat aufrufen und Antwort einer der fünf Quellen prüfen.

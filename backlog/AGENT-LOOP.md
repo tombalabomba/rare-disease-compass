@@ -4,7 +4,8 @@ Operating-Anweisung für die **autonome** Abarbeitung von Tickets aus
 `backlog/2.ready/`. Jede Iteration läuft in einer **frischen** Claude-Session.
 
 Epic-spezifisches lebt im Frontmatter des Tickets (`epic`, `commit_type`,
-`stop_after`) und im Kontext-File `2.ready/<epic>/README.md`.
+`stop_after`) und in der Projekt-Übersicht `backlog/PLAN.md` (Ziele, Modul-Karte,
+Abhängigkeitsgraph aller Epics).
 
 ## Trigger
 
@@ -23,12 +24,13 @@ Lies in dieser Reihenfolge:
    (`architektur.md`, `security.md`).
 
 ### 2. Nächstes Ticket finden
-Suche in `backlog/2.ready/` rekursiv nach `.md`-Files mit `status: todo`.
+Tickets liegen **flach** als `backlog/2.ready/<ID>.md` (ein File pro Ticket, kein
+Epic-Unterordner). Die Epic-Zugehörigkeit steht im Frontmatter (`epic:`). Suche
+nach `.md`-Files mit `status: todo`.
 
 **Auswahlregeln (in Reihenfolge):**
 1. `status: todo` (nicht `in_progress`, `done`, `blocked`)
-2. Alle `depends_on`-IDs liegen in einem `done/`-Ordner (epic-eigenes `done/` oder
-   `backlog/3.done/`)
+2. Alle `depends_on`-IDs liegen in `backlog/3.done/` (per ID, nicht per Pfad)
 3. Bei mehreren Kandidaten: kleinste ID zuerst (`INF-01` vor `INF-02`)
 
 **Kein Kandidat passt** (alles done/blocked oder Dependencies offen): exit clean,
@@ -67,8 +69,8 @@ Lies `Scope`, `Files`, `Out of scope`, `Notes`.
 Jeden `[ ]`-Punkt explizit prüfen, inklusive der **Negativ-Checks**
 („darf nicht drin sein …"). Acceptance ist **maschinell prüfbar** gehalten
 (lint, build, validate, unit-tests, config-validate). Browser-/Live-Server-Checks
-sind kein Teil der Acceptance — die stehen in `2.ready/<epic>/SMOKE-TEST.md` und
-macht der Mensch am Epic-Ende.
+sind kein Teil der Acceptance — die stehen in `backlog/SMOKE-TEST.md` und macht
+der Mensch beim Deployment.
 
 **Acceptance-Punkt nicht erfüllbar:**
 - ≤ 30 Min lösbar → lösen.
@@ -82,13 +84,9 @@ Dependency-Ticket nicht done.
 ### 7. Ticket abschließen — Status + Move
 Frontmatter: `status: done`. Datei verschieben mit **`git mv`** (History bleibt):
 
-| Ticket-Typ | Quelle | Ziel |
-|---|---|---|
-| Epic-Ticket | `2.ready/<epic>/tickets/<id>.md` | `2.ready/<epic>/done/<id>.md` |
-| Flat-Ticket | `2.ready/<id>.md` | `3.done/<id>.md` |
-
-**Niemals** den Epic-Folder selbst verschieben — das macht der Mensch, wenn alle
-Tickets des Epics done sind.
+```
+git mv backlog/2.ready/<ID>.md backlog/3.done/<ID>.md
+```
 
 ### 8. Commit
 Eine Commit pro Ticket. Prefix aus `commit_type`. Format:

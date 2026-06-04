@@ -53,10 +53,17 @@ CLAUDE_MODEL="${CLAUDE_MODEL:-claude-opus-4-8}"
 
 cmd="${1:-run}"
 
-# List all ticket files in 2.ready/ (epic or flat).
+# List all ticket files in 2.ready/ (flat: one .md per ticket).
 list_ticket_files() {
-  find "$READY_DIR" -mindepth 3 -maxdepth 3 -type f -name '*.md' -path '*/tickets/*.md' 2>/dev/null || true
   find "$READY_DIR" -mindepth 1 -maxdepth 1 -type f -name '*.md' 2>/dev/null || true
+}
+
+# Read one frontmatter field from a ticket file.
+fm_field() {
+  awk -v key="$2" '
+    /^---$/ {sep++; next}
+    sep==1 && $0 ~ "^" key ":" {sub("^" key ": *", ""); gsub(/"/, ""); print; exit}
+  ' "$1"
 }
 
 count_todo() {
@@ -71,48 +78,26 @@ count_todo() {
 }
 
 print_status() {
-  echo "Tickets in backlog/2.ready/:"
+  echo "Tickets in backlog/2.ready/ (flach, gruppiert nach epic):"
   echo
-  local epics=()
-  if [ -d "$READY_DIR" ]; then
-    while IFS= read -r d; do
-      [ -d "$d" ] || continue
-      epics+=("$(basename "$d")")
-    done < <(find "$READY_DIR" -mindepth 1 -maxdepth 1 -type d 2>/dev/null | sort)
-  fi
+  # Discover epic groups from the `epic:` frontmatter, in stable order of appearance.
+  local epics=() seen e
+  while IFS= read -r f; do
+    e="$(fm_field "$f" epic)"; [ -n "$e" ] || e="(ohne)"
+    case " ${epics[*]} " in *" $e "*) : ;; *) epics+=("$e") ;; esac
+  done < <(list_ticket_files | sort)
+
   for epic in "${epics[@]}"; do
     echo "=== $epic ==="
     printf "%-8s %-14s %s\n" "ID" "Status" "Titel"
     printf "%-8s %-14s %s\n" "--------" "--------------" "----------------------------------------"
-    for f in "$READY_DIR/$epic/tickets/"*.md "$READY_DIR/$epic/done/"*.md; do
-      [ -f "$f" ] || continue
-      awk '
-        /^id:/    {sub(/^id: */, "");    id=$0}
-        /^title:/ {sub(/^title: */, ""); gsub(/"/, "", $0); title=$0}
-        /^status:/{sub(/^status: */, ""); status=$0}
-        /^---$/   {if (++sep == 2) {printf "%-8s %-14s %s\n", id, status, title; exit}}
-      ' "$f"
-    done
+    while IFS= read -r f; do
+      e="$(fm_field "$f" epic)"; [ -n "$e" ] || e="(ohne)"
+      [ "$e" = "$epic" ] || continue
+      printf "%-8s %-14s %s\n" "$(fm_field "$f" id)" "$(fm_field "$f" status)" "$(fm_field "$f" title)"
+    done < <(list_ticket_files | sort)
     echo
   done
-  local flat_files=()
-  while IFS= read -r f; do
-    flat_files+=("$f")
-  done < <(find "$READY_DIR" -mindepth 1 -maxdepth 1 -type f -name '*.md' 2>/dev/null | sort)
-  if [ "${#flat_files[@]}" -gt 0 ]; then
-    echo "=== flat ==="
-    printf "%-8s %-14s %s\n" "ID" "Status" "Titel"
-    printf "%-8s %-14s %s\n" "--------" "--------------" "----------------------------------------"
-    for f in "${flat_files[@]}"; do
-      awk '
-        /^id:/    {sub(/^id: */, "");    id=$0}
-        /^title:/ {sub(/^title: */, ""); gsub(/"/, "", $0); title=$0}
-        /^status:/{sub(/^status: */, ""); status=$0}
-        /^---$/   {if (++sep == 2) {printf "%-8s %-14s %s\n", id, status, title; exit}}
-      ' "$f"
-    done
-    echo
-  fi
 }
 
 case "$cmd" in

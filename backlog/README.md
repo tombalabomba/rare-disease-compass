@@ -1,46 +1,37 @@
 # Backlog
 
-Alle laufende und geplante Arbeit. Zwei orthogonale Achsen:
-- **Stage** (Pipeline): `1.planning/` → `2.ready/` → `3.done/`
-- **Form** (Einzelticket oder Epic): flaches `.md` direkt in der Stage, oder
-  Epic-Ordner als Unterordner der Stage
+Flache Pipeline, ein Markdown-File pro Ticket. Keine Epic-Unterordner — die
+Epic-Zugehörigkeit steht im Frontmatter (`epic:`).
 
 ## Struktur
 ```
 backlog/
 ├── README.md             # diese Datei
+├── PLAN.md               # Projekt-Übersicht: Ziele, Modul-Karte, Abhängigkeitsgraph
 ├── AGENT-LOOP.md         # Operating-Manual für autonome Loop-Iteration
 ├── AGENT-TICKET.md       # Operating-Manual für genau ein Ticket
 ├── TICKET-TEMPLATE.md    # Vorlage (Frontmatter + Sektionen)
-├── 1.planning/           # Idee notiert, noch nicht implementations-fertig
-├── 2.ready/              # spezifiziert, sofort ziehbar (Loop greift hier zu)
-│   └── epic-<slug>/
-│       ├── README.md     # Ziel, Status, Entscheidungen, Modul-Karte
-│       ├── tickets/      # offene Tickets
-│       └── done/         # erledigte Tickets (per git mv aus tickets/)
-└── 3.done/               # erledigte Flat-Tickets (Archiv)
+├── 1.planning/           # noch nicht baufertig — u. a. die Deploy-Tickets (supervised)
+├── 2.ready/              # baufertig, flach: <ID>.md — der Loop greift hier zu
+│   ├── INF-01.md … INF-05.md
+│   ├── KB-01.md  … KB-04.md
+│   ├── MCP-01.md … MCP-06.md
+│   ├── GEN-01.md … GEN-03.md
+│   └── ONB-01.md … ONB-03.md
+└── 3.done/               # erledigte Tickets (per git mv aus 2.ready/)
 ```
-Stage-Wechsel: `git mv` über Datei bzw. ganzen Epic-Ordner.
 
-## Epics (Baureihenfolge über `depends_on`)
-
-| Epic | Slug | Inhalt | hängt ab von |
-|---|---|---|---|
-| Infrastruktur | `epic-infra` | Docker-Stack, Caddy/HTTPS, Hetzner-Provisioning, Backups | — |
-| Wissensbasis | `epic-knowledge` | Fallakten-Schema (HPO), Pseudonymisierung, RAG-Ingestion, System-Prompt | infra |
-| Datenanbindung | `epic-mcp` | BioMCP + eigener MCP (Monarch/Orphanet/EuropePMC/PubCaseFinder) | infra |
-| Genetik | `epic-genetics` | Exomiser-Runner (lokal), VCF+HPO → Kandidaten → Akte | knowledge |
-| Onboarding | `epic-onboarding` | Betreiber-Runbook, Nutzer-Guide, Einwilligungs-Vorlage | infra, knowledge, mcp |
-
-Die `depends_on`-Felder der einzelnen Tickets erzwingen die Reihenfolge feiner.
-Der Loop zieht immer das nächste Ticket, dessen Dependencies in `done/` liegen.
+Stage-Wechsel: `git mv backlog/2.ready/<ID>.md backlog/3.done/<ID>.md`.
+`depends_on` referenziert **IDs** (nicht Pfade); ein Ticket ist ziehbar, sobald
+alle seine Dependency-IDs in `3.done/` liegen.
 
 ## Loop ausführen
 - **Autonom** (frische Session pro Ticket): `bash scripts/agent-loop.sh`
-- **Status**: `bash scripts/agent-loop.sh status`
+- **Status** (gruppiert nach epic): `bash scripts/agent-loop.sh status`
 - **Einzel-Ticket** (manuell): „Bitte arbeite INF-01 nach `backlog/AGENT-TICKET.md` ab"
 
 ## Was hier NICHT hingehört
+- Projekt-Übersicht / Modul-Karte / Abhängigkeiten → [PLAN.md](PLAN.md)
 - Architektur/Datenfluss → [docs/architektur.md](../docs/architektur.md)
 - Sicherheits-/Datenschutzregeln → [docs/security.md](../docs/security.md)
 - Projektweite Lerneffekte/Gotchas → [AGENTS.md](../AGENTS.md) (`## Notes`)

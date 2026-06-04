@@ -77,6 +77,6 @@ librechat.yaml          (erweitert: mcpServers.rare-case)
   MCP-02 passen (stdio-Command vs. Netzwerk-Transport). Die in `epic-infra`
   gewählte Variante für BioMCP (MCP-01) konsistent übernehmen.
 - **Echter End-to-End-Test braucht laufenden Stack** → Smoke-Test manuell
-  (`2.ready/epic-mcp/SMOKE-TEST.md` bzw. Epic-Ende): Stack hochfahren, in einem
+  (`SMOKE-TEST.md (am Epic-Ende, vom Menschen)` bzw. Epic-Ende): Stack hochfahren, in einem
   Chat ein `rare-case`-Tool (z. B. `disease_by_phenotypes`) mit einer HPO-Liste
   aufrufen und die Antwort prüfen.
