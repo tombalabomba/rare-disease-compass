@@ -1,7 +1,7 @@
 ---
 id: CLI-01
 title: CLI-Kern (Typer-App, httpx-Client, SQLite-History)
-status: todo
+status: done
 depends_on: []
 stop_after: false
 epic: cli

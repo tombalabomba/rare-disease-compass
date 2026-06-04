@@ -1,7 +1,7 @@
 ---
 id: ONB-03
 title: Einwilligungs- & Datenschutz-Vorlage
-status: todo
+status: done
 depends_on: []
 stop_after: false
 epic: onboarding
