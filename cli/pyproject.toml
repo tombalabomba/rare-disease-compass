@@ -1,0 +1,44 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rdc"
+version = "0.1.0"
+description = "RareDiseaseCompass — agenten-native CLIs für die Recherche zu seltenen Erkrankungen."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "typer",
+  "httpx",
+  "pydantic",
+]
+
+[project.scripts]
+rdc = "rdc.main:app"
+
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "ruff",
+  "mypy",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["rdc"]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 88
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+# Typer nutzt Funktionsaufrufe (Option/Argument) als Parameter-Defaults — das
+# ist das vorgesehene Muster, daher für B008 als unveränderlich behandeln.
+[tool.ruff.lint.flake8-bugbear]
+extend-immutable-calls = ["typer.Option", "typer.Argument"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
