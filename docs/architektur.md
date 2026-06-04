@@ -5,9 +5,11 @@
 Bewusst minimal, lokal, kein Server. Drei Schichten:
 
 1. **Fallakte (privat)** — HPO-codierte, pseudonymisierte Krankengeschichte als
-   Markdown in einem lokalen Ordner (für die Zwei-Rollen-Nutzung in einer
-   verschlüsselten, geteilten Dropbox: einer kuratiert, einer liest mit). Die
-   Genetik-**Rohdaten** (VCF) bleiben lokal und außerhalb des geteilten Ordners.
+   Markdown in einem **lokalen Ordner**. Sollen zwei Personen denselben Ordner
+   nutzen (einer kuratiert, einer liest mit), kann er optional über einen
+   geteilten, verschlüsselten Ordner laufen (z. B. Dropbox, Nextcloud) — Pflicht
+   ist das nicht. Die Genetik-**Rohdaten** (VCF) bleiben lokal und außerhalb eines
+   etwaigen geteilten Ordners.
 2. **Welt-Wissen (öffentlich)** — medizinische Datenbanken, abgefragt über
    agenten-native CLIs. Nichts wird kopiert oder mit der Fallakte gefüttert.
 3. **Reasoning (Claude Code)** — liest die Akte als Dateien, ruft die CLIs auf,

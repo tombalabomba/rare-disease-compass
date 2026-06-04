@@ -98,7 +98,7 @@ docs/consent-template.md   (NEU)
   organisatorischer Schritt des Betreibers, nicht Teil dieser Einwilligungs-Vorlage.
   Die Vorlage **erwähnt** die API-Verarbeitung, regelt aber keinen Vertrag.
 - **Server-/Hosting-Datenschutz:** Es gibt keinen Server und keinen Hosting-AVV in
-  dieser Architektur (lokal/Dropbox). Die alte `docs/security.md`-Tabelle nennt noch
+  dieser Architektur (lokal, optional geteilt). Die alte `docs/security.md`-Tabelle nennt noch
   Hetzner — das gehört **nicht** in die Vorlage (siehe Notes).
 - **Rechtsgültige Endfassung:** Die Vorlage ist ein Muster; die fallspezifische,
   rechtsgeprüfte Fassung erstellt der Betreiber selbst.
@@ -108,7 +108,7 @@ docs/consent-template.md   (NEU)
   Acceptance-relevant. Die Vorlage darf nicht den Eindruck einer fertigen,
   rechtsgeprüften Erklärung erwecken.
 - **Kein Server, kein AVV-Server.** In dieser Architektur liegen die Daten lokal bzw.
-  in einer verschlüsselten, geteilten Dropbox — es gibt keinen Hetzner-Server und
+  in einem lokalen, optional geteilten Ordner — es gibt keinen Hetzner-Server und
   keinen serverseitigen Auftragsverarbeiter. `docs/security.md` enthält noch Alt-
   Referenzen (Hetzner, Postgres, AVV) aus der verworfenen Server-Architektur (siehe
   `AGENTS.md`, 2026-06-04 Architektur-Pivot) — **nicht** in die Vorlage übernehmen.

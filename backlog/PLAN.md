@@ -39,7 +39,7 @@ der Kern direkt auf PP aufsetzen. Bis geklärt: framework-frei.
 
 | Pfad | Verantwortung | Ticket |
 |---|---|---|
-| `docs/project-layout.md` | Ordnerstruktur, Fallakten-Ablage (Dropbox), Claude-Code-Konfig | SET-01 |
+| `docs/project-layout.md` | Ordnerstruktur, Fallakten-Ablage (lokaler Ordner, optional geteilt), Claude-Code-Konfig | SET-01 |
 | `cli/` (Installer/Skript) | CLIs auf einer Maschine installieren, API-Keys konfigurieren | SET-02 |
 | `cli/` (Kern) | Typer-App, httpx-Client, SQLite-History, Ausgabeformat | CLI-01 |
 | `cli/.../literature.py` | PubMed + Europe PMC | CLI-02 |

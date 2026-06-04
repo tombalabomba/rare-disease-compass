@@ -63,8 +63,8 @@ gebaut: [backlog/PLAN.md](backlog/PLAN.md), `bash scripts/agent-loop.sh`.
 
 - Patientendaten **nie** im Repo (siehe [.gitignore](.gitignore)) und nie an
   öffentliche Datenbanken gesendet — die werden nur abgefragt.
-- Die Fallakte liegt in einem **lokalen / privat geteilten Ordner** (z. B.
-  verschlüsselte Dropbox), pseudonymisiert (Initialen).
+- Die Fallakte liegt in einem **lokalen Ordner** (bei Bedarf optional geteilt,
+  z. B. verschlüsselte Dropbox/Nextcloud), pseudonymisiert (Initialen).
 - Genetik-Rohdaten (VCF) werden **lokal** ausgewertet, nur Ergebnisse fließen in die Akte.
 - Chat-Inhalte gehen zur Inferenz an die Claude-API (kein Training auf API-Daten).
 - Vollständig: [docs/security.md](docs/security.md).

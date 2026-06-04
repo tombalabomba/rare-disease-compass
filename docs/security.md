@@ -6,9 +6,9 @@ ggf. eines Kindes, Art. 9 DSGVO). Diese Datei ist verbindlich.
 ## Grundprinzipien
 
 1. **Lokal zuerst.** Es gibt keinen Server. Die Fallakte lebt in einem lokalen
-   Ordner (für die Zwei-Rollen-Nutzung in einer verschlüsselten, geteilten
-   Dropbox). Genetik-Rohdaten (VCF) bleiben rein lokal, außerhalb des geteilten
-   Ordners.
+   Ordner. Sollen zwei Personen ihn teilen, optional über einen geteilten,
+   verschlüsselten Ordner (z. B. Dropbox/Nextcloud). Genetik-Rohdaten (VCF) bleiben
+   rein lokal, außerhalb eines etwaigen geteilten Ordners.
 2. **Datensparsamkeit.** Nur was gebraucht wird. Aus der Genetik fließt nur die
    kuratierte Ergebnis-Zusammenfassung weiter, keine Rohzeilen.
 3. **Pseudonymisierung.** In der Fallakte stehen Initialen, kein Klarname, kein
@@ -22,7 +22,7 @@ ggf. eines Kindes, Art. 9 DSGVO). Diese Datei ist verbindlich.
 
 | Daten | Ort | Schutz |
 |---|---|---|
-| Fallakte (pseudonymisiert) | lokaler / geteilter Ordner (verschlüsselte Dropbox) | Festplatten-/Ordner-Verschlüsselung, Zugriff nur für Berechtigte |
+| Fallakte (pseudonymisiert) | lokaler Ordner (optional geteilt, z. B. verschlüsselte Dropbox) | Festplatten-/Ordner-Verschlüsselung, Zugriff nur für Berechtigte |
 | Genetik-Rohdaten (VCF) | **nur lokal**, nicht im geteilten Ordner | verlässt die Maschine nicht |
 | Exomiser-Ergebnis | als Teil der Fallakte (kuratiert) | wie Fallakte |
 | CLI-History (SQLite) | lokal, gitignored | kann fallbezogene Suchen enthalten → nicht teilen |

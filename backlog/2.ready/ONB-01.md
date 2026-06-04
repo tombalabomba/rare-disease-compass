@@ -42,8 +42,8 @@ Abschnitte (als Markdown-Überschriften, damit per `grep` prüfbar):
    Assistenten-Instruktionen `config/assistant-instructions.md` (aus KB-04) als
    `CLAUDE.md` in den Fall-Ordner legen, damit der Assistent Persona und Regeln
    (keine Diagnose, Quellen nennen, Arztfragen) übernimmt.
-5. **## Dropbox-Zwei-Rollen** — für die Zwei-Rollen-Nutzung den Fall-Ordner in eine
-   **geteilte, verschlüsselte Dropbox** legen: einer kuratiert die Akte, der andere
+5. **## Zwei-Rollen-Nutzung (optional)** — wollen zwei Personen denselben Fall-Ordner nutzen,
+   ihn in einen **geteilten, verschlüsselten Ordner** legen (z. B. Dropbox/Nextcloud): einer kuratiert die Akte, der andere
    (Endnutzer) liest und chattet. Klarstellen: die Genetik-**Rohdaten** (VCF) bleiben
    **lokal außerhalb** des geteilten Ordners (siehe `docs/architektur.md`,
    `docs/security.md`).
@@ -125,7 +125,7 @@ docs/runbook.md   (NEU)
 
 ## Notes
 - **Kein Server.** Das Runbook beschreibt ausschließlich lokales Setup: CLIs
-  installieren, Claude Code im Ordner öffnen, Fallakte im (Dropbox-)Ordner pflegen.
+  installieren, Claude Code im Ordner öffnen, Fallakte im lokalen (optional geteilten) Ordner pflegen.
   `docs/security.md` enthält noch Alt-Referenzen (Hetzner/LibreChat/Login) aus der
   verworfenen Server-Architektur (siehe `AGENTS.md`, 2026-06-04 Architektur-Pivot) —
   **nicht** ins Runbook übernehmen. Bereinigung von `security.md` ist nicht Scope
@@ -136,5 +136,5 @@ docs/runbook.md   (NEU)
   klickbarer Link stehen. Verweise auf bereits existierende Dokumente
   (`docs/architektur.md`, `docs/security.md`) gern als relativer Link.
 - **Reihenfolge = realer Ablauf.** Installation → API-Keys → Akte → Claude-Code →
-  Dropbox-Zwei-Rollen → Genetik → Troubleshooting. So liest es sich als durchgängiges
+  Zwei-Rollen-Nutzung (optional) → Genetik → Troubleshooting. So liest es sich als durchgängiges
   Runbook, nicht als Referenzliste.

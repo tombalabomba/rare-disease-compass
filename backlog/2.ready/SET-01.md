@@ -16,7 +16,7 @@ Claude Code darauf zeigt, würde jeder Nutzer das selbst erfinden — mit dem Ri
 die pseudonymisierte Akte oder (schlimmer) die Genetik-Rohdaten versehentlich ins
 Open-Source-Repo zu legen. Das wäre ein PII-Leck (`docs/security.md`). Dieses
 Ticket schreibt die verbindliche Ordner-Trennung fest: Software im Repo,
-Patientendaten strikt außerhalb (geteilter, verschlüsselter Dropbox-Ordner für die
+Patientendaten strikt außerhalb (standardmäßig ein lokaler Ordner; bei zwei Rollen optional geteilt+verschlüsselt, z. B. Dropbox, für die
 Zwei-Rollen-Nutzung), Genetik-Rohdaten nur lokal, nicht geteilt. Es ist die
 Grundlage, auf die ONB-01 (Runbook) und KB-03 (Ordner-Validierung) aufsetzen.
 
@@ -29,13 +29,13 @@ benannt, damit die Acceptance per `grep` greift):
   des Repos. Empfohlen ein eigener Top-Level-Ordner (z. B. `~/rca-fall-mustermann/`),
   niemals ein Unterordner des geklonten Repos. Begründung: das Repo ist öffentlich,
   die Akte ist es nie.
-- **`## Dropbox-Trennung`** — die Zwei-Rollen-Nutzung: die **pseudonymisierte**
-  Fallakte (Markdown) liegt in einem verschlüsselten, geteilten Dropbox-Ordner
+- **`## Datentrennung (lokal & optional geteilt)`** — die Zwei-Rollen-Nutzung: die **pseudonymisierte**
+  Fallakte (Markdown) liegt standardmäßig in einem lokalen Ordner; bei Zwei-Rollen-Nutzung optional in einem geteilten, verschlüsselten Ordner (z. B. Dropbox)
   (einer kuratiert, einer liest mit). Die Genetik-**Rohdaten** liegen NICHT in
   diesem geteilten Ordner. Klare Tabelle: was wird geteilt (Akte) vs. was bleibt
   privat-lokal (VCF, Befund-PDFs, CLI-SQLite-History).
 - **`## Genetik lokal`** — die VCF-/Rohgenom-Dateien liegen ausschließlich lokal auf
-  dem Rechner des Kurators, außerhalb des geteilten Dropbox-Ordners und außerhalb des
+  dem Rechner des Kurators, außerhalb eines etwaigen geteilten Ordners und außerhalb des
   Repos. Nur die kuratierte Ergebnis-Zusammenfassung (GEN-03) wandert in die Akte.
 - **`## Claude-Code-Konfig`** — wie Claude Code auf den Fall-Ordner zeigt: Claude
   Code wird **im Fall-Ordner** (nicht im Repo) gestartet bzw. der Fall-Ordner als
@@ -66,7 +66,7 @@ docs/project-layout.md   (NEU)
 ## Acceptance
 - [ ] Alle Pflicht-Abschnitte vorhanden (maschinell):
       `grep -q '## Fallakten-Ablage' docs/project-layout.md &&
-       grep -q '## Dropbox-Trennung' docs/project-layout.md &&
+       grep -q '## Datentrennung (lokal & optional geteilt)' docs/project-layout.md &&
        grep -q '## Genetik lokal' docs/project-layout.md &&
        grep -q '## Claude-Code-Konfig' docs/project-layout.md`
 - [ ] Persona-Hinweis vorhanden: die Datei nennt eine `CLAUDE.md` im Fall-Ordner:
@@ -105,6 +105,6 @@ docs/project-layout.md   (NEU)
   konkrete Ordner-Anleitung. Achtung: `docs/security.md` enthält noch eine ältere
   Server-Tabelle (Hetzner/Postgres) aus der Pre-Pivot-Phase — das ist NICHT die
   aktuelle Architektur (server-los, siehe `docs/architektur.md` und `AGENTS.md`
-  Pivot-Note 2026-06-04). SET-01 beschreibt ausschließlich die lokale/Dropbox-Ablage,
+  Pivot-Note 2026-06-04). SET-01 beschreibt ausschließlich die lokale (optional geteilte) Ablage,
   übernimmt nichts vom Server-Modell. (Die Server-Tabelle in `docs/security.md` zu
   bereinigen ist ein eigenes Doku-Ticket, nicht Teil von SET-01.)
