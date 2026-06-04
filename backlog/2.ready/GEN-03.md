@@ -18,7 +18,7 @@ Fallakten-Template leer gelassen hat — als kuratierte Top-Kandidaten-Tabelle m
 Disclaimer. Entscheidend für den Datenschutz: Es darf **nur** das kuratierte
 Ergebnis in die Akte, **keine** vollständige Variantenliste und **keine** Rohgenom-
 Zeilen (`docs/architektur.md`: „nur das Ergebnis fließt in die Akte"). Damit wird
-das sensibelste Datum (Rohgenom) von der server-seitigen Fallakte ferngehalten.
+das sensibelste Datum (Rohgenom) von der geteilten Fallakte ferngehalten.
 
 ## Scope
 Code + Tests + synthetische Fixtures:
@@ -113,7 +113,7 @@ genetics/tests/__init__.py                       (NEU, leer — Paket-Marker fü
   tatsächliche Einsetzen in eine reale (lokale, gitignored) Fallakte ist ein
   manueller Schritt des Kurators — GEN-03 schreibt keine Patientendatei.
 - **HPO-/ClinVar-Validierung gegen Live-DBs:** GEN-03 übernimmt die Werte aus dem
-  Exomiser-Output, validiert sie nicht gegen externe APIs (das ist `epic-mcp`).
+  Exomiser-Output, validiert sie nicht gegen externe APIs (das ist `epic-cli`).
 - **Vollständige Variantenliste:** bewusst **nicht** ausgegeben — nur kuratierte
   Top-Kandidaten (Datensparsamkeit).
 

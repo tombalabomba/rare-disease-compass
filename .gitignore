@@ -16,8 +16,11 @@ patient-data/
 *.ped
 exomiser-results/
 **/case-file*.md
-!docs/**/case-file-TEMPLATE.md   # nur das leere Template ist erlaubt
-!**/fixtures/case-file-FIXTURE*.md # synthetische Test-Fixtures (kein echter Mensch)
+# Allowlist (Kommentare MÜSSEN auf eigener Zeile stehen — git kennt keine Inline-Kommentare):
+# nur das leere Template ist erlaubt
+!docs/**/case-file-TEMPLATE.md
+# synthetische Test-Fixtures (kein echter Mensch)
+!**/fixtures/case-file-FIXTURE*.md
 
 # Secrets / Env
 .env
@@ -32,6 +35,13 @@ librechat-credentials*
 *.dump
 *.sql.gz
 backups/
+
+# CLI-History / lokaler Recherche-Cache (kann fallbezogene Inhalte ansammeln)
+*.db
+*.sqlite
+*.sqlite3
+.cache/
+cli-history*
 
 # Loop-Logs & Marker
 .agent-loop-logs/

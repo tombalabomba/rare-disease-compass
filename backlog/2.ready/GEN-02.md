@@ -104,7 +104,7 @@ genetics/run_exomiser.sh   (NEU)
   enthält den (lokalen) VCF-Pfad und die HPO-Liste des Falls — sie gehört in ein
   temp-Verzeichnis oder nach `exomiser-results/` (gitignored), niemals nach
   `genetics/config/` (getracked). Sonst Datenschutz-Bruch.
-- **HPO-Regex strikt** `^HP:[0-9]{7}$` — identisch zu KB-01 und `epic-mcp`, damit
+- **HPO-Regex strikt** `^HP:[0-9]{7}$` — identisch zu KB-01 und `epic-cli`, damit
   der Verbindungsschlüssel über alle Epics konsistent bleibt.
 - **Defense-in-Depth:** Die `.gitignore`-Sperre (`exomiser-results/`, `*.vcf`) UND
   die Skript-interne Beschränkung des Schreibziels bleiben **beide** — nicht das

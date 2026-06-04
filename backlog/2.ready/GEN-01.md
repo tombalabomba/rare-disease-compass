@@ -26,13 +26,12 @@ Vier Dateien anlegen — Container-Definition, zwei Konfig-Templates, Doku:
 
 **1. `genetics/docker-compose.exomiser.yml`** — definiert einen einzelnen Service
 `exomiser`, der das offizielle Exomiser-CLI-Image als Container lokal ausführt.
-Bewusst **getrennt** vom Server-Compose (`epic-infra`), damit der lokale Genetik-Lauf
-nie zusammen mit dem Server deployed wird. Eigenschaften:
+Reiner lokaler Batch-Lauf, vollständig getrennt vom restlichen System. Eigenschaften:
 - `image:` auf ein pinned Exomiser-CLI-Tag (Kommentar: bei Bedarf anpassen).
 - Volumes (read-only wo möglich): Referenzdaten-Verzeichnis, Config-Verzeichnis
   (`./config`), VCF-Input-Verzeichnis und Output-Verzeichnis (`exomiser-results/`).
   Pfade über `${VAR:-default}`-Substitution, sodass GEN-02 sie setzen kann.
-- **Keine** Ports nach außen, **kein** Server-Netz — reiner lokaler Batch-Lauf.
+- **Keine** Ports nach außen, **kein** öffentliches Netz — reiner lokaler Batch-Lauf.
 - Kommentare, die jeden Mount und seinen Zweck erklären (deutsch).
 
 **2. `genetics/config/application.properties.template`** — Exomiser-Hauptkonfig als
@@ -57,7 +56,7 @@ sind als Strings notiert, brechen das Parsen nicht).
 - **Speicherbedarf** (mehrere GB pro Release) als grobe Größenordnung.
 - **Wohin** die Daten lokal gehören (das Verzeichnis, das das Compose-File mountet).
 - Klarer Hinweis: **alles bleibt lokal** — Referenzdaten, VCF und Ergebnisse werden
-  nicht ins Repo committet und nicht zum Server übertragen; nur die kuratierte
+  nicht ins Repo committet und nicht nach außen übertragen; nur die kuratierte
   Ergebnis-Zusammenfassung (GEN-03) wandert später in die Fallakte.
 - Verweis auf GEN-02 (Wrapper, der den Lauf orchestriert).
 
@@ -124,7 +123,7 @@ docs/genetics-setup.md                          (NEU)
   Properties-Format (`key=value`) — wird **nicht** mit `yaml.safe_load` geprüft, nur
   per `grep`. Nur das Compose-File und das Analysis-YAML sind YAML.
 - **Compose getrennt halten.** Dieses File ist der **lokale** Genetik-Lauf und gehört
-  nicht in den Server-Stack aus `epic-infra`. Niemals zusammenführen — das wäre ein
+  getrennt vom restlichen System. Niemals mit Repo-getracktem Code vermengen — das wäre ein
   Bruch der Datensparsamkeits-Architektur (`docs/architektur.md`).
 - **Exomiser-Image-Tag.** Im Compose ein konkretes, gepinntes Tag setzen und per
   Kommentar als „bei Bedarf auf aktuelle Version anpassen" markieren. `docker compose

@@ -1,65 +1,76 @@
 # rare-case-assistant
 
-Selbst-gehosteter, datenschutzfreundlicher KI-Recherche-Assistent für einen
-komplexen pädiatrischen Krankheitsfall (Verdachtsrichtung früh beginnende,
-ggf. monogene Darmentzündung / VEO-IBD). Das System verknüpft eine **private,
-strukturierte Fallakte** mit dem **öffentlich verfügbaren medizinischen Wissen**
-(Literatur, Datenbanken für seltene Krankheiten, Genetik) und macht es über eine
-einfache Chat-Oberfläche durchsuchbar.
+Ein lokaler, datenschutzfreundlicher KI-Recherche-Assistent für komplexe und
+seltene Krankheitsfälle — gedacht als **„Dex für seltene Erkrankungen"**. Er
+verknüpft eine **private, strukturierte Fallakte** (lokaler Ordner) mit dem
+**öffentlich verfügbaren medizinischen Wissen** (Literatur, Datenbanken für
+seltene Krankheiten, Genetik) über agenten-native CLIs, die du direkt in
+**Claude Code** nutzt.
 
-> **Kein Medizinprodukt. Keine Diagnose.** Dieses System ist Recherche- und
-> Entscheidungsunterstützung. Jede medizinische Schlussfolgerung gehört in die
-> Hände behandelnder Fachärztinnen und Fachärzte.
+> **Kein Medizinprodukt. Keine medizinische Beratung. Keine Diagnose.**
+> Dieses Open-Source-Werkzeug ist Recherche- und Entscheidungs*unterstützung*.
+> Jede medizinische Schlussfolgerung gehört in die Hände qualifizierter
+> Ärztinnen und Ärzte. Nutzung auf eigene Verantwortung.
 
-## Was es ist
+## Idee in einem Satz
+
+Claude Code + ein Satz CLIs auf öffentliche Medizin-APIs + ein lokaler Ordner mit
+der Fallakte = ein persönlicher Recherche-Assistent, der das Weltwissen immer durch
+deinen konkreten Fall filtert. Kein Server, keine Cloud-Infrastruktur, keine
+Installation für Nicht-Techniker außer einem einmaligen Setup.
 
 ```
-┌──────────────────┐        ┌──────────────────────────────┐
-│  Matze (Browser) │──────▶ │  LibreChat (Login, Verlauf)  │
-└──────────────────┘  HTTPS │   + RAG-Wissensbasis         │
-┌──────────────────┐        │   = die private Fallakte     │
-│  Thomas (Kurator)│──────▶ │   + MCP-Werkzeuge            │
-└──────────────────┘        │   = Live-Datenanbindung      │
-                            └───────────────┬──────────────┘
-                                            │ fragt live ab
-        ┌───────────────────────────────────┼────────────────────────────┐
-        ▼                 ▼                  ▼                ▼            ▼
-   PubMed/EuropePMC   ClinVar/gnomAD   Monarch/Orphanet  PubCaseFinder  Exomiser
-   (Literatur)        (Varianten)      (Krankheits-Graph)  (DDx)        (lokal, Genetik)
+                 ┌─────────────────────────────┐
+   Fallakte ────▶│         Claude Code         │
+  (lok. Ordner)  │  liest Akte · ruft CLIs auf │────▶ Antwort mit Quellen
+                 └──────────────┬──────────────┘      + Fragen für den Arzt
+                                │ ruft auf
+   ┌────────────────────────────┼─────────────────────────────┐
+   ▼            ▼               ▼              ▼               ▼
+ PubMed     ClinVar/gnomAD   Monarch/Orphanet  PubCaseFinder  Exomiser
+(Literatur) (Varianten)     (Krankheits-Graph) (DDx, HPO)    (lokal, Genetik)
 ```
 
-Zwei strikt getrennte Datenwelten:
-
-- **Privat (kommt rein, bleibt auf dem Server / lokal):** die Fallakte. Arztbriefe,
-  Befunde, Laborwerte, Symptomverlauf (HPO-codiert), Genetik-Zusammenfassung.
-- **Öffentlich (wird nur abgefragt, nie befüllt):** medizinische Datenbanken.
+Jede CLI folgt dem **Printing-Press-Muster**: agenten-nativ, mit lokaler
+SQLite-History (du baust dir über die Zeit einen durchsuchbaren Recherche-Speicher
+auf) und zusammengesetzten Abfragen, die eine rohe API nicht direkt beantwortet.
 
 ## Komponenten
 
 | Bereich | Was | Epic |
 |---|---|---|
-| Infrastruktur | Docker-Stack (LibreChat + Postgres/pgvector + RAG), Caddy/HTTPS, Hetzner-Provisioning, Backups | `epic-infra` |
-| Datenanbindung | BioMCP (PubMed/ClinVar/gnomAD/Trials) + eigener MCP (Monarch/Orphanet/EuropePMC/PubCaseFinder) | `epic-mcp` |
-| Wissensbasis | HPO-codierte Fallakten-Struktur, Pseudonymisierung, RAG-Ingestion, System-Prompt | `epic-knowledge` |
-| Genetik | Exomiser-Runner (lokal) für VCF + HPO → priorisierte Kandidaten | `epic-genetics` |
-| Onboarding | Runbook (Betreiber), Nutzer-Guide (Matze), Einwilligungs-/Datenschutz-Vorlage | `epic-onboarding` |
+| Setup | Lokales Projekt-Layout, Installer, Claude-Code-Konfiguration | `setup` |
+| Daten-CLIs | Agenten-native CLIs: PubMed, ClinVar/gnomAD, Monarch, Orphanet, Europe PMC, PubCaseFinder, Phen2Gene | `cli` |
+| Wissensbasis | HPO-codierte Fallakten-Struktur, PII-Guard, Assistenten-Instruktionen | `knowledge` |
+| Genetik | Exomiser lokal: VCF + HPO → priorisierte Kandidaten | `genetics` |
+| Onboarding | Setup-Runbook, Nutzer-Guide, Einwilligungs-/Datenschutz-Vorlage | `onboarding` |
 
-## Autonomer Bau
-
-Das gesamte Projekt ist als Backlog von Tickets in `backlog/2.ready/` geplant.
-Eine autonome Loop baut es Ticket für Ticket ab:
+## Loslegen (sobald gebaut)
 
 ```bash
-bash scripts/agent-loop.sh status     # Überblick
-bash scripts/agent-loop.sh            # autonom abarbeiten (frische Session pro Ticket)
+# 1. CLIs installieren (Setup-Epic)
+pipx install ./cli        # oder das mitgelieferte setup-Skript
+
+# 2. Fallakte anlegen (aus docs/case-file-TEMPLATE.md), lokal/privat halten
+# 3. Claude Code im Projektordner öffnen und fragen, z. B.:
+#    „Welche seltenen Krankheiten passen zu diesen HPO-Symptomen?"
 ```
 
-Details: [backlog/README.md](backlog/README.md) und [backlog/AGENT-LOOP.md](backlog/AGENT-LOOP.md).
+Das komplette Projekt ist als Backlog geplant und wird autonom Ticket für Ticket
+gebaut: [backlog/PLAN.md](backlog/PLAN.md), `bash scripts/agent-loop.sh`.
 
 ## Datenschutz auf einen Blick
 
-- Patientendaten **nie** im Repo (siehe [.gitignore](.gitignore)) und nie in öffentlichen Datenbanken.
-- Fallakte pseudonymisiert (Initialen), liegt verschlüsselt auf dem Hetzner-Server (EU).
+- Patientendaten **nie** im Repo (siehe [.gitignore](.gitignore)) und nie an
+  öffentliche Datenbanken gesendet — die werden nur abgefragt.
+- Die Fallakte liegt in einem **lokalen / privat geteilten Ordner** (z. B.
+  verschlüsselte Dropbox), pseudonymisiert (Initialen).
 - Genetik-Rohdaten (VCF) werden **lokal** ausgewertet, nur Ergebnisse fließen in die Akte.
-- Chat-Inhalte gehen zur Inferenz an die Anthropic-API (kein Training auf API-Daten, DPA).
+- Chat-Inhalte gehen zur Inferenz an die Claude-API (kein Training auf API-Daten).
 - Vollständig: [docs/security.md](docs/security.md).
+
+## Mitmachen / Lizenz
+
+Open Source unter [MIT](LICENSE). Beiträge willkommen — siehe
+[CONTRIBUTING.md](CONTRIBUTING.md). Die Daten-CLIs sind generisch nutzbar, nicht an
+einen bestimmten Fall gebunden.

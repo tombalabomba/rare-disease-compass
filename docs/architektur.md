@@ -2,79 +2,77 @@
 
 ## Überblick
 
-Drei Schichten, sauber getrennt:
+Bewusst minimal, lokal, kein Server. Drei Schichten:
 
-1. **Fallakte (privat)** — die strukturierte, HPO-codierte, pseudonymisierte
-   Krankengeschichte. Lebt als RAG-Wissensbasis im LibreChat-Stack auf dem Server.
-   Die Genetik-**Rohdaten** (VCF) verlassen den lokalen Rechner nie; nur die
-   abgeleitete Ergebnis-Zusammenfassung wandert in die Akte.
-2. **Welt-Wissen (öffentlich)** — medizinische Datenbanken, live abgefragt über
-   MCP-Werkzeuge. Nichts davon wird kopiert oder mit der Fallakte gefüttert.
-3. **Reasoning (Claude)** — kombiniert 1 und 2 im Chat, nennt Quellen, schlägt
-   Fragen für den nächsten Arzttermin vor.
+1. **Fallakte (privat)** — HPO-codierte, pseudonymisierte Krankengeschichte als
+   Markdown in einem lokalen Ordner (für die Zwei-Rollen-Nutzung in einer
+   verschlüsselten, geteilten Dropbox: einer kuratiert, einer liest mit). Die
+   Genetik-**Rohdaten** (VCF) bleiben lokal und außerhalb des geteilten Ordners.
+2. **Welt-Wissen (öffentlich)** — medizinische Datenbanken, abgefragt über
+   agenten-native CLIs. Nichts wird kopiert oder mit der Fallakte gefüttert.
+3. **Reasoning (Claude Code)** — liest die Akte als Dateien, ruft die CLIs auf,
+   kombiniert beides, nennt Quellen, schlägt Arztfragen vor.
 
 ```mermaid
 %%{init: {'theme': 'neutral'}}%%
 flowchart TB
-    M[Matze] -->|HTTPS + Login| LC
-    T[Thomas: Kurator] -->|pflegt Akte| LC
-    subgraph SRV[Hetzner-Server EU, verschluesselt]
-      direction TB
-      CADDY[Caddy: TLS + Security-Header] --> LC[LibreChat]
-      LC --> PG[(Postgres + pgvector<br/>RAG = Fallakte)]
-      LC --> BIO[BioMCP]
-      LC --> CUSTOM[Eigener MCP-Server]
-    end
-    LC -->|Inferenz| CL[Anthropic Claude API]
-    BIO --> PUBMED[PubMed]
-    BIO --> CLINVAR[ClinVar / dbSNP]
-    BIO --> GNOMAD[MyVariant / gnomAD]
-    BIO --> TRIALS[ClinicalTrials]
-    CUSTOM --> MON[Monarch]
-    CUSTOM --> ORPHA[Orphanet]
-    CUSTOM --> EPMC[Europe PMC]
-    CUSTOM --> PCF[PubCaseFinder / Phen2Gene]
-    VCF[VCF lokal] --> EXO[Exomiser lokal] -->|nur Ergebnis| PG
+    U[Nutzer in Claude Code] --> CC[Claude Code lokal]
+    CASE[(Fallakte<br/>lokaler/geteilter Ordner<br/>HPO, pseudonymisiert)] --> CC
+    CC -->|Inferenz| CL[Claude API]
+    CC -->|ruft auf| CLIS[Daten-CLIs + SQLite-History]
+    CLIS --> PUB[PubMed / Europe PMC]
+    CLIS --> VAR[ClinVar / gnomAD / MyVariant]
+    CLIS --> GRAPH[Monarch / Orphanet]
+    CLIS --> DDX[PubCaseFinder / Phen2Gene]
+    VCF[VCF lokal] --> EXO[Exomiser lokal] -->|nur Ergebnis| CASE
 ```
 
-## Komponentenverantwortung
+## Warum CLIs statt MCP-Server
 
-| Komponente | Verantwortung | Läuft wo |
-|---|---|---|
-| Caddy | TLS-Terminierung, HTTPS-Redirect, Security-Header, Reverse Proxy | Server |
-| LibreChat | Auth (manuelle User), Chat-Verlauf, Agent-Konfiguration, RAG, MCP-Client | Server |
-| Postgres + pgvector | Nutzer/Verlauf + Vektor-Store der Fallakte | Server |
-| BioMCP | Fertige MCP-Tools: PubMed, ClinVar, dbSNP, MyVariant, ClinicalTrials | Server (Container) |
-| Eigener MCP | Monarch, Orphanet, Europe PMC, PubCaseFinder, Phen2Gene | Server (Container) |
-| Exomiser | VCF + HPO → priorisierte Varianten/Krankheiten | **Lokal** (Datensparsamkeit) |
+In einer Web-App wäre MCP der einzige Weg, dem Modell Werkzeuge zu geben. In
+Claude Code gibt es eine Shell — damit sind CLIs die natürlichere, präzisere Wahl:
 
-## Datenfluss
+- **Lokale SQLite-History** → ein über Monate wachsender, durchsuchbarer
+  Recherche-Speicher (welche Paper, Varianten, Krankheiten schon angesehen wurden).
+  Ein zustandsloser MCP-Server gäbe das nicht.
+- **Compound Queries** → mehrere Quellen kombiniert (z. B. „Paper zu Gen X UND
+  Variante Y bei Kindern < 6"), was eine rohe API nicht direkt kann.
+- **Präzision & wenig Token** → knappe, kontrollierte Ausgabe statt verbose JSON.
+- **Inspizierbar** → denselben Befehl kann ein Mensch im Terminal nachvollziehen.
+- **Ein Install, kein laufender Server.**
 
-1. Thomas strukturiert die Befunde → HPO-codierte Fallakte (`epic-knowledge`).
-2. (Falls VCF vorhanden) Exomiser lokal → Ergebnis-Markdown → Teil der Fallakte.
-3. Fallakte wird in die RAG-Wissensbasis geladen (Ingestion-Skript).
-4. Matze chattet. LibreChat reichert die Frage mit relevanten Akten-Auszügen an
-   (RAG) und stellt Claude die MCP-Tools bereit.
-5. Claude fragt bei Bedarf live die Datenbanken ab und antwortet mit Quellen.
+Geringer Lock-in: Die wertvolle Logik ist die API-Anbindung. Sie ließe sich später
+mit überschaubarem Aufwand auch als MCP-Server verpacken (falls je eine Web-Tür
+für nicht-technische Nutzer gewünscht ist).
 
-## Warum diese Wahl
+## CLI-Design (Printing-Press-Muster)
 
-- **LibreChat statt Eigenbau:** gewartet, bringt Auth + RAG + MCP nativ mit.
-  Ein Eigenbau wäre genau die unwartbare Bastelei, die wir vermeiden wollen.
-- **Monarch statt eigenem Knowledge-Graph:** Monarch integriert bereits 33 Quellen
-  (OMIM, Orphanet, GARD, NORD). Nicht nachbauen, anbinden.
-- **BioMCP als Bündel:** deckt fünf Genetik-/Literatur-Quellen in einem Schritt ab.
-- **Exomiser lokal:** das Allersensibelste (Rohgenom) bleibt in-house.
+| Eigenschaft | Umsetzung |
+|---|---|
+| Einheitlicher Einstieg | eine CLI mit Subkommandos pro Quelle |
+| HTTP | zentraler httpx-Client: Cache, höfliches Rate-Limit, Retry, Timeout, User-Agent |
+| History/Cache | lokale SQLite-DB pro Projekt (gitignored) |
+| Ausgabe | knappes, agenten-freundliches Format (Tabellen/JSON-Lines), Quellen-IDs |
+| Compound Queries | quellenübergreifende Abfragen, die die SQLite-History nutzen |
+
+OSS-Hinweis: Der CLI-Kern wird framework-frei gebaut (Typer + httpx + SQLite), damit
+das Repo keine proprietäre Abhängigkeit hat. Das PP-*Muster* wird übernommen, nicht
+zwingend eine PP-*Laufzeit*.
 
 ## Schnittstellen (öffentliche Quellen)
 
-| Quelle | Zugriff | Auth |
-|---|---|---|
-| PubMed / NCBI E-utilities | REST | optional API-Key (höheres Rate-Limit) |
-| Europe PMC | REST | keine |
-| Monarch Initiative | REST API | keine |
-| Orphanet | REST / Orphadata | teils Registrierung |
-| PubCaseFinder | REST API | keine |
-| Phen2Gene | REST API | keine |
-| ClinVar / dbSNP / MyVariant | über BioMCP | optional API-Key |
-| ClinicalTrials.gov | über BioMCP | keine |
+| Quelle | Zugriff | Auth | CLI |
+|---|---|---|---|
+| PubMed / NCBI E-utilities | REST (oder Entrez Direct) | optional API-Key | `cli pubmed` |
+| Europe PMC | REST | keine | `cli europepmc` |
+| ClinVar / dbSNP / MyVariant / gnomAD | REST (MyVariant.info) | optional | `cli variant` |
+| Monarch Initiative | REST API | keine | `cli monarch` |
+| Orphanet / Orphadata | REST | teils Registrierung | `cli orphanet` |
+| PubCaseFinder | REST API (HPO-IDs) | keine | `cli pubcasefinder` |
+| Phen2Gene | REST API (HPO-IDs) | keine | `cli phen2gene` |
+
+## Genetik (lokal)
+
+Exomiser läuft als lokaler Docker-Batch gegen VCF + HPO-Terme und priorisiert
+Varianten/Krankheiten. Nur die kuratierte Ergebnis-Zusammenfassung (keine Rohzeilen)
+wird in die Fallakte übernommen. Details: `docs/genetics-setup.md` (Genetik-Epic).

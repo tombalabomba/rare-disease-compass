@@ -11,11 +11,11 @@ backlog/
 ├── AGENT-LOOP.md         # Operating-Manual für autonome Loop-Iteration
 ├── AGENT-TICKET.md       # Operating-Manual für genau ein Ticket
 ├── TICKET-TEMPLATE.md    # Vorlage (Frontmatter + Sektionen)
-├── 1.planning/           # noch nicht baufertig — u. a. die Deploy-Tickets (supervised)
+├── 1.planning/           # noch nicht baufertige Ideen
 ├── 2.ready/              # baufertig, flach: <ID>.md — der Loop greift hier zu
-│   ├── INF-01.md … INF-05.md
+│   ├── SET-01.md … SET-02.md
+│   ├── CLI-01.md … CLI-06.md
 │   ├── KB-01.md  … KB-04.md
-│   ├── MCP-01.md … MCP-06.md
 │   ├── GEN-01.md … GEN-03.md
 │   └── ONB-01.md … ONB-03.md
 └── 3.done/               # erledigte Tickets (per git mv aus 2.ready/)

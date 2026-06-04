@@ -31,7 +31,7 @@ nach `.md`-Files mit `status: todo`.
 **Auswahlregeln (in Reihenfolge):**
 1. `status: todo` (nicht `in_progress`, `done`, `blocked`)
 2. Alle `depends_on`-IDs liegen in `backlog/3.done/` (per ID, nicht per Pfad)
-3. Bei mehreren Kandidaten: kleinste ID zuerst (`INF-01` vor `INF-02`)
+3. Bei mehreren Kandidaten: kleinste ID zuerst (`CLI-01` vor `CLI-02`)
 
 **Kein Kandidat passt** (alles done/blocked oder Dependencies offen): exit clean,
 kein Commit. Shell-Loop interpretiert das als „nichts zu tun" und stoppt.
@@ -68,9 +68,9 @@ Lies `Scope`, `Files`, `Out of scope`, `Notes`.
 ### 6. Acceptance verifizieren
 Jeden `[ ]`-Punkt explizit prüfen, inklusive der **Negativ-Checks**
 („darf nicht drin sein …"). Acceptance ist **maschinell prüfbar** gehalten
-(lint, build, validate, unit-tests, config-validate). Browser-/Live-Server-Checks
-sind kein Teil der Acceptance — die stehen in `backlog/SMOKE-TEST.md` und macht
-der Mensch beim Deployment.
+(lint, build, validate, unit-tests, config-validate). Alles ist lokal prüfbar —
+es gibt keinen Server und keine Live-Checks, die menschliche Hardware bräuchten.
+Echte API-Calls in Tests werden gemockt (öffentliche APIs nicht im Test hämmern).
 
 **Acceptance-Punkt nicht erfüllbar:**
 - ≤ 30 Min lösbar → lösen.
@@ -103,7 +103,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 Wenn `stop_after: true`:
 1. Marker setzen: `touch backlog/.STOP_GATE`
 2. Im finalen Output: Ticket-ID + Titel, was gebaut wurde, welcher **manuelle**
-   Schritt jetzt ansteht (Server provisionieren, Secret setzen, Daten herholen),
+   Schritt jetzt ansteht (z. B. API-Key hinterlegen, Referenzdaten herunterladen),
    welches Ticket laut `depends_on` als nächstes käme.
 
 Wenn `stop_after: false`: kein Marker. Commit reicht. Exit. Loop nimmt das nächste.
@@ -129,13 +129,13 @@ Wenn `stop_after: false`: kein Marker. Commit reicht. Exit. Loop nimmt das näch
 ## Schnell-Referenz: Ticket-Frontmatter
 ```yaml
 ---
-id: INF-01
-title: Docker-Compose-Stack (LibreChat + Postgres + RAG)
+id: CLI-01
+title: CLI-Kern (Typer-App, httpx-Client, SQLite-History)
 status: todo                  # todo | in_progress | blocked | done
 depends_on: []                # IDs, optional
 stop_after: false             # ob Loop nach Commit pausiert
-epic: infra                   # Slug, "" = standalone
-commit_type: feat(infra)      # Commit-Prefix
+epic: cli                     # Slug, "" = standalone
+commit_type: feat(cli)        # Commit-Prefix
 ---
 ```
 Vollständiges Schema: `backlog/TICKET-TEMPLATE.md`.

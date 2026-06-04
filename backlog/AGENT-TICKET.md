@@ -8,7 +8,7 @@ Commit-Format sind identisch — siehe dort.
 
 ## Trigger
 - „Bitte arbeite INF-01 nach `backlog/AGENT-TICKET.md` ab."
-- „Bitte mach das nächste Ticket aus `epic-mcp` (Loop-Modus aus)."
+- „Bitte mach das nächste Ticket aus `epic-cli` (Loop-Modus aus)."
 
 Wenn keine ID übergeben: prüfe, ob genau **ein** Ticket in `backlog/2.ready/`
 (rekursiv) `status: in_progress` hat. Wenn ja: das. Wenn null oder mehrere:
@@ -26,7 +26,7 @@ Identische Schritte wie AGENT-LOOP.md §1–§8, mit zwei Unterschieden:
 - Ticket-ID + Titel
 - Was gemacht wurde (1–3 Zeilen)
 - Acceptance-Status (alle ✓ oder welcher Punkt geblockt)
-- Manuelle Folgeaufgaben (Deploy, Secret setzen, Daten herholen)
+- Manuelle Folgeaufgaben (z. B. API-Key hinterlegen, Referenzdaten herunterladen)
 - Welches Ticket laut `depends_on`-Graph als nächstes käme
 
 **STOP.** Niemals automatisch zum nächsten Ticket springen.

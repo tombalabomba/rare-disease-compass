@@ -1,66 +1,61 @@
 ---
 id: ONB-01
-title: Betreiber-Runbook (Thomas)
+title: Setup-Runbook (Betreiber/Kurator)
 status: todo
-depends_on: [INF-01, INF-03, KB-03, MCP-06]
+depends_on: [SET-02, CLI-06, KB-03]
 stop_after: false
 epic: onboarding
 commit_type: docs(onboarding)
 ---
 
-# ONB-01 — Betreiber-Runbook (Thomas)
+# ONB-01 — Setup-Runbook (Betreiber/Kurator)
 
 ## Why
-Thomas baut und pflegt das System, aber das verteilte Wissen über Compose-Stack,
-`librechat.yaml`, Secrets, Ingestion und Backups liegt heute nur in den einzelnen
-Tickets und im Kopf. Ohne ein zusammenhängendes Runbook ist der Betrieb nicht
-reproduzierbar: ein neuer User für Matze, ein Akten-Update oder ein Restore nach
-Server-Verlust würden jedes Mal zur Detektivarbeit. Bei Gesundheitsdaten eines
-Kindes (Art. 9 DSGVO) ist das inakzeptabel. Dieses Ticket bündelt alle
-Betreiber-Abläufe in `docs/runbook.md` — ein Ort, eine Reihenfolge, kopierbare
-Befehle.
+Der Betreiber/Kurator (die technische Rolle, die die Fallakte einrichtet und
+pflegt) braucht eine einzige, lückenlose Schritt-für-Schritt-Anleitung, um das
+System auf einer Maschine lauffähig zu machen. Ohne dieses Runbook ist das Wissen
+über CLIs, Fallakten-Ordner, Validierung, Claude-Code-Konfiguration und die
+Zwei-Rollen-Dropbox über `docs/` verstreut und reproduzierbar nur für den, der
+den Code geschrieben hat. Das Runbook bündelt den **einmaligen, manuellen**
+Einrichtungspfad (kein Server-Deployment) und verlinkt in die jeweiligen
+Detail-Dokumente.
 
 ## Scope
-**`docs/runbook.md`** — Schritt-für-Schritt-Handbuch für den Betreiber. Pflicht-
-Abschnitte (als `##`-Überschriften, exakt so benannt, damit die Acceptance per
-`grep` greift):
+Eine neue Datei `docs/runbook.md` (deutsch) als geführtes Setup-Runbook für den
+Betreiber/Kurator. Sie ist ein **Verweis-Hub** — die Tiefe steht in den verlinkten
+Dokumenten, das Runbook gibt die richtige Reihenfolge und das große Bild. Pflicht-
+Abschnitte (als Markdown-Überschriften, damit per `grep` prüfbar):
 
-- **`## Provisionierung`** — Server reproduzierbar in den Soll-Zustand bringen:
-  Verweis auf `scripts/provision-server.sh` (INF-04), was es härtet (Docker,
-  Deploy-User, ufw 22/80/443, fail2ban, unattended-upgrades, SSH), und der Hinweis,
-  dass der eigentliche Lauf gegen die Maschine manuell erfolgt.
-- **`## Start/Stop`** — Stack hoch- und runterfahren: `docker compose up -d`,
-  `docker compose down`, `docker compose ps`, Logs (`docker compose logs -f api`),
-  Reihenfolge/Healthchecks, was „läuft sauber" bedeutet.
-- **`## Konfiguration & Secrets`** — `librechat.yaml` (INF-03) und `.env`: welche
-  Variablen gesetzt sein müssen (`ANTHROPIC_API_KEY`, `JWT_SECRET`,
-  `JWT_REFRESH_SECRET`, `CREDS_KEY`, `CREDS_IV`, DB-Credentials …), dass `.env`
-  gitignored ist und Secrets nie im Repo landen, wo der Anthropic-Endpoint und das
-  Modell `claude-opus-4-8` konfiguriert sind, und dass die Selbstregistrierung
-  **aus** ist. **Keine echten Secret-Werte** im Runbook — nur Platzhalter.
-- **`## User-Anlage`** — User für Matze und Thomas anlegen, obwohl Registrierung
-  deaktiviert ist: der LibreChat-CLI-/Container-Weg zum manuellen Anlegen, Hinweis
-  auf starke Passwörter und Zwei-Faktor (docs/security.md).
-- **`## Akte-Update`** — Fallakte aktualisieren und **neu ingestieren**: bearbeiten,
-  PII-Guard läuft im Ladepfad (bricht bei Fund ab), dann Ingestion via KB-03
-  (`tools/ingest_case_file.py`), Idempotenz (Re-Upload aktualisiert statt
-  dupliziert). Verweis auf KB-03.
-- **`## MCP-Tools prüfen`** — verdrahtete MCP-Server (BioMCP + eigener `rare-case`
-  aus MCP-06) prüfen: dass die Tools in einem Chat verfügbar sind, ein einfacher
-  Test-Aufruf, wo nachzusehen ist, wenn ein Tool fehlt. Verweis auf MCP-06.
-- **`## Backup/Restore`** — verschlüsseltes Backup via `scripts/backup.sh` (INF-05)
-  und der **Restore-Weg**: entschlüsseln, Mongo + Postgres wiederherstellen, Volumes
-  zurückspielen, Stack neu starten. Verweis auf INF-05.
-- **`## Updates & Key-Rotation`** — Images/Stack aktualisieren (`docker compose pull`
-  + Neustart), Secrets/Keys rotieren (welche, in welcher Reihenfolge, was danach neu
-  startet), und der Hinweis, vor Updates ein Backup zu ziehen.
-- **`## Troubleshooting`** — die häufigen Fehlerbilder: Stack startet nicht,
-  Healthcheck rot, Login klemmt, RAG findet die Akte nicht, MCP-Tool antwortet
-  nicht, TLS-/Caddy-Problem — je mit erstem Diagnose-Schritt.
+1. **## Installation** — die CLIs auf der Maschine installieren. Verweis auf das
+   Installer-Skript `scripts/install.sh` und die Installations-Doku `docs/install.md`
+   (beide aus SET-02). Voraussetzungen kurz nennen (Python 3.11, Docker für die
+   Genetik), aber nicht duplizieren — auf `docs/install.md` verweisen.
+2. **## API-Keys** — optionale API-Keys hinterlegen (z. B. PubMed/NCBI). Wo sie
+   hingehören (lokale, gitignored `.env`), dass sie **optional** sind (die meisten
+   Quellen brauchen keinen Key, siehe `docs/architektur.md`) und **nie** ins Repo.
+3. **## Akte anlegen und validieren** — den Fallakten-Ordner anlegen (Verweis auf
+   die Ordner-Konvention `docs/project-layout.md` und die Fallakten-Vorlage
+   `docs/case-file-TEMPLATE.md`), die Akte HPO-codiert und pseudonymisiert pflegen,
+   anschließend mit `tools/validate_case_folder.py` (aus KB-03) prüfen. Den
+   konkreten Aufruf des Validators nennen.
+4. **## Claude-Code-Konfiguration** — Claude Code im Fall-Ordner öffnen und die
+   Assistenten-Instruktionen `config/assistant-instructions.md` (aus KB-04) als
+   `CLAUDE.md` in den Fall-Ordner legen, damit der Assistent Persona und Regeln
+   (keine Diagnose, Quellen nennen, Arztfragen) übernimmt.
+5. **## Dropbox-Zwei-Rollen** — für die Zwei-Rollen-Nutzung den Fall-Ordner in eine
+   **geteilte, verschlüsselte Dropbox** legen: einer kuratiert die Akte, der andere
+   (Endnutzer) liest und chattet. Klarstellen: die Genetik-**Rohdaten** (VCF) bleiben
+   **lokal außerhalb** des geteilten Ordners (siehe `docs/architektur.md`,
+   `docs/security.md`).
+6. **## Genetik (Exomiser lokal)** — Exomiser einmalig lokal lauffähig machen,
+   Verweis auf `docs/genetics-setup.md` (Referenzdaten-Download, Docker-Lauf). Nur
+   verlinken, nicht duplizieren.
+7. **## Troubleshooting** — die häufigsten Stolpersteine: CLI nicht im `PATH`,
+   fehlendes/fehlerhaftes API-Key-Format, Validator meldet PII/Schema-Fehler, Docker
+   nicht gestartet, Dropbox synchronisiert nicht.
 
-Querverweise als Markdown-Links auf die referenzierten Tickets
-(`../tickets/`-relativ in `2.ready/`) bzw. auf `docs/security.md` und
-`docs/architektur.md`.
+Querverweise als relative Markdown-Links auf die genannten Dateien. Reihenfolge der
+Abschnitte folgt dem realen Einrichtungsablauf.
 
 ## Files
 ```
@@ -68,58 +63,78 @@ docs/runbook.md   (NEU)
 ```
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
-- [x] **Files in `Scope`/`Files`**: `docs/runbook.md` ist **NEU** — verifiziert,
-      existiert noch nicht (`ls docs/` zeigt nur `architektur.md`, `security.md`).
-- [x] **`depends_on`-IDs**: INF-01, INF-03, KB-03, MCP-06 existieren als Tickets
-      (`backlog/2.ready/INF-01.md`,
-      `.../INF-03.md`, `backlog/2.ready/KB-03.md`,
-      `backlog/2.ready/MCP-06.md`). Das Runbook dokumentiert deren
-      Output (Compose-Stack, `librechat.yaml`, Ingestion-Skript, verdrahteter MCP) —
-      darum müssen sie vor ONB-01 `done` sein.
-- [x] **Externe Voraussetzungen**: keine. Reine Doku, kein laufender Server, kein
-      Secret nötig. Beschriebene Befehle setzen den fertigen Stack voraus, werden
-      hier aber nur **dokumentiert**, nicht ausgeführt.
-- [x] **Tooling**: nur ein Texteditor. Für die Acceptance reichen `grep`/`test`
-      (vorhanden); `markdownlint` falls verfügbar, sonst manueller Lint-Check.
+- [x] **Files in `Scope`/`Files`**: `docs/runbook.md` wird bewusst NEU angelegt.
+      `ls docs/` zeigt aktuell nur `architektur.md mockups security.md` — `runbook.md`
+      existiert noch nicht. `docs/` existiert.
+- [x] **`depends_on`-IDs**: SET-02 liefert `scripts/install.sh` + `docs/install.md`,
+      CLI-06 liefert den CLI-Guide (`docs/cli-guide.md`) als Abschluss des CLI-Epics,
+      KB-03 liefert `tools/validate_case_folder.py` + `docs/case-folder.md`. Alle drei
+      Tickets stehen in `backlog/PLAN.md` (Modul-Karte) und sind die Quellen der hier
+      verlinkten Dateien. Das Runbook **verlinkt** nur — es importiert keinen Code,
+      daher reicht, dass die Ziel-Pfade nach `done` der Deps existieren. Zusätzlich
+      verlinkte Dateien aus Schwester-Tickets desselben `knowledge`/`setup`-Bereichs
+      (`docs/project-layout.md` SET-01, `docs/case-file-TEMPLATE.md` KB-01,
+      `config/assistant-instructions.md` KB-04, `docs/genetics-setup.md` GEN-01)
+      gehören zum geplanten Doku-Set (PLAN.md Modul-Karte) und werden vom Loop vor/neben
+      diesem Ticket gebaut. Sollte eine Ziel-Datei beim Bau noch fehlen, bleibt der
+      Verweis als relativer Link korrekt (Pfad ist festgelegt) — der Negativ-Link-Check
+      prüft nur **dieses** File auf offensichtlich kaputte Inline-Links.
+- [x] **Externe Voraussetzungen**: keine. Reine Doku, kein Download, kein Secret,
+      kein Server. Der einzige „manuelle" Teil ist der vom Runbook **beschriebene**
+      Setup-Vorgang selbst — der gehört in den Text, nicht in die Acceptance.
+- [x] **Tooling**: `grep` (für die Abschnitts- und Verweis-Checks) ist verfügbar.
+      `markdownlint` ist im Repo **nicht** installiert (`command -v markdownlint` →
+      leer) → der markdownlint-Check ist „falls verfügbar" und wird sonst übersprungen.
 
 ## Acceptance
-- [ ] Datei existiert: `test -f docs/runbook.md`.
-- [ ] Alle Pflicht-Abschnitte vorhanden (jeweils als Überschrift):
-      `grep -q '## Provisionierung' docs/runbook.md`,
-      `grep -q '## Start/Stop' docs/runbook.md`,
-      `grep -q '## User-Anlage' docs/runbook.md`,
-      `grep -q '## Akte-Update' docs/runbook.md`,
-      `grep -q '## Backup/Restore' docs/runbook.md`,
-      `grep -q '## Troubleshooting' docs/runbook.md`.
-- [ ] Verweise auf die referenzierten Tickets/Dateien vorhanden:
-      `grep -q 'INF-04' docs/runbook.md` (Provisioning),
-      `grep -q 'KB-03' docs/runbook.md` (Ingestion),
-      `grep -q 'INF-05' docs/runbook.md` (Backup),
-      `grep -q 'MCP-06' docs/runbook.md` (MCP-Tools),
-      `grep -q 'librechat.yaml' docs/runbook.md`.
-- [ ] **Negativ-Check (Datenschutz):** kein echter Secret-Wert / keine echten
-      Patientendaten im Diff — nur Platzhalter. Sichtprüfung + grep auf typische
-      Leak-Muster (`grep -nEi 'sk-ant-[a-z0-9]|BEGIN .*PRIVATE KEY' docs/runbook.md`
-      findet **nichts**).
-- [ ] Markdown-Links nicht offensichtlich kaputt: keine leeren Linkziele
-      (`grep -nE '\]\(\s*\)' docs/runbook.md` findet nichts), relative Ziele zeigen
-      auf existierende Pfade.
-- [ ] `markdownlint docs/runbook.md` ohne Findings (falls Tool verfügbar; sonst
-      manuelle Prüfung auf konsistente Überschriften-Ebenen und Codeblock-Zäune).
+- [ ] Datei existiert: `test -f docs/runbook.md`
+- [ ] Alle Pflicht-Abschnitte vorhanden (Markdown-Überschriften), per `grep`:
+      `grep -qiE '^#+ .*Installation' docs/runbook.md &&
+       grep -qiE '^#+ .*API-Keys' docs/runbook.md &&
+       grep -qiE '^#+ .*(Akte anlegen|anlegen und validieren|validieren)' docs/runbook.md &&
+       grep -qiE '^#+ .*Claude-Code' docs/runbook.md &&
+       grep -qiE '^#+ .*(Dropbox|Zwei-Rollen)' docs/runbook.md &&
+       grep -qiE '^#+ .*Troubleshooting' docs/runbook.md`
+- [ ] Verweise auf die referenzierten Dateien vorhanden (als Pfad-Strings im Text):
+      `for ref in scripts/install.sh docs/install.md docs/project-layout.md \
+        docs/case-file-TEMPLATE.md tools/validate_case_folder.py \
+        config/assistant-instructions.md docs/genetics-setup.md; do \
+        grep -q "$ref" docs/runbook.md || { echo "fehlt: $ref"; exit 1; }; done`
+- [ ] Keine offensichtlich kaputten relativen Links: jedes Ziel eines
+      `](relativer/pfad)`-Links, das auf eine `.md`/`.sh`/`.py`-Datei im Repo zeigt,
+      existiert. Prüfung relativ zu `docs/` für `../`-Pfade. (Verweise auf noch nicht
+      gebaute Dep-Dateien dürfen als reine Pfad-Strings ohne Link-Syntax stehen, damit
+      dieser Check nicht an Dep-Reihenfolge scheitert.)
+- [ ] markdownlint-sauber, **falls verfügbar**:
+      `command -v markdownlint >/dev/null && markdownlint docs/runbook.md || true`
+- [ ] **Negativ-Check (Architektur):** erwähnt KEINEN Server/Hetzner/Login:
+      `! grep -qiE 'hetzner|librechat|\bserver\b|server-deployment|login|anmeldung am server' docs/runbook.md`
+- [ ] **Negativ-Check (Datenschutz):** keine echten Patientendaten, Namen oder
+      Geburtsdaten — nur generische Anleitung und Platzhalter.
 
 ## Out of scope
-- Schreiben oder Ändern von Skripten/Configs (`provision-server.sh`, `backup.sh`,
-  `librechat.yaml`, `ingest_case_file.py`) — die kommen aus ihren eigenen Tickets.
-  Hier wird nur ihre **Bedienung** beschrieben.
-- Nutzer-Anleitung für Matze — das ist ONB-02.
-- Einwilligungs-/Datenschutz-Vorlage — das ist ONB-03.
-- Live-Smoke-Test gegen den laufenden Stack — Epic-Ende, nicht maschinelle Acceptance.
+- **Inhalt der verlinkten Dokumente:** `docs/install.md`, `docs/project-layout.md`,
+  `docs/case-file-TEMPLATE.md`, `tools/validate_case_folder.py`,
+  `config/assistant-instructions.md`, `docs/genetics-setup.md` werden von ihren
+  eigenen Tickets erzeugt. Das Runbook **verlinkt** nur, dupliziert nicht.
+- **Nutzer-Guide (Endnutzer):** Die Anleitung für den chattenden Endnutzer ist
+  ONB-02 (`docs/user-guide.md`).
+- **Einwilligungs-/Datenschutz-Vorlage:** ist ONB-03 (`docs/consent-template.md`).
+- **Tatsächliche Installation/Smoke-Test:** das reale Ausführen von `install.sh`,
+  Exomiser-Lauf etc. ist ein menschlicher Schritt (lokal), kein Doku-Ticket.
 
 ## Notes
-- Die exakten Befehle (CLI zum User-Anlegen, Ingestion-Aufruf, Restore-Schritte)
-  aus den `done`-Tickets INF-01/INF-03/KB-03/MCP-06 und INF-04/INF-05 übernehmen,
-  damit das Runbook zur tatsächlichen Implementierung passt — nicht erfinden.
-- Beim manuellen User-Anlegen den von der finalen `librechat.yaml`/LibreChat-Version
-  unterstützten Weg verwenden (Container-CLI). Falls der dokumentierte Weg von der
-  Implementierung abweicht, ist das eine Doku-Inkonsistenz → in der Commit-Message
-  als zweite Zeile vermerken.
+- **Kein Server.** Das Runbook beschreibt ausschließlich lokales Setup: CLIs
+  installieren, Claude Code im Ordner öffnen, Fallakte im (Dropbox-)Ordner pflegen.
+  `docs/security.md` enthält noch Alt-Referenzen (Hetzner/LibreChat/Login) aus der
+  verworfenen Server-Architektur (siehe `AGENTS.md`, 2026-06-04 Architektur-Pivot) —
+  **nicht** ins Runbook übernehmen. Bereinigung von `security.md` ist nicht Scope
+  dieses Tickets (eigenes Ticket/Drive-by außerhalb von `Files`).
+- **Verweise als robuste Pfad-Strings.** Damit der Link-Check nicht an der
+  Bau-Reihenfolge der Dep-Dateien scheitert, dürfen Verweise auf noch nicht erzeugte
+  Dateien als reiner Code-Pfad (z. B. `` `tools/validate_case_folder.py` ``) statt als
+  klickbarer Link stehen. Verweise auf bereits existierende Dokumente
+  (`docs/architektur.md`, `docs/security.md`) gern als relativer Link.
+- **Reihenfolge = realer Ablauf.** Installation → API-Keys → Akte → Claude-Code →
+  Dropbox-Zwei-Rollen → Genetik → Troubleshooting. So liest es sich als durchgängiges
+  Runbook, nicht als Referenzliste.
