@@ -1,7 +1,7 @@
 ---
 id: SET-01
 title: Projekt-Layout & Fallakten-Ordner-Konvention
-status: todo
+status: done
 depends_on: []
 stop_after: false
 epic: setup
@@ -64,24 +64,24 @@ docs/project-layout.md   (NEU)
       Build/Test nötig.
 
 ## Acceptance
-- [ ] Alle Pflicht-Abschnitte vorhanden (maschinell):
+- [x] Alle Pflicht-Abschnitte vorhanden (maschinell):
       `grep -q '## Fallakten-Ablage' docs/project-layout.md &&
        grep -q '## Datentrennung (lokal & optional geteilt)' docs/project-layout.md &&
        grep -q '## Genetik lokal' docs/project-layout.md &&
        grep -q '## Claude-Code-Konfig' docs/project-layout.md`
-- [ ] Persona-Hinweis vorhanden: die Datei nennt eine `CLAUDE.md` im Fall-Ordner:
+- [x] Persona-Hinweis vorhanden: die Datei nennt eine `CLAUDE.md` im Fall-Ordner:
       `grep -q 'CLAUDE.md' docs/project-layout.md`
-- [ ] CLI-Bezug vorhanden: die Doku benennt die `rdc`-CLIs:
+- [x] CLI-Bezug vorhanden: die Doku benennt die `rdc`-CLIs:
       `grep -q 'rdc' docs/project-layout.md`
-- [ ] Beispiel-Layout vorhanden: mindestens ein Code-Block (Fenced):
+- [x] Beispiel-Layout vorhanden: mindestens ein Code-Block (Fenced):
       `grep -q '```' docs/project-layout.md`
-- [ ] **Negativ-Check (Datenschutz):** die Doku rät NICHT, die Akte ins Repo zu
+- [x] **Negativ-Check (Datenschutz):** die Doku rät NICHT, die Akte ins Repo zu
       legen. Es darf keine Empfehlung geben, die Fallakte unter dem Repo abzulegen.
       Maschinell — keine Erwähnung eines Repo-internen Akten-Pfads:
       `! grep -qiE 'akte.*(im|ins) repo|repo/.*case-file|fallakte.*im repo' docs/project-layout.md`
       Die Doku stellt im Gegenteil explizit klar, dass die Akte **außerhalb** des
       Repos liegt: `grep -qiE 'außerhalb des repos' docs/project-layout.md`
-- [ ] **Negativ-Check (keine echten Daten):** keine realen Namen/Geburtsdaten im
+- [x] **Negativ-Check (keine echten Daten):** keine realen Namen/Geburtsdaten im
       Beispiel-Layout — kein Muster `DD.MM.YYYY`:
       `! grep -qE '[0-9]{2}\.[0-9]{2}\.[0-9]{4}' docs/project-layout.md`
 
