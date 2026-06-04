@@ -1,7 +1,7 @@
 ---
 id: GEN-03
 title: Exomiser-Output → Fallakten-Markdown-Konverter
-status: todo
+status: done
 depends_on: [GEN-01, KB-01]
 stop_after: false
 epic: genetics
@@ -84,27 +84,27 @@ genetics/tests/__init__.py                       (NEU, leer — Paket-Marker fü
       Fixture tracked, echte Outputs aber weiterhin geblockt.
 
 ## Acceptance
-- [ ] `ruff check genetics/` grün (Lint sauber für alle neuen Python-Dateien).
-- [ ] `pytest genetics/tests/` grün — Parsing **und** Markdown-Erzeugung getestet.
-- [ ] Erzeugte Sektion passt zu den Überschriften aus KB-01: die von
+- [x] `ruff check genetics/` grün (Lint sauber für alle neuen Python-Dateien).
+- [x] `pytest genetics/tests/` grün — Parsing **und** Markdown-Erzeugung getestet.
+- [x] Erzeugte Sektion passt zu den Überschriften aus KB-01: die von
       `render_genetics_section` produzierte Überschrift ist exakt
       `## Genetik-Zusammenfassung` und matcht die Sektion in
       `docs/case-file-TEMPLATE.md`. Maschinell (sobald KB-01 done):
       `grep -q '## Genetik-Zusammenfassung' docs/case-file-TEMPLATE.md` und ein Test
       prüft denselben String im Konverter-Output.
-- [ ] Tabellen-Spalten vorhanden im erzeugten Markdown (im Test geprüft):
+- [x] Tabellen-Spalten vorhanden im erzeugten Markdown (im Test geprüft):
       `Gen | Variante | ClinVar-Bedeutung | Häufigkeit | Phänotyp-Score | Quelle`.
-- [ ] Disclaimer vorhanden im erzeugten Markdown (im Test geprüft, deutscher
+- [x] Disclaimer vorhanden im erzeugten Markdown (im Test geprüft, deutscher
       Hinweis-Text „keine Diagnose"/„ärztlich" o. Ä.).
-- [ ] **Negativ-Check (keine Rohgenom-Zeilen):** das erzeugte Markdown enthält
+- [x] **Negativ-Check (keine Rohgenom-Zeilen):** das erzeugte Markdown enthält
       keinen VCF-Header und keine Roh-Variantenzeile — im Test asserted:
       kein `##fileformat=VCF`, kein `#CHROM\tPOS\tID\tREF\tALT`, nur die kuratierten
       Top-N-Kandidaten. Über die Top-N hinaus erscheinen keine weiteren Varianten.
-- [ ] **Negativ-Check (Datenschutz Fixture):** `exomiser_result.tsv.sample` ist
+- [x] **Negativ-Check (Datenschutz Fixture):** `exomiser_result.tsv.sample` ist
       synthetisch — keine realen Patientendaten, keine echte VCF, kein
       Geburtsdatum-Muster `DD.MM.YYYY`:
       `! grep -qE '[0-9]{2}\.[0-9]{2}\.[0-9]{4}' genetics/tests/fixtures/exomiser_result.tsv.sample`
-- [ ] Fixture-Pfad ist nicht gitignored (tracked):
+- [x] Fixture-Pfad ist nicht gitignored (tracked):
       `! git check-ignore -q genetics/tests/fixtures/exomiser_result.tsv.sample`
 
 ## Out of scope
