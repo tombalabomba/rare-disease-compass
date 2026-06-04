@@ -1,17 +1,17 @@
 # Agent-Loop — universell für alle Epics
 
 Operating-Anweisung für die **autonome** Abarbeitung von Tickets aus
-`backlog/2.ready/`. Jede Iteration läuft in einer **frischen** Claude-Session.
+`dev/backlog/2.ready/`. Jede Iteration läuft in einer **frischen** Claude-Session.
 
 Epic-spezifisches lebt im Frontmatter des Tickets (`epic`, `commit_type`,
-`stop_after`) und in der Projekt-Übersicht `backlog/PLAN.md` (Ziele, Modul-Karte,
+`stop_after`) und in der Projekt-Übersicht `dev/backlog/PLAN.md` (Ziele, Modul-Karte,
 Abhängigkeitsgraph aller Epics).
 
 ## Trigger
 
-- **Shell-Loop**: `bash scripts/agent-loop.sh` startet eine `claude -p`-Session pro
+- **Shell-Loop**: `bash dev/agent-loop.sh` startet eine `claude -p`-Session pro
   Iteration. Cooldown 10 s, Logs pro Iteration in `.agent-loop-logs/`.
-- **In Claude Code direkt**: `/loop Bitte arbeite eine Iteration aus backlog/AGENT-LOOP.md ab.`
+- **In Claude Code direkt**: `/loop Bitte arbeite eine Iteration aus dev/backlog/AGENT-LOOP.md ab.`
 
 ## Iteration — Schritt für Schritt
 
@@ -24,13 +24,13 @@ Lies in dieser Reihenfolge:
    (`architektur.md`, `security.md`).
 
 ### 2. Nächstes Ticket finden
-Tickets liegen **flach** als `backlog/2.ready/<ID>.md` (ein File pro Ticket, kein
+Tickets liegen **flach** als `dev/backlog/2.ready/<ID>.md` (ein File pro Ticket, kein
 Epic-Unterordner). Die Epic-Zugehörigkeit steht im Frontmatter (`epic:`). Suche
 nach `.md`-Files mit `status: todo`.
 
 **Auswahlregeln (in Reihenfolge):**
 1. `status: todo` (nicht `in_progress`, `done`, `blocked`)
-2. Alle `depends_on`-IDs liegen in `backlog/3.done/` (per ID, nicht per Pfad)
+2. Alle `depends_on`-IDs liegen in `dev/backlog/3.done/` (per ID, nicht per Pfad)
 3. Bei mehreren Kandidaten: kleinste ID zuerst (`CLI-01` vor `CLI-02`)
 
 **Kein Kandidat passt** (alles done/blocked oder Dependencies offen): exit clean,
@@ -53,14 +53,14 @@ Lies `Scope`, `Files`, `Out of scope`, `Notes`.
   Fixtures sind synthetisch. Im Zweifel defensiv blocken. (Siehe `docs/security.md`.)
 - **Modul-Separation:** nur die Pfade aus `Files`. Scope erweitern = **neues Ticket**.
 - **Drive-by Fix** nur ≤ 10 Zeilen UND klar verstanden, in der Commit-Message als
-  zweite Zeile vermerken. Größere Fixes → neues Ticket in `backlog/1.planning/`.
+  zweite Zeile vermerken. Größere Fixes → neues Ticket in `dev/backlog/1.planning/`.
 
 ### 5. Bug- & Lern-Disziplin (kontinuierlich)
 - **Tool-Quirk / unerwartetes Verhalten / Befehl zweimal nötig?** → mit Datum in
   `AGENTS.md` unter `## Notes` ergänzen. Format strikt:
   `- YYYY-MM-DD · <terse, specific finding inkl. Fix>`
 - **Fremder Bug bemerkt?** ≤ 30 Min und klar → jetzt mit-fixen (Drive-by-Vermerk).
-  Größer → **neues Ticket** in `backlog/1.planning/`, aktuelles Ticket nicht blockieren.
+  Größer → **neues Ticket** in `dev/backlog/1.planning/`, aktuelles Ticket nicht blockieren.
 - **Doku-Inkonsistenz** in `docs/` oder Epic-README? → in derselben Commit-Message
   als zweite Zeile vermerken.
 - **Niemals** Status-Reports in `AGENTS.md` parken. Dort nur lessons learned.
@@ -85,7 +85,7 @@ Dependency-Ticket nicht done.
 Frontmatter: `status: done`. Datei verschieben mit **`git mv`** (History bleibt):
 
 ```
-git mv backlog/2.ready/<ID>.md backlog/3.done/<ID>.md
+git mv dev/backlog/2.ready/<ID>.md dev/backlog/3.done/<ID>.md
 ```
 
 ### 8. Commit
@@ -101,7 +101,7 @@ Co-Authored-By: Claude Opus 4.8 (1M context) <noreply@anthropic.com>
 
 ### 9. Stop-Gate-Check
 Wenn `stop_after: true`:
-1. Marker setzen: `touch backlog/.STOP_GATE`
+1. Marker setzen: `touch dev/backlog/.STOP_GATE`
 2. Im finalen Output: Ticket-ID + Titel, was gebaut wurde, welcher **manuelle**
    Schritt jetzt ansteht (z. B. API-Key hinterlegen, Referenzdaten herunterladen),
    welches Ticket laut `depends_on` als nächstes käme.
@@ -138,4 +138,4 @@ epic: cli                     # Slug, "" = standalone
 commit_type: feat(cli)        # Commit-Prefix
 ---
 ```
-Vollständiges Schema: `backlog/TICKET-TEMPLATE.md`.
+Vollständiges Schema: `dev/backlog/TICKET-TEMPLATE.md`.

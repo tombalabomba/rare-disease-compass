@@ -5,7 +5,7 @@ Epic-Zugehörigkeit steht im Frontmatter (`epic:`).
 
 ## Struktur
 ```
-backlog/
+dev/backlog/
 ├── README.md             # diese Datei
 ├── PLAN.md               # Projekt-Übersicht: Ziele, Modul-Karte, Abhängigkeitsgraph
 ├── AGENT-LOOP.md         # Operating-Manual für autonome Loop-Iteration
@@ -21,17 +21,17 @@ backlog/
 └── 3.done/               # erledigte Tickets (per git mv aus 2.ready/)
 ```
 
-Stage-Wechsel: `git mv backlog/2.ready/<ID>.md backlog/3.done/<ID>.md`.
+Stage-Wechsel: `git mv dev/backlog/2.ready/<ID>.md dev/backlog/3.done/<ID>.md`.
 `depends_on` referenziert **IDs** (nicht Pfade); ein Ticket ist ziehbar, sobald
 alle seine Dependency-IDs in `3.done/` liegen.
 
 ## Loop ausführen
-- **Autonom** (frische Session pro Ticket): `bash scripts/agent-loop.sh`
-- **Status** (gruppiert nach epic): `bash scripts/agent-loop.sh status`
-- **Einzel-Ticket** (manuell): „Bitte arbeite INF-01 nach `backlog/AGENT-TICKET.md` ab"
+- **Autonom** (frische Session pro Ticket): `bash dev/agent-loop.sh`
+- **Status** (gruppiert nach epic): `bash dev/agent-loop.sh status`
+- **Einzel-Ticket** (manuell): „Bitte arbeite INF-01 nach `dev/backlog/AGENT-TICKET.md` ab"
 
 ## Was hier NICHT hingehört
 - Projekt-Übersicht / Modul-Karte / Abhängigkeiten → [PLAN.md](PLAN.md)
-- Architektur/Datenfluss → [docs/architektur.md](../docs/architektur.md)
-- Sicherheits-/Datenschutzregeln → [docs/security.md](../docs/security.md)
-- Projektweite Lerneffekte/Gotchas → [AGENTS.md](../AGENTS.md) (`## Notes`)
+- Architektur/Datenfluss → [docs/architektur.md](../../docs/architektur.md)
+- Sicherheits-/Datenschutzregeln → [docs/security.md](../../docs/security.md)
+- Projektweite Lerneffekte/Gotchas → [AGENTS.md](../../AGENTS.md) (`## Notes`)

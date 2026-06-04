@@ -45,7 +45,7 @@ cli-history*
 
 # Loop-Logs & Marker
 .agent-loop-logs/
-backlog/.STOP_GATE
+dev/backlog/.STOP_GATE
 
 # Build / deps
 node_modules/

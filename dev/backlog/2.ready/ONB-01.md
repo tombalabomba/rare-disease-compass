@@ -69,7 +69,7 @@ docs/runbook.md   (NEU)
 - [x] **`depends_on`-IDs**: SET-02 liefert `scripts/install.sh` + `docs/install.md`,
       CLI-06 liefert den CLI-Guide (`docs/cli-guide.md`) als Abschluss des CLI-Epics,
       KB-03 liefert `tools/validate_case_folder.py` + `docs/case-folder.md`. Alle drei
-      Tickets stehen in `backlog/PLAN.md` (Modul-Karte) und sind die Quellen der hier
+      Tickets stehen in `dev/backlog/PLAN.md` (Modul-Karte) und sind die Quellen der hier
       verlinkten Dateien. Das Runbook **verlinkt** nur — es importiert keinen Code,
       daher reicht, dass die Ziel-Pfade nach `done` der Deps existieren. Zusätzlich
       verlinkte Dateien aus Schwester-Tickets desselben `knowledge`/`setup`-Bereichs

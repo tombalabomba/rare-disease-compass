@@ -78,7 +78,7 @@ cli/tests/test_compound.py     (NEU)
       sind NEU. `docs/` existiert (`ls docs` zeigt `architektur.md`, `security.md`).
       `main.py` existiert nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-02 (literature), CLI-03 (variant), CLI-04 (graph),
-      CLI-05 (ddx) müssen in `backlog/3.done/` liegen — Compound ruft deren reine
+      CLI-05 (ddx) müssen in `dev/backlog/3.done/` liegen — Compound ruft deren reine
       Funktionen auf. CLI-01 ist transitiv über diese vorausgesetzt.
 - [x] **Externe Voraussetzungen**: keine neuen — Compound nutzt nur bestehende
       Quellen + History. Keine Pflicht-Secrets → kein `stop_after`.

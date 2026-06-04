@@ -60,7 +60,7 @@ cli/tests/test_variant.py      (NEU)
       CLI-01, daher das `__init__.py` defensiv mit aufführen). `main.py` existiert
       nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
-      sobald CLI-01 in `backlog/3.done/`. **Nicht** abhängig von CLI-02.
+      sobald CLI-01 in `dev/backlog/3.done/`. **Nicht** abhängig von CLI-02.
 - [x] **Externe Voraussetzungen**: MyVariant.info ist ohne Auth nutzbar; API-Key
       optional. Kein Pflicht-Secret → kein `stop_after`.
 - [x] **Tooling**: `ruff`/`pytest`; Tests injizieren `httpx.MockTransport` — keine

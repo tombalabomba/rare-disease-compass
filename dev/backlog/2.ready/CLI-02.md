@@ -59,7 +59,7 @@ cli/tests/test_literature.py       (NEU)
       erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Registry (`main.register`), httpx-Client
       (mit `transport`-Injection), History (`save_query`) und Output. Erst nutzbar,
-      wenn CLI-01 in `backlog/3.done/` liegt.
+      wenn CLI-01 in `dev/backlog/3.done/` liegt.
 - [x] **Externe Voraussetzungen**: NCBI-API-Key ist **optional** (Env `NCBI_API_KEY`);
       ohne Key voll funktionsfähig. Kein Pflicht-Secret → kein `stop_after`.
 - [x] **Tooling**: `ruff`/`pytest` wie CLI-01. Tests injizieren `httpx.MockTransport`

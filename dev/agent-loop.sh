@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Outer-shell loop for backlog/2.ready/ — single-repo variant.
+# Outer-shell loop for dev/backlog/2.ready/ — single-repo variant.
 #
-# Spawns a fresh `claude -p` session per ticket, follows backlog/AGENT-LOOP.md.
-# Scans backlog/2.ready/ recursively for tickets:
-#   - epic ticket:  backlog/2.ready/<epic>/tickets/<id>.md
-#   - flat ticket:  backlog/2.ready/<id>.md
+# Spawns a fresh `claude -p` session per ticket, follows dev/backlog/AGENT-LOOP.md.
+# Scans dev/backlog/2.ready/ recursively for tickets:
+#   - epic ticket:  dev/backlog/2.ready/<epic>/tickets/<id>.md
+#   - flat ticket:  dev/backlog/2.ready/<id>.md
 # Ticket selection (status, depends_on, sort order) happens INSIDE the Claude
 # session per AGENT-LOOP.md §2. The shell only checks if any `status: todo`
 # ticket is left and trusts the agent's pick. One commit per iteration.
@@ -13,9 +13,9 @@
 #           · non-zero claude exit · MAX_ITERATIONS reached.
 #
 # Usage:
-#   scripts/agent-loop.sh             # run until an exit condition
-#   scripts/agent-loop.sh continue    # remove a pending .STOP_GATE, then run
-#   scripts/agent-loop.sh status      # print ticket status grouped by epic
+#   dev/agent-loop.sh             # run until an exit condition
+#   dev/agent-loop.sh continue    # remove a pending .STOP_GATE, then run
+#   dev/agent-loop.sh status      # print ticket status grouped by epic
 #
 # Env knobs (defaults):
 #   MAX_ITERATIONS=30
@@ -41,10 +41,10 @@ fi
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-READY_DIR="$REPO_ROOT/backlog/2.ready"
+READY_DIR="$REPO_ROOT/dev/backlog/2.ready"
 LOG_DIR="$REPO_ROOT/.agent-loop-logs"
 LOCK_FILE="/tmp/rare-disease-compass-agent-loop.lock"
-MARKER="$REPO_ROOT/backlog/.STOP_GATE"
+MARKER="$REPO_ROOT/dev/backlog/.STOP_GATE"
 
 MAX_ITERATIONS="${MAX_ITERATIONS:-30}"
 COOLDOWN_SECONDS="${COOLDOWN_SECONDS:-10}"
@@ -78,7 +78,7 @@ count_todo() {
 }
 
 print_status() {
-  echo "Tickets in backlog/2.ready/ (flach, gruppiert nach epic):"
+  echo "Tickets in dev/backlog/2.ready/ (flach, gruppiert nach epic):"
   echo
   # Discover epic groups from the `epic:` frontmatter, in stable order of appearance.
   local epics=() seen e
@@ -135,7 +135,7 @@ fi
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 echo "[loop] Running on branch: $current_branch"
 
-PROMPT='Read backlog/AGENT-LOOP.md and execute exactly ONE iteration of the loop as described there. Pick the next eligible ticket from backlog/2.ready/ (epic or flat, per AGENT-LOOP.md §2), run its scope, verify all acceptance criteria, commit, and exit. Do not pick a second ticket. If the ticket has stop_after:true and you finished it successfully, touch backlog/.STOP_GATE before exiting. If no eligible ticket exists or you hit a blocker that cannot be resolved in this run, exit cleanly without committing. Do not push to remote.'
+PROMPT='Read dev/backlog/AGENT-LOOP.md and execute exactly ONE iteration of the loop as described there. Pick the next eligible ticket from dev/backlog/2.ready/ (epic or flat, per AGENT-LOOP.md §2), run its scope, verify all acceptance criteria, commit, and exit. Do not pick a second ticket. If the ticket has stop_after:true and you finished it successfully, touch dev/backlog/.STOP_GATE before exiting. If no eligible ticket exists or you hit a blocker that cannot be resolved in this run, exit cleanly without committing. Do not push to remote.'
 
 iter=0
 while [ "$iter" -lt "$MAX_ITERATIONS" ]; do
@@ -143,7 +143,7 @@ while [ "$iter" -lt "$MAX_ITERATIONS" ]; do
 
   if [ -f "$MARKER" ]; then
     echo "[loop] Stop-gate marker present: $MARKER"
-    echo "[loop] Verify the last commit and tickets, then: bash scripts/agent-loop.sh continue"
+    echo "[loop] Verify the last commit and tickets, then: bash dev/agent-loop.sh continue"
     break
   fi
 

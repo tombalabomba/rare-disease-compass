@@ -56,7 +56,7 @@ cli/tests/test_ddx.py          (NEU)
       `cli/rdc/sources/__init__.py` ggf. aus CLI-02/03/04 schon vorhanden — defensiv
       mit aufgeführt. `main.py` existiert nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
-      sobald CLI-01 in `backlog/3.done/`. Unabhängig von CLI-02/03/04.
+      sobald CLI-01 in `dev/backlog/3.done/`. Unabhängig von CLI-02/03/04.
 - [x] **Externe Voraussetzungen**: PubCaseFinder und Phen2Gene sind ohne Auth über
       REST nutzbar (`docs/architektur.md`, Schnittstellen-Tabelle: „keine").
       Kein Pflicht-Secret → kein `stop_after`.

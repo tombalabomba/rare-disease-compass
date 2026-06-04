@@ -63,7 +63,7 @@ docs/install.md      (NEU)
 - [x] **`depends_on`-IDs**: `CLI-01` muss `done` sein — es liefert das
       installierbare `cli/`-Paket (Typer-App, Befehl `rdc`). Ohne dieses Paket hat
       `install.sh` nichts zu installieren. Der Loop zieht SET-02 erst, wenn `CLI-01`
-      in `backlog/3.done/` liegt. **Annahme an CLI-01:** das `cli/`-Paket ist als
+      in `dev/backlog/3.done/` liegt. **Annahme an CLI-01:** das `cli/`-Paket ist als
       installierbares Python-Paket strukturiert (mit `pyproject.toml`/Entry-Point
       `rdc`). Der Installer ermittelt den Paketpfad relativ zum Skript und übergibt
       ihn an `pipx install`/`pip install`; der exakte Paket-Root wird bei der

@@ -7,10 +7,10 @@ Datei zur Orientierung, bevor er ein Ticket zieht (hält den Kontext klein).
 Ein lokaler KI-Recherche-Assistent für seltene Krankheitsfälle („Dex für seltene
 Erkrankungen"): private Fallakte (lokaler Ordner) + öffentliche Medizin-Datenbanken
 (agenten-native CLIs) + Claude Code. **Kein Server.** Open Source (MIT).
-Siehe [../docs/architektur.md](../docs/architektur.md).
+Siehe [../../docs/architektur.md](../../docs/architektur.md).
 
 ## Bauen (autonom)
-`scripts/agent-loop.sh` baut die komplette Software aus `2.ready/` — CLIs,
+`dev/agent-loop.sh` baut die komplette Software aus `2.ready/` — CLIs,
 Fallakten-Schema, PII-Guard, Genetik-Pipeline, Doku. Jede Acceptance ist lokal
 maschinell prüfbar (ruff, pytest, shellcheck, config-validate). Kein laufender
 Server nötig. Endet sauber, wenn `2.ready/` leer ist.

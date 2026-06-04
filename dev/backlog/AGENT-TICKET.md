@@ -3,14 +3,14 @@
 Operating-Anweisung für die manuelle Bearbeitung **genau eines** namentlich
 benannten Tickets. Nach Commit STOP — kein automatisches Springen zum nächsten.
 
-Single-Ticket-Variante von `backlog/AGENT-LOOP.md`. Disziplinen, Bug-/Lern-Regeln,
+Single-Ticket-Variante von `dev/backlog/AGENT-LOOP.md`. Disziplinen, Bug-/Lern-Regeln,
 Commit-Format sind identisch — siehe dort.
 
 ## Trigger
-- „Bitte arbeite INF-01 nach `backlog/AGENT-TICKET.md` ab."
+- „Bitte arbeite INF-01 nach `dev/backlog/AGENT-TICKET.md` ab."
 - „Bitte mach das nächste Ticket aus `epic-cli` (Loop-Modus aus)."
 
-Wenn keine ID übergeben: prüfe, ob genau **ein** Ticket in `backlog/2.ready/`
+Wenn keine ID übergeben: prüfe, ob genau **ein** Ticket in `dev/backlog/2.ready/`
 (rekursiv) `status: in_progress` hat. Wenn ja: das. Wenn null oder mehrere:
 **STOP**, frag welches.
 

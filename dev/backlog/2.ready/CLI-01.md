@@ -19,7 +19,7 @@ durchsuchbar macht. Ohne diesen Kern hat keines der Folge-Tickets einen Ort, an 
 es sich registrieren kann, und es gäbe keinen einheitlichen HTTP-Pfad — jede Quelle
 würde Cache/Rate-Limit/Retry neu erfinden. Dieses Ticket legt den framework-freien
 Kern an (kein proprietäres Printing-Press-Laufzeit-Paket, siehe `CLAUDE.md` und
-`backlog/PLAN.md`).
+`dev/backlog/PLAN.md`).
 
 ## Scope
 Ein installierbares Python-Paket `cli/` mit folgendem Aufbau:
@@ -101,7 +101,7 @@ cli/tests/test_history.py     (NEU)
 - [x] **Files in `Scope`/`Files`**: alle werden bewusst NEU angelegt. `cli/` existiert
       noch nicht (`ls -R cli` im Repo-Root liefert nichts) — wird neu erstellt.
 - [x] **`depends_on`-IDs**: keine — CLI-01 ist die Wurzel des `cli`-Epics
-      (`backlog/PLAN.md`, Abhängigkeitsgraph: `CLI01 --> CLI02…05`).
+      (`dev/backlog/PLAN.md`, Abhängigkeitsgraph: `CLI01 --> CLI02…05`).
 - [x] **Externe Voraussetzungen**: keine. Keine API-Keys, keine echten Netzwerk-Calls
       (Tests mocken via `httpx.MockTransport`). DB-Default liegt außerhalb des Repos
       und ist über `*.db`/`*.sqlite` in `.gitignore:36-40` bereits gesperrt.
@@ -134,7 +134,7 @@ cli/tests/test_history.py     (NEU)
   die leere Registry und die Hooks, an denen sie hängen.
 - **Compound Queries:** CLI-06.
 - **CLI-Installer/Setup-Skript** (Installation auf einer Maschine, API-Key-Konfig):
-  SET-02 (`backlog/PLAN.md`, Modul-Karte).
+  SET-02 (`dev/backlog/PLAN.md`, Modul-Karte).
 - **Persistenter Platten-Cache / TTL-Strategie:** prozesslokaler in-memory Cache
   reicht für CLI-01; eine ausgefeiltere Cache-Schicht wäre ein eigenes Ticket.
 
@@ -143,7 +143,7 @@ cli/tests/test_history.py     (NEU)
   `RCA_HISTORY_DB`-Env). `.gitignore:36-40` sperrt `*.db`/`*.sqlite`/`.cache/` —
   trotzdem nie eine DB-Datei unter den getrackten Pfaden anlegen.
 - **Tests mocken HTTP zwingend.** `httpx.MockTransport` in den Client injizieren;
-  öffentliche APIs werden im Test **nie** echt getroffen (`backlog/AGENT-LOOP.md`,
+  öffentliche APIs werden im Test **nie** echt getroffen (`dev/backlog/AGENT-LOOP.md`,
   Schritt 6). Auch das Rate-Limit-Warten im Test mocken (kein echter `sleep`).
 - **Registry single source of truth.** Folge-Tickets registrieren ihre Gruppe über
   **einen** definierten Mechanismus in `main.py` — keine zweite Parallel-Registry

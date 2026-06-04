@@ -43,7 +43,32 @@ auf) und zusammengesetzten Abfragen, die eine rohe API nicht direkt beantwortet.
 | Daten-CLIs | Agenten-native CLIs: PubMed, ClinVar/gnomAD, Monarch, Orphanet, Europe PMC, PubCaseFinder, Phen2Gene | `cli` |
 | Wissensbasis | HPO-codierte Fallakten-Struktur, PII-Guard, Assistenten-Instruktionen | `knowledge` |
 | Genetik | Exomiser lokal: VCF + HPO → priorisierte Kandidaten | `genetics` |
+| Experience | Companion-Persona, Ton-Adaption, Skills-Schicht, Onboarding-Flow | `experience` |
 | Onboarding | Setup-Runbook, Nutzer-Guide, Einwilligungs-/Datenschutz-Vorlage | `onboarding` |
+
+## Repo-Struktur: Produkt vs. Bau-Werkzeug
+
+Klar getrennt, damit man sofort sieht, was man als Nutzer braucht und was nur dem
+Entwickeln dient:
+
+```
+RareDiseaseCompass/
+├── cli/          ← PRODUKT: die installierbaren Daten-CLIs (rdc)
+├── skills/       ← PRODUKT: die /Workflows (erklär-mir, differential, …)
+├── config/       ← PRODUKT: Assistenten-Persona + Ton-Adaption
+├── tools/        ← PRODUKT: PII-Guard, Fallakten-Validierung
+├── genetics/     ← PRODUKT: Exomiser-Runner (lokal)
+├── docs/         ← PRODUKT: Nutzer-Doku, Vorlagen, Runbook
+├── README · LICENSE · CONTRIBUTING · CLAUDE.md · AGENTS.md
+└── dev/          ← NUR BAU-WERKZEUG (für Nutzer irrelevant)
+    ├── backlog/      Tickets + Planung
+    └── agent-loop.sh autonome Build-Loop
+```
+
+**Als Nutzer brauchst du `dev/` nie.** Du installierst die CLI (`pipx install ./cli`)
+und kopierst dir `skills/`, `config/` und die Vorlagen. Das `dev/`-Verzeichnis ist
+die Werkstatt, in der das Projekt gebaut wird — transparent im Repo, aber kein Teil
+des nutzbaren Produkts.
 
 ## Loslegen (sobald gebaut)
 
@@ -57,7 +82,7 @@ pipx install ./cli        # oder das mitgelieferte setup-Skript
 ```
 
 Das komplette Projekt ist als Backlog geplant und wird autonom Ticket für Ticket
-gebaut: [backlog/PLAN.md](backlog/PLAN.md), `bash scripts/agent-loop.sh`.
+gebaut: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 
 ## Datenschutz auf einen Blick
 

@@ -49,7 +49,7 @@ Siehe [README.md](README.md) und [docs/architektur.md](docs/architektur.md).
 
 > **Printing Press:** Die CLIs folgen dem PP-Muster, hängen aber nicht hart von
 > einer proprietären PP-Laufzeit ab (OSS-Sauberkeit). Falls PP offen lizenziert
-> ist, kann der CLI-Kern später direkt darauf aufsetzen — siehe `backlog/PLAN.md`.
+> ist, kann der CLI-Kern später direkt darauf aufsetzen — siehe `dev/backlog/PLAN.md`.
 
 ## Sprache
 - Doku, Tickets, Commit-Bodies, Nutzer-Texte: **Deutsch**.

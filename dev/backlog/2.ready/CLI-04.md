@@ -57,7 +57,7 @@ cli/tests/test_graph.py        (NEU)
       `cli/rdc/sources/__init__.py` ggf. aus CLI-02/03 schon da — defensiv mit
       aufgeführt. `main.py` existiert nach CLI-01 und wird erweitert.
 - [x] **`depends_on`-IDs**: CLI-01 liefert Client, History, Output, Registry. Nutzbar
-      sobald CLI-01 in `backlog/3.done/`. Unabhängig von CLI-02/03.
+      sobald CLI-01 in `dev/backlog/3.done/`. Unabhängig von CLI-02/03.
 - [x] **Externe Voraussetzungen**: Monarch- und Orphanet-/Orphadata-REST sind ohne
       Auth nutzbar (`docs/architektur.md`, Schnittstellen-Tabelle: „keine" /
       „teils Registrierung"). Kein Pflicht-Secret → kein `stop_after`.

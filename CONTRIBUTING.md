@@ -19,10 +19,10 @@ qualifizierten Ärztinnen und Ärzten.
 ## Arbeitsweise
 
 Das Projekt wird über ein Ticket-Backlog gebaut. Siehe
-[backlog/README.md](backlog/README.md) und [backlog/PLAN.md](backlog/PLAN.md).
+[dev/backlog/README.md](dev/backlog/README.md) und [dev/backlog/PLAN.md](dev/backlog/PLAN.md).
 
-- Neue Idee → Ticket in `backlog/1.planning/` nach `backlog/TICKET-TEMPLATE.md`.
-- Baufertig → nach `backlog/2.ready/` (Reality-Check ausgefüllt).
+- Neue Idee → Ticket in `dev/backlog/1.planning/` nach `dev/backlog/TICKET-TEMPLATE.md`.
+- Baufertig → nach `dev/backlog/2.ready/` (Reality-Check ausgefüllt).
 - Ein Commit pro Ticket, Conventional-Commit-Prefix.
 
 ## Qualität

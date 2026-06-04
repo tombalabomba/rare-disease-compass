@@ -70,7 +70,7 @@ docs/genetics-setup.md                          (NEU)
 
 ## Reality Check (Pflicht — vor Promotion nach `2.ready/`)
 - [x] **Files in `Scope`/`Files`**: alle vier werden bewusst NEU angelegt. `genetics/`
-      existiert noch nicht (`ls` zeigt nur `backlog/ docs/ scripts/` im Repo-Root) —
+      existiert noch nicht (`ls` zeigt nur `dev/backlog/ docs/ scripts/` im Repo-Root) —
       wird neu erstellt. `docs/` existiert bereits.
 - [x] **`depends_on`-IDs**: keine — GEN-01 ist die Wurzel des Epics.
 - [x] **Externe Voraussetzungen**: Referenzdaten-Download (mehrere GB) ist **manuell**
