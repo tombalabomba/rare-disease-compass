@@ -1,7 +1,7 @@
 ---
 id: EXP-01
 title: Persona & Ton-Adaption (Companion-Charakter + case-profile)
-status: todo
+status: done
 depends_on: [KB-04]
 stop_after: false
 epic: experience

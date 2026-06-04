@@ -1,0 +1,33 @@
+# case-profile.example.yaml — Vorlage für das Nutzer-/Fall-Profil
+#
+# Diese Datei steuert NUR den Ton der Antworten (Fachsprache-Level, Sprache,
+# emotionaler Register), nicht die Kernregeln (keine Diagnose, Quellenpflicht,
+# ärztliche Bewertung — die gelten immer, siehe assistant-instructions.md).
+#
+# WICHTIG: Dies ist eine SYNTHETISCHE Vorlage. Die echte case-profile.yaml lebt
+# im privaten Fall-Ordner (außerhalb dieses Repos) und enthält ausschließlich
+# PSEUDONYMISIERTE Angaben — Initialen statt Namen, niemals Geburtsdaten,
+# niemals Befund-Rohdaten. Siehe docs/security.md und docs/project-layout.md.
+
+# Fachsprache-Niveau der Erklärungen: laie | informiert | fachkundig
+medical_literacy: informiert
+
+# Antwort-Sprache (ISO-Kürzel, z. B. de | en)
+language: de
+
+# Emotionaler Register: sachlich | behutsam | direkt
+tone: behutsam
+
+# Pseudonymisierter Kontext zum Nutzer — KEINE Klarnamen, KEINE Geburtsdaten.
+about:
+  initials: M. B.          # Initialen des Nutzers (nicht des Kindes)
+  role: Elternteil          # z. B. Elternteil | Betreuer:in | erwachsene:r Betroffene:r
+  age_band: 30-40           # grobe Altersspanne statt exaktem Alter/Geburtsdatum
+  patient_relation: Kind    # Verhältnis zum Betroffenen, falls abweichend
+  patient_age_band: 0-5     # grobe Altersspanne des Betroffenen
+
+# Woran die Familie gerade arbeitet — priorisiert die Recherche entlang dieser Ziele.
+goals:
+  - Diagnose finden
+  - Symptome lindern
+  - Fragen für den nächsten Arzttermin vorbereiten
