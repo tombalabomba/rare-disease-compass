@@ -1,7 +1,7 @@
 ---
 id: CLI-02
 title: Literatur-Quelle (PubMed + Europe PMC)
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: cli

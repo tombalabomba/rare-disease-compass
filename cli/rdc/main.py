@@ -72,23 +72,42 @@ def _main(
     _state["format"] = OutputFormat.jsonl if json_ else output_format
 
 
-def _render(rows: list[dict[str, Any]]) -> None:
-    if _state["format"] is OutputFormat.jsonl:
+def render(
+    rows: list[dict[str, Any]],
+    headers: list[str],
+    *,
+    json_override: bool = False,
+    empty: str = "(keine Einträge)",
+) -> None:
+    """Rendert ``rows`` als Tabelle oder JSON-Lines.
+
+    Single source of truth fürs Rendern: das globale ``--json``/``--format``
+    bestimmt das Format; ein Quellen-Subkommando kann es per ``json_override``
+    (sein lokales ``--json``) gezielt auf JSON-Lines zwingen.
+    """
+    fmt = OutputFormat.jsonl if json_override else _state["format"]
+    if fmt is OutputFormat.jsonl:
         output.print_jsonl(rows)
         return
     if not rows:
-        typer.echo("(keine Einträge)")
+        typer.echo(empty)
         return
-    headers = [
-        "id",
-        "timestamp",
-        "source",
-        "command",
-        "result_count",
-        "result_summary",
-    ]
     table_rows = [[row.get(header) for header in headers] for row in rows]
     output.print_table(table_rows, headers)
+
+
+HISTORY_HEADERS = [
+    "id",
+    "timestamp",
+    "source",
+    "command",
+    "result_count",
+    "result_summary",
+]
+
+
+def _render(rows: list[dict[str, Any]]) -> None:
+    render(rows, HISTORY_HEADERS)
 
 
 history_app = typer.Typer(
@@ -126,6 +145,23 @@ def version() -> None:
 
 
 app.add_typer(history_app, name="history")
+
+
+# Quellen-Gruppen registrieren sich über die Registry. ``literature`` importiert
+# ``main`` nur lazy (in den Befehls-Funktionen), daher entsteht hier kein
+# Import-Zyklus.
+from .sources import literature  # noqa: E402
+
+register(
+    "pubmed",
+    literature.pubmed_app,
+    "PubMed-Literatursuche (NCBI E-utilities).",
+)
+register(
+    "europepmc",
+    literature.europepmc_app,
+    "Europe-PMC-Literatursuche (REST).",
+)
 
 
 if __name__ == "__main__":
