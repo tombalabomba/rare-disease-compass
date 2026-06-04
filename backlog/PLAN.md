@@ -33,6 +33,7 @@ der Kern direkt auf PP aufsetzen. Bis geklärt: framework-frei.
 | `cli` | CLI-01…06 | Agenten-native CLIs: Literatur, Varianten, Krankheits-Graph, DDx + Compound Queries | — |
 | `knowledge` | KB-01…04 | HPO-Fallakten-Schema, PII-Guard, Ordner-Konvention, Assistenten-Instruktionen | — |
 | `genetics` | GEN-01…03 | Exomiser lokal: VCF + HPO → Kandidaten → Akte | knowledge |
+| `experience` | EXP-01…05 | Companion-Persona + Ton-Adaption, Skills-Schicht, Session-Kontext, Onboarding-Flow, Erweiterbarkeit | cli, knowledge |
 | `onboarding` | ONB-01…03 | Setup-Runbook, Nutzer-Guide, Einwilligungs-Vorlage | setup, cli, knowledge |
 
 ## Modul-Karte (Datei → Ticket)
@@ -50,7 +51,12 @@ der Kern direkt auf PP aufsetzen. Bis geklärt: framework-frei.
 | `docs/case-file-TEMPLATE.md` | HPO-codierte Fallakten-Struktur | KB-01 |
 | `tools/pii_guard.py` | PII-Leck-Prüfung | KB-02 |
 | `docs/case-folder.md` + `tools/validate_case_folder.py` | Ordner-Konvention + Validierung | KB-03 |
-| `config/assistant-instructions.md` | Assistenten-Persona (keine Diagnose, Quellen, Arztfragen) | KB-04 |
+| `config/assistant-instructions.md` | Assistenten-Persona (keine Diagnose, Quellen, Arztfragen) | KB-04, EXP-01 |
+| `config/case-profile.example.yaml` | Ton-/Vorwissen-Adaption (medical_literacy, tone, goals) | EXP-01 |
+| `skills/<name>/SKILL.md` | Skills-Schicht (erklaer-mir, differential, variante, arzttermin-vorbereiten, spezialisten-finden, was-ist-neu) | EXP-02 |
+| `scripts/session-context.sh` | Fallstand + neue Literatur beim Start | EXP-03 |
+| `skills/fall-anlegen/SKILL.md` | Geführter Onboarding-Flow | EXP-04 |
+| `skills/skill-erstellen/SKILL.md` + `docs/extending.md` | Erweiterbarkeit (-custom-Schutz) | EXP-05 |
 | `genetics/` | Exomiser-Runner + Konverter | GEN-01…03 |
 | `docs/runbook.md` | Setup-Runbook (Einrichten auf einer Maschine) | ONB-01 |
 | `docs/user-guide.md` | Nutzer-Guide | ONB-02 |
@@ -82,6 +88,14 @@ flowchart LR
   KB03 --> ONB01
   ONB02[ONB-02]
   ONB03[ONB-03]
+  KB04 --> EXP01[EXP-01]
+  CLI06 --> EXP02[EXP-02]
+  EXP01 --> EXP02
+  KB03 --> EXP03[EXP-03]
+  CLI06 --> EXP03
+  KB01 --> EXP04[EXP-04]
+  EXP01 --> EXP04
+  EXP02 --> EXP05[EXP-05]
 ```
 
 **Sofort ziehbar (keine Dependencies):** SET-01, CLI-01, KB-01, KB-04, GEN-01,
