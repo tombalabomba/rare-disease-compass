@@ -1,7 +1,7 @@
 ---
 id: ONB-01
 title: Setup-Runbook (Betreiber/Kurator)
-status: todo
+status: done
 depends_on: [SET-02, CLI-06, KB-03]
 stop_after: false
 epic: onboarding
