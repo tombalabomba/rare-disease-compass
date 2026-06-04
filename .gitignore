@@ -21,6 +21,8 @@ exomiser-results/
 !docs/**/case-file-TEMPLATE.md
 # synthetische Test-Fixtures (kein echter Mensch)
 !**/fixtures/case-file-FIXTURE*.md
+# synthetische Ordner-Fixtures (KB-03, case-file-FIXTURE in fixtures-Unterordnern)
+!**/fixtures/**/case-file-FIXTURE*.md
 
 # Secrets / Env
 .env
