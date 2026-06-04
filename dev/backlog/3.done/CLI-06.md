@@ -1,7 +1,7 @@
 ---
 id: CLI-06
 title: Compound Queries + Claude-Nutzungs-Guide
-status: todo
+status: done
 depends_on: [CLI-02, CLI-03, CLI-04, CLI-05]
 stop_after: false
 epic: cli

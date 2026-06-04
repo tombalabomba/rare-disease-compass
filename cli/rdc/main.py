@@ -147,9 +147,10 @@ def version() -> None:
 app.add_typer(history_app, name="history")
 
 
-# Quellen-Gruppen registrieren sich über die Registry. ``literature`` importiert
-# ``main`` nur lazy (in den Befehls-Funktionen), daher entsteht hier kein
-# Import-Zyklus.
+# Quellen-Gruppen registrieren sich über die Registry. ``literature`` und
+# ``compound`` importieren ``main`` nur lazy (in den Befehls-Funktionen), daher
+# entsteht hier kein Import-Zyklus.
+from . import compound  # noqa: E402
 from .sources import ddx, graph, literature, variant  # noqa: E402
 
 register(
@@ -186,6 +187,11 @@ register(
     "phen2gene",
     ddx.phen2gene_app,
     "Differentialdiagnose (Phen2Gene): HPO-Profil → gerankte Kandidatengene.",
+)
+register(
+    "compound",
+    compound.compound_app,
+    "Compound Queries: quellenübergreifende Phänotyp-Abklärung (DDx + Graph).",
 )
 
 
