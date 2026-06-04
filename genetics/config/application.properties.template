@@ -1,0 +1,28 @@
+# Exomiser — Hauptkonfiguration (Java .properties-Format)
+#
+# Template. Platzhalter sind als __PLATZHALTER__ markiert und werden vom Betreiber
+# (oder GEN-02) auf die lokal heruntergeladenen Daten-Release-Versionen gesetzt.
+# Dies ist KEIN YAML — Format ist key=value, eine Zuweisung pro Zeile.
+#
+# Welche Daten-Releases gebraucht werden und woher: docs/genetics-setup.md.
+
+# Verzeichnis mit den Exomiser-Datenbank-Releases (Phenotype-DB + Variant-DB).
+# Entspricht dem im Compose gemounteten /exomiser-data.
+exomiser.data-directory=/exomiser-data
+
+# Datenbank-Release-Versionen je Assembly. Auf die tatsächlich heruntergeladenen
+# Release-Stände setzen (z. B. 2402 für Februar 2024). Format: JJMM.
+exomiser.hg38.data-version=__HG38_DATA_VERSION__
+exomiser.hg19.data-version=__HG19_DATA_VERSION__
+
+# Phenotype-Datenbank-Release (HPO/Orphanet-Mapping). Eigener Release-Stand.
+exomiser.phenotype.data-version=__PHENOTYPE_DATA_VERSION__
+
+# Optionale Pathogenitäts-Scores (großer Zusatz-Download, siehe Setup-Doku).
+# Auskommentiert lassen, falls die CADD/REMM-Daten nicht lokal vorliegen.
+#exomiser.hg38.cadd-snv-path=__CADD_SNV_PATH__
+#exomiser.hg38.cadd-indel-path=__CADD_INDEL_PATH__
+#exomiser.hg38.remm-path=__REMM_PATH__
+
+# Standard-Ausgabeformate des Laufs.
+exomiser.output-format=TSV_GENE,TSV_VARIANT,JSON,HTML

@@ -1,0 +1,48 @@
+# Exomiser — lokaler Genetik-Lauf (Batch, vollständig offline)
+#
+# Dieses Compose-File definiert NUR den lokalen Exomiser-Lauf. Es gehört bewusst
+# getrennt vom restlichen System (siehe docs/architektur.md): Das Rohgenom (VCF)
+# und die Referenzdaten verlassen die Maschine nie. Es gibt keine Ports, kein
+# öffentliches Netz, keinen Server — reiner einmaliger Batch-Lauf.
+#
+# Validieren ohne Image-Pull:
+#   docker compose -f genetics/docker-compose.exomiser.yml config
+#
+# Pfade kommen über ${VAR:-default}-Substitution. GEN-02 (Wrapper) setzt die Vars
+# (EXOMISER_DATA_DIR, EXOMISER_VCF_DIR, EXOMISER_RESULTS_DIR), bevor es den
+# Container startet. Ohne gesetzte Vars greifen die lokalen Defaults unten.
+
+services:
+  exomiser:
+    # Gepinntes Exomiser-CLI-Tag. Bei Bedarf auf die aktuelle Version anpassen
+    # (siehe docs/genetics-setup.md). `docker compose config` validiert ohne Pull,
+    # ein veraltetes Tag blockiert die Acceptance daher nicht.
+    image: exomiser/exomiser-cli:14.0.0
+
+    # Kein Restart — der Lauf ist ein einmaliger Batch-Job, kein Dienst.
+    restart: "no"
+
+    # Reiner lokaler Batch-Lauf: kein eigenes Netz, keine ausgehenden Verbindungen.
+    network_mode: "none"
+
+    volumes:
+      # Referenzdaten-Verzeichnis (Phenotype-DB + Variant-DB je Assembly, mehrere
+      # GB). Manueller Download durch den Betreiber (siehe docs/genetics-setup.md).
+      # Read-only: Exomiser liest die DBs nur.
+      - "${EXOMISER_DATA_DIR:-./exomiser-data}:/exomiser-data:ro"
+      # Konfig-Verzeichnis mit application.properties + analysis.yml (aus den
+      # Templates erzeugt). Read-only: der Container liest die Konfig nur.
+      - "./config:/exomiser/config:ro"
+      # VCF-Input-Verzeichnis. Das Rohgenom bleibt lokal. Read-only: Exomiser
+      # liest die VCF nur, schreibt nichts zurück.
+      - "${EXOMISER_VCF_DIR:-./vcf-input}:/exomiser/vcf:ro"
+      # Output-Verzeichnis für die Ergebnis-Dateien (TSV/JSON/HTML). Beschreibbar.
+      # GEN-03 liest hieraus die kuratierte Zusammenfassung für die Fallakte.
+      - "${EXOMISER_RESULTS_DIR:-./exomiser-results}:/exomiser/results"
+
+    # Lauf-Befehl: Exomiser-CLI gegen die aus den Templates erzeugte Analysis-YAML
+    # und die Haupt-Properties. GEN-02 kann diesen Befehl überschreiben.
+    command:
+      - "--analysis"
+      - "/exomiser/config/analysis.yml"
+      - "--spring.config.location=/exomiser/config/application.properties"

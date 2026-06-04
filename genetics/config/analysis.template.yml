@@ -1,0 +1,44 @@
+# Exomiser — Analysis-Template (gültiges YAML, mit Platzhaltern)
+#
+# GEN-02 ersetzt __HPO_IDS__ (HPO-Term-Liste des Falls) und __VCF_PATH__ (Pfad zur
+# lokalen VCF im Container) und schreibt das Ergebnis nach config/analysis.yml.
+# Die Platzhalter sind als Strings notiert und brechen yaml.safe_load nicht.
+
+analysis:
+  # Referenz-Assembly der VCF. Bei hg19-Daten auf "hg19" setzen.
+  genomeAssembly: hg38
+
+  # Pfad zur VCF im Container (siehe Volume /exomiser/vcf im Compose). Platzhalter.
+  vcf: "__VCF_PATH__"
+
+  # Proband-ID (Sample-Spalte in der VCF). Leer = erstes Sample der VCF.
+  proband: ""
+
+  # HPO-Terme des Falls, von GEN-02 aus der Fallakte gesetzt. Platzhalter-String,
+  # den GEN-02 durch eine echte YAML-Liste (z. B. ["HP:0001250", "HP:0004322"])
+  # ersetzt.
+  hpoIds: "__HPO_IDS__"
+
+  # Vererbungsmodi, gegen die priorisiert wird (leer = alle).
+  inheritanceModes: {}
+
+  # PASS_ONLY filtert auf Varianten mit FILTER=PASS; FULL wertet alle aus.
+  analysisMode: PASS_ONLY
+
+  # Populations-Frequenz-Quellen für die Häufigkeitsfilterung.
+  frequencySources:
+    - GNOMAD_E_NFE
+    - GNOMAD_G_NFE
+
+  # Pathogenitäts-Quellen für die Varianten-Bewertung.
+  pathogenicitySources:
+    - REVEL
+    - MVP
+
+  # Analyse-Schritte: Frequenz- und Pathogenitäts-Filter.
+  steps:
+    - failedVariantFilter: {}
+    - frequencyFilter:
+        maxFrequency: 2.0
+    - pathogenicityFilter:
+        keepNonPathogenic: true

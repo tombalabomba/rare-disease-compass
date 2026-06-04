@@ -1,7 +1,7 @@
 ---
 id: GEN-01
 title: Exomiser-Runner (Docker, lokal) + Konfig-Templates + Daten-Doku
-status: todo
+status: done
 depends_on: []
 stop_after: false
 epic: genetics
