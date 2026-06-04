@@ -1,7 +1,7 @@
 ---
 id: EXP-02
 title: Skills-Schicht (modulare /Workflows über den CLIs)
-status: todo
+status: done
 depends_on: [CLI-06, EXP-01]
 stop_after: false
 epic: experience
