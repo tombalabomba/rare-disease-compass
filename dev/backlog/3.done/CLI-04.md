@@ -1,7 +1,7 @@
 ---
 id: CLI-04
 title: Krankheits-Graph-Quelle (Monarch + Orphanet)
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: cli
@@ -65,22 +65,22 @@ cli/tests/test_graph.py        (NEU)
       echten Monarch-/Orphanet-Calls.
 
 ## Acceptance
-- [ ] `ruff check cli/` ohne Findings.
-- [ ] `python -m py_compile cli/rdc/sources/graph.py cli/tests/test_graph.py`
+- [x] `ruff check cli/` ohne Findings.
+- [x] `python -m py_compile cli/rdc/sources/graph.py cli/tests/test_graph.py`
       ohne Fehler.
-- [ ] `pytest cli/tests/test_graph.py` grün — alle HTTP-Calls über
+- [x] `pytest cli/tests/test_graph.py` grün — alle HTTP-Calls über
       `httpx.MockTransport` (kein echter Netzwerk-Call).
-- [ ] CLI startbar: `rdc monarch --help` (listet `diseases-by-phenotypes`,
+- [x] CLI startbar: `rdc monarch --help` (listet `diseases-by-phenotypes`,
       `gene-to-diseases`) und `rdc orphanet --help` (listet `lookup`).
-- [ ] **HPO-Listen-Serialisierung getestet:** mehrere HPO-IDs (`HP:0001250
+- [x] **HPO-Listen-Serialisierung getestet:** mehrere HPO-IDs (`HP:0001250
       HP:0001263`) werden in das erwartete Query-Format überführt (reine Funktion,
       ohne HTTP).
-- [ ] **Response-Parsing getestet:** aus einer gemockten Monarch-Response werden
+- [x] **Response-Parsing getestet:** aus einer gemockten Monarch-Response werden
       Krankheits-Records (ID + Name) extrahiert; aus einer gemockten
       Orphanet-Response der Eintrag.
-- [ ] **History-Eintrag getestet:** nach einer (gemockten) `diseases-by-phenotypes`-
+- [x] **History-Eintrag getestet:** nach einer (gemockten) `diseases-by-phenotypes`-
       Abfrage existiert ein History-Eintrag mit `source` `monarch`.
-- [ ] **Negativ-Check:** keine eigene HTTP-Implementierung —
+- [x] **Negativ-Check:** keine eigene HTTP-Implementierung —
       `! grep -nE 'httpx\.(get|post|Client\()' cli/rdc/sources/graph.py`.
 
 ## Out of scope
