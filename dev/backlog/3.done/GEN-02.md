@@ -1,7 +1,7 @@
 ---
 id: GEN-02
 title: VCF + HPO → Exomiser Wrapper-Skript
-status: todo
+status: done
 depends_on: [GEN-01]
 stop_after: false
 epic: genetics
