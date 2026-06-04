@@ -1,7 +1,7 @@
 ---
 id: EXP-03
 title: Session-Start-Kontext (Fallstand + neue Literatur)
-status: todo
+status: done
 depends_on: [KB-03, CLI-06]
 stop_after: false
 epic: experience
