@@ -14,6 +14,13 @@ seltene Krankheiten, Genetik) über agenten-native CLIs, die du direkt in
 > Jede medizinische Schlussfolgerung gehört in die Hände qualifizierter
 > Ärztinnen und Ärzte. Nutzung auf eigene Verantwortung.
 
+## Demo
+
+<video src="https://github.com/tombalabomba/rare-disease-compass/raw/main/docs/media/RareDiseaseCompass_KI.mp4" controls width="100%">
+  Dein Browser zeigt das Video nicht inline —
+  <a href="docs/media/RareDiseaseCompass_KI.mp4">hier herunterladen / ansehen</a>.
+</video>
+
 ## Idee in einem Satz
 
 Claude Code + ein Satz CLIs auf öffentliche Medizin-APIs + ein lokaler Ordner mit

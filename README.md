@@ -12,6 +12,13 @@ agent-native CLIs that you use directly in **Claude Code**.
 > This open-source tool is research and decision *support*. Every medical
 > conclusion belongs in the hands of qualified physicians. Use at your own risk.
 
+## Demo
+
+<video src="https://github.com/tombalabomba/rare-disease-compass/raw/main/docs/media/RareDiseaseCompass_KI.mp4" controls width="100%">
+  Your browser doesn't show the video inline —
+  <a href="docs/media/RareDiseaseCompass_KI.mp4">download / watch it here</a>.
+</video>
+
 ## The idea in one sentence
 
 Claude Code + a set of CLIs over public medical APIs + a local folder with the
