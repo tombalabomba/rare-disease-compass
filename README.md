@@ -14,10 +14,9 @@ agent-native CLIs that you use directly in **Claude Code**.
 
 ## Demo
 
-<video src="https://github.com/tombalabomba/rare-disease-compass/raw/main/docs/media/RareDiseaseCompass_KI.mp4" controls width="100%">
-  Your browser doesn't show the video inline —
-  <a href="docs/media/RareDiseaseCompass_KI.mp4">download / watch it here</a>.
-</video>
+[![Watch the demo](docs/media/demo-poster.jpg)](https://github.com/tombalabomba/rare-disease-compass/blob/main/docs/media/RareDiseaseCompass_KI.mp4)
+
+▶ Click the image to play the demo.
 
 ## The idea in one sentence
 

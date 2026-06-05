@@ -16,10 +16,9 @@ seltene Krankheiten, Genetik) über agenten-native CLIs, die du direkt in
 
 ## Demo
 
-<video src="https://github.com/tombalabomba/rare-disease-compass/raw/main/docs/media/RareDiseaseCompass_KI.mp4" controls width="100%">
-  Dein Browser zeigt das Video nicht inline —
-  <a href="docs/media/RareDiseaseCompass_KI.mp4">hier herunterladen / ansehen</a>.
-</video>
+[![Demo ansehen](docs/media/demo-poster.jpg)](https://github.com/tombalabomba/rare-disease-compass/blob/main/docs/media/RareDiseaseCompass_KI.mp4)
+
+▶ Auf das Bild klicken, um die Demo abzuspielen.
 
 ## Idee in einem Satz
 
