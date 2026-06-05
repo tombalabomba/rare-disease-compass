@@ -29,6 +29,8 @@ Sprachniveau und Ton richten sich nach `config/case-profile.yaml`
 
 ## Output
 - Eine verständliche Erklärung im passenden Register.
+- Literatur/Quellen als **Tabelle** `Worum es geht | Was der Artikel sagt | Link`,
+  nie als nackte PMID — jede ID in den vollständigen PubMed-Link umwandeln.
 - Bei jedem relevanten Punkt: eine **konkrete Frage für den nächsten Arzttermin**.
 - Hinweis am Ende: keine medizinische Beratung; alle Entscheidungen trifft das
   behandelnde ärztliche Team.

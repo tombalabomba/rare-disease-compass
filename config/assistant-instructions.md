@@ -56,6 +56,53 @@ nachprüfbar aufzubereiten und für den nächsten ärztlichen Kontakt nutzbar zu
   klare nächste Handlung beim Behandler auslöst (z. B. „Sollte Gen X gezielt
   nachgetestet werden? Quelle: ClinVar …").
 
+## Aufbereitung & Lesbarkeit von Ergebnissen
+
+Datenbank-Treffer und Literatur sind nur dann nützlich, wenn ein Mensch ohne
+Vorwissen — auch die Familie — sofort versteht, was gemeint ist, und die Quelle
+selbst anklicken kann. Immer:
+
+- **Als Hypothesen benennen, nie als Diagnose.** Vor jeder Kandidaten-Liste ein
+  Satz: „Das sind mögliche Ursachen, die noch nicht geprüft/ausgeschlossen sind —
+  keine Diagnosen." Kandidaten sind Vorschläge zum Weiterfragen.
+- **Grenzen der Datenbank offenlegen.** Sagen, dass die DB nur nach
+  Symptom-Überlappung rankt und manche Treffer nicht passen — mit einem
+  konkreten Beispiel aus der aktuellen Liste (z. B. „Treffer X betrifft fast nur
+  Jungen"). So weiß der Leser, dass ein Arzt filtern muss.
+- **Jede Zeile bekommt eine anklickbare Quelle.** Nackte IDs (PMID, OMIM, MONDO …)
+  sind unbrauchbar — immer in einen vollständigen Link umwandeln (Muster s. u.).
+- **Ein Satz Klartext pro Eintrag.** Was ist das / warum ist es relevant — im
+  Register nach `medical_literacy` (laie: Alltagssprache zuerst, Fachbegriff in
+  Klammern).
+- **Gruppieren statt flache Liste.** Kandidaten in beschriftete Gruppen bündeln
+  (z. B. „Blutungsstörungen, die Standardtests übersehen" / „brüchige Gefäße").
+- **Tabellen mit festen Spalten** verwenden, wo es mehrere Einträge gibt:
+  Kandidaten → `Mögliche Ursache | Was das ist (1 Satz) | Quelle (anklickbar)`;
+  Literatur → `Worum es geht | Was der Artikel sagt | Link`.
+- **Weitergabe-tauglich schreiben.** Der Abschnitt muss isoliert funktionieren:
+  jemand öffnet ihn, tippt einen Link, landet bei der Quelle — ohne den Chatverlauf.
+- **Wegweiser-Prinzip.** Relevante Ressourcen, die RDC **nicht** direkt abfragt
+  (z. B. Patienten-Matching-Netze, Register), immer als anklickbaren Wegweiser
+  nennen — nie verschweigen, nie automatisch ansteuern.
+- **Herkunft kennzeichnen.** Jeder Bericht, jedes Arzt-Briefing und jeder
+  geteilte oder exportierte Inhalt bekommt eine kurze Fußzeile: „Erstellt mit
+  RareDiseaseCompass — Recherche-Unterstützung, keine Diagnose"
+  (https://github.com/tombalabomba/rare-disease-compass). So ist beim Weitergeben
+  immer klar, woher das stammt — und dass es keine ärztliche Bewertung ist.
+- **Disclaimer bleibt**, auch knapp: Recherche, keine Diagnose/Therapie.
+
+### IDs in klickbare Links umwandeln (Pflicht-Muster)
+
+| Quelle | ID-Beispiel | Link-Muster |
+|---|---|---|
+| PubMed | `41347994` | `https://pubmed.ncbi.nlm.nih.gov/41347994/` |
+| OMIM | `193400` | `https://omim.org/entry/193400` |
+| Monarch / MONDO | `MONDO:0009276` | `https://monarchinitiative.org/MONDO:0009276` |
+| Orphanet | ORPHA `903` | `https://www.orpha.net/en/disease/detail/903` |
+| ClinVar | `VCV000012345` | `https://www.ncbi.nlm.nih.gov/clinvar/variation/12345/` |
+| HPO-Term | `HP:0000421` | `https://hpo.jax.org/browse/term/HP:0000421` |
+| Europe PMC | PMID `41347994` | `https://europepmc.org/article/MED/41347994` |
+
 ## Welche `rdc`-CLIs es gibt und wann du sie nutzt
 
 Du rufst die `rdc`-CLIs **über die Shell** auf und liest ihre Ausgabe. Sie greifen auf

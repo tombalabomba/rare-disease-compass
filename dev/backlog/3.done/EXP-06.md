@@ -1,7 +1,7 @@
 ---
 id: EXP-06
 title: Lesbarkeit & Aufbereitung von Reports (Hypothesen-Framing, klickbare Quellen, Klartext)
-status: todo
+status: done
 depends_on: [KB-04, EXP-02]
 stop_after: false
 epic: experience

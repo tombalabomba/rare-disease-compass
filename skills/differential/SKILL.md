@@ -44,8 +44,13 @@ zu finden in der Fallakte unter `## Symptome`.
    markieren.
 
 ## Output
-- Differentialliste mit Konfidenz-Einschätzung und **Quelle pro Eintrag**
-  (PubCaseFinder-Score, Monarch-Eintrag, PMID).
-- Gegenevidenz und offene Punkte explizit.
+- **Einleitungssatz:** „mögliche Ursachen / Hypothesen, keine Diagnosen" + Hinweis,
+  dass die DB nach Symptom-Überlappung rankt und manche Treffer nicht passen
+  (ein konkretes Beispiel aus der Liste nennen).
+- **Gruppierte Tabelle:** `Mögliche Ursache | Was das ist (1 Satz) | Quelle (Link)`
+  — Kandidaten in beschriftete Gruppen bündeln, jede ID als klickbarer Link
+  (Muster s. assistant-instructions.md), jeder Eintrag mit Klartext-Satz.
+- Übereinstimmungen über Quellen stärken die Konfidenz; Abweichungen + bereits
+  Ausgeschlossenes offen markieren.
 - **Konkrete Fragen für den nächsten Arzttermin** zu den Top-Hypothesen.
 - Hinweis: keine Diagnose; ärztliche Bewertung erforderlich.
