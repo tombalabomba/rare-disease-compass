@@ -31,7 +31,8 @@ damit das OSS-Repo keine proprietäre Laufzeit-Abhängigkeit hat.
 | `cli` | CLI-01…06 | Agenten-native CLIs: Literatur, Varianten, Krankheits-Graph, DDx + Compound Queries | — |
 | `knowledge` | KB-01…04 | HPO-Fallakten-Schema, PII-Guard, Ordner-Konvention, Assistenten-Instruktionen | — |
 | `genetics` | GEN-01…03 | Exomiser lokal: VCF + HPO → Kandidaten → Akte | knowledge |
-| `experience` | EXP-01…05 | Companion-Persona + Ton-Adaption, Skills-Schicht, Session-Kontext, Onboarding-Flow, Erweiterbarkeit | cli, knowledge |
+| `experience` | EXP-01…06 | Companion-Persona + Ton-Adaption, Skills-Schicht, Session-Kontext, Onboarding-Flow, Erweiterbarkeit, Report-Lesbarkeit | cli, knowledge |
+| `community` | COM-01…04 | „Finde deine Leute": Patientenorgs/RareConnect, klinische Studien, Matching-Wegweiser (kein Auto-Submit), Skill | cli, knowledge, experience |
 | `onboarding` | ONB-01…03 | Setup-Runbook, Nutzer-Guide, Einwilligungs-Vorlage | setup, cli, knowledge |
 
 ## Modul-Karte (Datei → Ticket)
@@ -55,6 +56,11 @@ damit das OSS-Repo keine proprietäre Laufzeit-Abhängigkeit hat.
 | `scripts/session-context.sh` | Fallstand + neue Literatur beim Start | EXP-03 |
 | `skills/fall-anlegen/SKILL.md` | Geführter Onboarding-Flow | EXP-04 |
 | `skills/skill-erstellen/SKILL.md` + `docs/extending.md` | Erweiterbarkeit (-custom-Schutz) | EXP-05 |
+| `config/assistant-instructions.md` + differential/erklaer-mir `## Output` | Report-Lesbarkeit (Hypothesen, klickbare Quellen, Klartext-Tabellen) | EXP-06 |
+| `cli/rdc/sources/community.py` | `rdc community`: Patientenorgs + RareConnect | COM-01 |
+| `cli/rdc/sources/trials.py` | `rdc trials`: ClinicalTrials.gov | COM-02 |
+| `docs/connect-genetic-matching.md` + `rdc community matchmaking` | Matching-Wegweiser (MME/MyGene2), kein Auto-Submit | COM-03 |
+| `skills/finde-deine-leute/SKILL.md` | Community-Workflow (führt COM-01..03 zusammen) | COM-04 |
 | `genetics/` | Exomiser-Runner + Konverter | GEN-01…03 |
 | `docs/runbook.md` | Setup-Runbook (Einrichten auf einer Maschine) | ONB-01 |
 | `docs/user-guide.md` | Nutzer-Guide | ONB-02 |
@@ -94,6 +100,15 @@ flowchart LR
   KB01 --> EXP04[EXP-04]
   EXP01 --> EXP04
   EXP02 --> EXP05[EXP-05]
+  KB04 --> EXP06[EXP-06]
+  EXP02 --> EXP06
+  CLI01 --> COM01[COM-01]
+  CLI01 --> COM02[COM-02]
+  CLI01 --> COM03[COM-03]
+  COM01 --> COM04[COM-04]
+  COM02 --> COM04
+  COM03 --> COM04
+  EXP01 --> COM04
 ```
 
 **Sofort ziehbar (keine Dependencies):** SET-01, CLI-01, KB-01, KB-04, GEN-01,
