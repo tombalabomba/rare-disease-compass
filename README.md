@@ -111,7 +111,12 @@ gebaut: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 - Die Fallakte liegt in einem **lokalen Ordner** (bei Bedarf optional geteilt,
   z. B. verschlüsselte Dropbox/Nextcloud), pseudonymisiert (Initialen).
 - Genetik-Rohdaten (VCF) werden **lokal** ausgewertet, nur Ergebnisse fließen in die Akte.
-- Chat-Inhalte gehen zur Inferenz an die Claude-API (kein Training auf API-Daten).
+- Claude Code läuft als Werkzeug lokal, aber das KI-Modell **nicht**: die Inferenz
+  passiert auf Anthropics Servern. Deine Eingaben und die Aktendaten, die Claude
+  liest, werden also zur Verarbeitung an Anthropic übertragen (je nach Anmeldung
+  per Anthropic-API, Claude-Abo oder Cloud-Provider). Ob Daten zum Training genutzt
+  werden, richtet sich nach den jeweiligen Anthropic-Bedingungen für deine
+  Anmeldeart — vor dem Einsatz mit echten Daten prüfen.
 - Vollständig: [docs/security.md](docs/security.md).
 
 ## Mitmachen / Lizenz

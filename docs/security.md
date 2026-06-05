@@ -16,7 +16,8 @@ ggf. eines Kindes, Art. 9 DSGVO). Diese Datei ist verbindlich.
 4. **Privacy by default.** Das Repo enthält nie echte Daten (siehe `.gitignore`).
    Öffentliche Datenbanken werden nur abgefragt, nie befüllt.
 5. **Einwilligung.** Dokumentierte Einwilligung des/der Sorgeberechtigten,
-   inklusive Verarbeitung über die Claude-API. Vorlage: `docs/consent-template.md`.
+   inklusive der Verarbeitung in Anthropics Cloud (Claude Code rechnet nicht
+   lokal). Vorlage: `docs/consent-template.md`.
 
 ## Wo welche Daten liegen
 
@@ -26,7 +27,7 @@ ggf. eines Kindes, Art. 9 DSGVO). Diese Datei ist verbindlich.
 | Genetik-Rohdaten (VCF) | **nur lokal**, nicht im geteilten Ordner | verlässt die Maschine nicht |
 | Exomiser-Ergebnis | als Teil der Fallakte (kuratiert) | wie Fallakte |
 | CLI-History (SQLite) | lokal, gitignored | kann fallbezogene Suchen enthalten → nicht teilen |
-| Chat-Inhalte (Inferenz) | transient an die Claude-API | kein Training auf API-Daten |
+| Chat-Inhalte (Inferenz) | transient an Anthropics Server (API/Abo/Cloud-Provider) | Training je nach Anmeldeart — Bedingungen prüfen |
 | Secrets / API-Keys | lokale Konfig, gitignored | nie im Repo |
 
 ## Maschinen-Härtung (Mindeststandard)
@@ -36,12 +37,25 @@ ggf. eines Kindes, Art. 9 DSGVO). Diese Datei ist verbindlich.
 - Geteilter Akte-Ordner nur für die berechtigten Personen freigegeben.
 - Genetik-Rohdaten in einem separaten, **nicht** geteilten Pfad.
 
-## Der ehrliche Punkt: Claude-API
+## Der ehrliche Punkt: die Inferenz läuft in der Cloud
 
-Chat-Inhalte gehen zur Verarbeitung an die Claude-API. Das ist bei jedem
-Claude-System so, auch lokal. Mitigationen:
-- Anthropic trainiert **nicht** auf API-Daten (Standard).
+**Claude Code ist ein lokales Werkzeug, aber kein lokales Modell.** Der Agent läuft
+auf deinem Rechner, die eigentliche KI-Rechenleistung (Inferenz) jedoch auf
+Anthropics Servern. Deine Fragen und die Aktendaten, die Claude zum Beantworten
+liest, werden also an Anthropic übertragen — das ist bei jedem Claude-System so
+(Claude Code, API, Web), nicht umgehbar, solange man Claude nutzt.
+
+Was genau dahinter steht, hängt von der **Anmeldeart** ab (Anthropic-API,
+Claude-Abo Pro/Max oder Cloud-Provider wie Bedrock/Vertex). Die Bedingungen zur
+Datennutzung und insbesondere zum **Training** unterscheiden sich danach. Über die
+**Anthropic-API** werden Inhalte standardmäßig nicht zum Training genutzt; für
+Abo-/Consumer-Kanäle gelten andere, 2025 geänderte Regeln. **Vor dem Einsatz mit
+echten Gesundheitsdaten die für deine Anmeldeart geltenden Anthropic-Bedingungen
+prüfen** — hier wird bewusst nichts pauschal versprochen.
+
+Mitigationen:
 - Fallakte pseudonymisiert → übertragene Inhalte enthalten keinen Klarnamen.
+- Genetik-Rohdaten (VCF) bleiben lokal, werden nie übertragen.
 - Wer **null** externe Verarbeitung will, müsste ein lokales Open-Weight-Modell
   fahren — deutlich schwächere Qualität. Bewusste Entscheidung dagegen.
 

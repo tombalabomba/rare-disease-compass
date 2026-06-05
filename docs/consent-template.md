@@ -57,17 +57,20 @@ zentral gespeichert würde.
 Genetische **Rohdaten (VCF)** verlassen das lokale Gerät **nicht** und werden
 ausschließlich lokal ausgewertet.
 
-## Verarbeitung über die Claude-API
+## Verarbeitung in Anthropics Cloud
 
-Zur Beantwortung von Fragen werden die Inhalte des Chats **transient** an die
-Claude-API von Anthropic übertragen und dort zur Erzeugung der Antwort verarbeitet.
-Dazu ist wichtig:
+Das Werkzeug (Claude Code) läuft lokal, aber das KI-Modell **nicht**: Zur
+Beantwortung von Fragen werden die Inhalte des Chats **transient** an Anthropics
+Server übertragen und dort verarbeitet. Dazu ist wichtig:
 
-- **Anthropic trainiert seine Modelle nicht auf den über die API übertragenen
-  Inhalten.**
+- Was vertraglich dahinter steht, hängt von der **Anmeldeart** ab (Anthropic-API,
+  Claude-Abo oder Cloud-Provider). Über die **Anthropic-API** werden Inhalte
+  standardmäßig **nicht** zum Training genutzt; für Abo-/Consumer-Kanäle gelten
+  andere Regeln. Die jeweils geltenden Anthropic-Bedingungen sind **vor** der
+  Nutzung zu prüfen.
 - Durch die **Pseudonymisierung** enthalten die übertragenen Inhalte **keinen
   Klarnamen** und kein exaktes Geburtsdatum.
-- Genetische Rohdaten (VCF) werden **nicht** an die Claude-API übertragen.
+- Genetische Rohdaten (VCF) werden **nicht** übertragen und bleiben lokal.
 
 ## Pseudonymisierung
 

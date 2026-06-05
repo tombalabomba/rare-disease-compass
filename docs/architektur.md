@@ -20,7 +20,7 @@ Bewusst minimal, lokal, kein Server. Drei Schichten:
 flowchart TB
     U[Nutzer in Claude Code] --> CC[Claude Code lokal]
     CASE[(Fallakte<br/>lokaler/geteilter Ordner<br/>HPO, pseudonymisiert)] --> CC
-    CC -->|Inferenz| CL[Claude API]
+    CC -->|Inferenz| CL[Anthropic Cloud]
     CC -->|ruft auf| CLIS[Daten-CLIs + SQLite-History]
     CLIS --> PUB[PubMed / Europe PMC]
     CLIS --> VAR[ClinVar / gnomAD / MyVariant]
