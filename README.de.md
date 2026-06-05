@@ -106,20 +106,38 @@ pipx install ./cli        # oder das mitgelieferte scripts/install.sh
 Das komplette Projekt ist als Backlog geplant und wird autonom Ticket für Ticket
 gebaut: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 
-## Datenschutz auf einen Blick
+## Datenschutz, ehrlich betrachtet
 
-- Patientendaten **nie** im Repo (siehe [.gitignore](.gitignore)) und nie an
-  öffentliche Datenbanken gesendet — die werden nur abgefragt.
-- Die Fallakte liegt in einem **lokalen Ordner** (bei Bedarf optional geteilt,
-  z. B. verschlüsselte Dropbox/Nextcloud), pseudonymisiert (Initialen).
-- Genetik-Rohdaten (VCF) werden **lokal** ausgewertet, nur Ergebnisse fließen in die Akte.
-- Claude Code läuft als Werkzeug lokal, aber das KI-Modell **nicht**: die Inferenz
-  passiert auf Anthropics Servern. Deine Eingaben und die Aktendaten, die Claude
-  liest, werden also zur Verarbeitung an Anthropic übertragen (je nach Anmeldung
-  per Anthropic-API, Claude-Abo oder Cloud-Provider). Ob Daten zum Training genutzt
-  werden, richtet sich nach den jeweiligen Anthropic-Bedingungen für deine
-  Anmeldeart — vor dem Einsatz mit echten Daten prüfen.
-- Vollständig: [docs/security.md](docs/security.md).
+**Sei ehrlich zu dir selbst:** Das ist **kein** „100 % privat, nichts verlässt
+deinen Rechner"-Werkzeug. Claude Code läuft lokal, aber das KI-Modell nicht. Um
+deine Fragen zu beantworten, werden **deine Eingaben UND die Aktendaten, die Claude
+liest, an Anthropic übertragen.** Solange du Claude nutzt, führt daran kein Weg
+vorbei. (Wenn ein Tool in Videos klingt, als sei alles 1000 % privat: bei jedem
+cloud-basierten KI-Modell stimmt das schlicht nicht.)
+
+Was das Werkzeug trotzdem tut, um deine Daten so privat wie möglich zu halten:
+
+- Patientendaten **nie** im Repo (siehe [.gitignore](.gitignore)); öffentliche
+  Datenbanken werden nur **abgefragt**, nie mit deinen Daten befüllt.
+- Die Fallakte liegt in einem **lokalen Ordner** (bei Bedarf geteilt, z. B.
+  verschlüsselte Dropbox/Nextcloud), **pseudonymisiert** (Initialen, keine
+  Klarnamen, keine Geburtsdaten).
+- Genetik-Rohdaten (VCF) bleiben **lokal**, nur Ergebnisse fließen in die Akte.
+
+**Datenschutz so weit wie möglich — entscheiden musst du.** Wenn du oder dein Kind
+eine seltene Krankheit hat und du sie verstehen und Hilfe finden willst, solltest
+du selbst abwägen, wie wichtig dir Datensicherheit ist gegenüber dem Wert, eine KI
+mit den Daten arbeiten zu lassen. Das ist eine persönliche Entscheidung. Dieses
+Werkzeug ist dafür gebaut, dir diese Wahl mit offenen Augen zu lassen, nicht so zu
+tun, als gäbe es die Frage nicht.
+
+**Zum Training:** Anthropic sagt selbst, dass über die **API** übertragene Daten
+**nicht** zum Training der Modelle verwendet werden. Ob das auch für ein
+**Claude-Abo** (Pro/Max) gilt, das du mit Claude Code nutzt, prüfst du am besten in
+den aktuellen Anthropic-Bedingungen selbst — im Zweifel frag einfach die KI deiner
+Wahl danach.
+
+Vollständig: [docs/security.md](docs/security.md).
 
 ## Mitmachen / Lizenz
 

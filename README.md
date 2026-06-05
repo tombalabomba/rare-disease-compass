@@ -105,20 +105,35 @@ pipx install ./cli        # or the bundled scripts/install.sh
 The whole project is planned as a backlog and built autonomously, ticket by
 ticket: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 
-## Privacy at a glance
+## Privacy, honestly
 
-- Patient data is **never** in the repo (see [.gitignore](.gitignore)) and never
-  sent to public databases — those are only queried.
-- The case file lives in a **local folder** (optionally shared if needed, e.g.
-  an encrypted Dropbox/Nextcloud), pseudonymized (initials).
-- Genetic raw data (VCF) is processed **locally**; only results flow into the case file.
-- Claude Code runs locally as a tool, but the AI model does **not**: inference
-  happens on Anthropic's servers. Your inputs and the case-file content that
-  Claude reads are therefore transmitted to Anthropic for processing (depending
-  on your login: Anthropic API, Claude subscription, or cloud provider). Whether
-  data is used for training depends on the applicable Anthropic terms for your
-  login method — check before using real data.
-- Full details: [docs/security.md](docs/security.md).
+**Be honest with yourself about this:** this is **not** a "100% private, nothing
+leaves your computer" tool. Claude Code runs locally, but the AI model does not.
+To answer your questions, **your inputs AND the case-file content that Claude
+reads are transmitted to Anthropic.** As long as you use Claude, there is no way
+around that. (If a tool sounds in videos as if everything were 1000% private: for
+any cloud-based AI model, that simply isn't true.)
+
+What the tool still does to keep your data as private as possible:
+
+- Patient data is **never** in the repo (see [.gitignore](.gitignore)); public
+  databases are only **queried**, never filled with your data.
+- The case file lives in a **local folder** (optionally shared, e.g. an encrypted
+  Dropbox/Nextcloud), **pseudonymized** (initials, no real names, no birth dates).
+- Genetic raw data (VCF) stays **local**; only results flow into the case file.
+
+**Privacy as far as possible — but you decide.** If you or your child has a rare
+disease and you want to understand it and find help, you yourself should weigh how
+much data security matters against the value of letting an AI work through the data
+with you. That is a personal decision. This tool is built to give you that choice
+with open eyes, not to pretend the question away.
+
+**On training:** Anthropic states that data sent via its **API** is **not** used
+to train its models. Whether the same applies to a **Claude subscription** (Pro/Max)
+used with Claude Code, you should check in the current Anthropic terms yourself —
+when in doubt, just ask the AI of your choice.
+
+Full details: [docs/security.md](docs/security.md).
 
 ## Contributing / License
 
