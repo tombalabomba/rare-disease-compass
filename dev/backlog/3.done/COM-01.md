@@ -1,7 +1,7 @@
 ---
 id: COM-01
 title: rdc community — Patientenorganisationen + RareConnect-Communities
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: community
@@ -46,13 +46,13 @@ cli/tests/test_community.py    (NEU)
 - [x] Externe Voraussetzungen: keine Secrets. RareConnect ohne Auth (nur Links).
 
 ## Acceptance
-- [ ] `ruff check cli/` grün; `python -m py_compile`; `rdc community --help` listet
+- [x] `ruff check cli/` grün; `python -m py_compile`; `rdc community --help` listet
       `orgs` und `rareconnect`.
-- [ ] `pytest cli/tests/test_community.py` grün — mit **gemocktem HTTP**
+- [x] `pytest cli/tests/test_community.py` grün — mit **gemocktem HTTP**
       (`httpx.MockTransport`), kein echter Call im Test.
-- [ ] Test belegt: jede Ergebniszeile enthält einen vollständigen `http(s)://`-Link
+- [x] Test belegt: jede Ergebniszeile enthält einen vollständigen `http(s)://`-Link
       (keine nackten IDs); RareConnect-Befehl liefert immer eine URL.
-- [ ] Negativ-Check: keine Patientendaten in Code/Test; History speichert nur die
+- [x] Negativ-Check: keine Patientendaten in Code/Test; History speichert nur die
       Abfrage (Krankheit), keine PII.
 
 ## Out of scope
