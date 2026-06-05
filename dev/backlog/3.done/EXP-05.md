@@ -13,7 +13,7 @@ commit_type: feat(experience)
 ## Why
 RDC soll eine Plattform sein, kein Einzelwerkzeug. Nutzer und Community sollen eigene
 Skills bauen können (andere Krankheitsbilder, andere Datenquellen), ohne dass ein Update
-sie überschreibt. Spiegelt Dex' `create-skill` + `-custom`-Schutz.
+sie überschreibt. Greift das bewÃ¤hrte `create-skill` + `-custom`-Schutz-Muster auf.
 
 ## Scope
 - `skills/skill-erstellen/SKILL.md` — geführte Erstellung einer neuen Skill: legt
@@ -45,4 +45,4 @@ docs/extending.md                 (NEU)
 - Ein zentrales Skill-Repository/Marktplatz.
 
 ## Notes
-`-custom`-Konvention bewusst identisch zu Dex, damit das Muster vertraut und robust ist.
+`-custom`-Konvention als bewusst vertrautes, robustes Update-Schutz-Muster.

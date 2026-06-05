@@ -7,9 +7,9 @@ description: Geführte Erstellung einer eigenen RDC-Skill — legt updatefest ei
 
 Hilft Nutzern und Community, **eigene Skills** für RDC zu bauen — für andere
 Krankheitsbilder, andere Fragestellungen oder zusätzliche Datenquellen — ohne
-dass ein späteres RDC-Update die eigene Arbeit überschreibt. Das Muster ist
-bewusst identisch zu Dex' `create-skill` + `-custom`-Schutz, damit es vertraut
-und robust ist.
+dass ein späteres RDC-Update die eigene Arbeit überschreibt. Das `-custom`-Suffix
+folgt einem bewährten, vertrauten Konventions-Muster und macht eigene Skills
+robust gegen Updates.
 
 ## Haltung
 Diese Skill folgt `config/assistant-instructions.md`: **keine Diagnose**, keine

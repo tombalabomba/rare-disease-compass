@@ -4,8 +4,9 @@ Projekt-Konventionen, die **immer** gelten. Vor jeder Ticket-Bearbeitung lesen.
 
 ## Was dieses Projekt ist
 
-Ein lokaler KI-Recherche-Assistent für seltene Krankheitsfälle („Dex für seltene
-Erkrankungen"). **Kein Server, keine Web-App, keine Cloud-Infrastruktur.** Die
+Ein lokaler KI-Recherche-Assistent für seltene Krankheitsfälle, wie ein
+persönliches Wissenssystem für genau einen Krankheitsfall.
+**Kein Server, keine Web-App, keine Cloud-Infrastruktur.** Die
 Architektur ist bewusst minimal:
 
 1. **Claude Code** als Oberfläche (läuft lokal, in VS Code/Codium oder Terminal).

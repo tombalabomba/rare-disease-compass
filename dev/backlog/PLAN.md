@@ -4,8 +4,7 @@ Die Gesamtübersicht für Mensch und Loop. Jeder frische Loop-Lauf liest diese
 Datei zur Orientierung, bevor er ein Ticket zieht (hält den Kontext klein).
 
 ## Ziel
-Ein lokaler KI-Recherche-Assistent für seltene Krankheitsfälle („Dex für seltene
-Erkrankungen"): private Fallakte (lokaler Ordner) + öffentliche Medizin-Datenbanken
+Ein lokaler KI-Recherche-Assistent für seltene Krankheitsfälle: private Fallakte (lokaler Ordner) + öffentliche Medizin-Datenbanken
 (agenten-native CLIs) + Claude Code. **Kein Server.** Open Source (MIT).
 Siehe [../../docs/architektur.md](../../docs/architektur.md).
 

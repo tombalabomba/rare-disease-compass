@@ -12,7 +12,7 @@ commit_type: feat(experience)
 
 ## Why
 Damit jede Sitzung sofort weiß, wo der Fall steht, ohne dass der Nutzer alles wiederholt.
-Spiegelt Dex' Session-Start, aber medizinisch: Fallzusammenfassung, offene Fragen und
+Spiegelt ein bewÃ¤hrtes Session-Start-Muster, aber medizinisch: Fallzusammenfassung, offene Fragen und
 „seit deiner letzten Sitzung gibt es N neue Studien" (die SQLite-History weiß, was schon
 abgefragt wurde). Das ist die **eine** Proaktivität, die hier passt — kein Nagging.
 

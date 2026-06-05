@@ -72,8 +72,8 @@ RDC unterscheidet **mitgelieferte** von **eigenen** Skills am Namen:
 - Willst du eine mitgelieferte Skill anpassen, **kopiere** sie nach
   `skills/<name>-custom/` und ändere die Kopie. Die Änderung überlebt dann jedes
   Update.
-- Dieselbe Vertrautheit wie bei Dex' `create-skill` + `-custom`-Schutz — bewusst
-  identisch, damit das Muster robust und wiedererkennbar ist.
+- Das `-custom`-Suffix ist ein bewusst einfaches, robustes Update-Schutz-Muster,
+  wie man es von erweiterbaren Skill-Systemen kennt.
 
 > Der eigentliche Update-/Installer-Mechanismus von RDC ist ein eigenes, späteres
 > Ticket. Diese Regel legt nur die Konvention fest, an die er sich halten wird.

@@ -13,7 +13,7 @@ commit_type: feat(experience)
 ## Why
 Die CLIs sind das Datenplumbing. Ein Mensch denkt aber in **Aufgaben**, nicht in API-Calls.
 Eine Skills-Schicht (modulare `/befehle`) übersetzt menschliche Workflows in die richtige
-Folge von CLI-Aufrufen und Antworten — genau wie Dex' Skills über seinem MCP. Modular,
+Folge von CLI-Aufrufen und Antworten — wie eine Skills-Schicht über einer Tool/MCP-Ebene. Modular,
 erweiterbar, einzeln auffindbar.
 
 ## Scope

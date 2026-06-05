@@ -13,7 +13,7 @@ commit_type: feat(experience)
 ## Why
 Ein verunsicherter Nutzer kann keine HPO-codierte Akte aus dem Stand bauen. Ein geführter
 Flow nimmt ihn an die Hand: für wen, welche Symptome, was wurde schon gemacht, welche
-Daten existieren — und erzeugt daraus die erste strukturierte Fallakte. Spiegelt Dex'
+Daten existieren — und erzeugt daraus die erste strukturierte Fallakte. Greift ein bewÃ¤hrtes Muster auf:
 Onboarding, aber empathisch und ohne Pflicht-Hürden.
 
 ## Scope
@@ -49,5 +49,5 @@ skills/fall-anlegen/SKILL.md   (NEU)
 - Eine GUI — der Flow läuft im Gespräch.
 
 ## Notes
-Tonalität bewusst behutsam (EXP-01). Keine Validierungs-Blockaden wie bei Dex' Pflicht-Step;
+Tonalität bewusst behutsam (EXP-01). Keine Validierungs-Blockaden wie bei einem strikten Pflicht-Onboarding;
 der Flow darf jederzeit pausiert und später fortgesetzt werden.

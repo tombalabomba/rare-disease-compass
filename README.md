@@ -1,8 +1,8 @@
 # RareDiseaseCompass
 
 Ein lokaler, datenschutzfreundlicher KI-Recherche-Assistent für komplexe und
-seltene Krankheitsfälle — gedacht als **„Dex für seltene Erkrankungen"**. Er
-verknüpft eine **private, strukturierte Fallakte** (lokaler Ordner) mit dem
+seltene Krankheitsfälle. Wie ein persönliches Wissenssystem für genau einen
+Krankheitsfall: Er verknüpft eine **private, strukturierte Fallakte** (lokaler Ordner) mit dem
 **öffentlich verfügbaren medizinischen Wissen** (Literatur, Datenbanken für
 seltene Krankheiten, Genetik) über agenten-native CLIs, die du direkt in
 **Claude Code** nutzt.
