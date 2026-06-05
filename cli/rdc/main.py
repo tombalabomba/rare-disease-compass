@@ -151,7 +151,7 @@ app.add_typer(history_app, name="history")
 # ``compound`` importieren ``main`` nur lazy (in den Befehls-Funktionen), daher
 # entsteht hier kein Import-Zyklus.
 from . import compound  # noqa: E402
-from .sources import community, ddx, graph, literature, variant  # noqa: E402
+from .sources import community, ddx, graph, literature, trials, variant  # noqa: E402
 
 register(
     "pubmed",
@@ -197,6 +197,11 @@ register(
     "community",
     community.community_app,
     "Community: Patientenorganisationen + RareConnect-Communities (Wegweiser).",
+)
+register(
+    "trials",
+    trials.trials_app,
+    "Klinische Studien (ClinicalTrials.gov v2): Studiensuche zu Krankheit/Gen.",
 )
 
 
