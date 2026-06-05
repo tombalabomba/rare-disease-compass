@@ -31,7 +31,7 @@ Installation für Nicht-Techniker außer einem einmaligen Setup.
 (Literatur) (Varianten)     (Krankheits-Graph) (DDx, HPO)    (lokal, Genetik)
 ```
 
-Jede CLI folgt dem **Printing-Press-Muster**: agenten-nativ, mit lokaler
+Jede CLI ist **agenten-nativ** gebaut: knappe, kombinierbare Befehle mit lokaler
 SQLite-History (du baust dir über die Zeit einen durchsuchbaren Recherche-Speicher
 auf) und zusammengesetzten Abfragen, die eine rohe API nicht direkt beantwortet.
 
@@ -124,3 +124,17 @@ gebaut: [dev/backlog/PLAN.md](dev/backlog/PLAN.md), `bash dev/agent-loop.sh`.
 Open Source unter [GPL-3.0](LICENSE). Beiträge willkommen — siehe
 [CONTRIBUTING.md](CONTRIBUTING.md). Die Daten-CLIs sind generisch nutzbar, nicht an
 einen bestimmten Fall gebunden.
+
+## Inspiration
+
+RareDiseaseCompass steht auf den Schultern zweier Open-Source-Projekte:
+
+- **[printing-press-library](https://github.com/mvanhorn/printing-press-library)** —
+  die Idee **agenten-nativer CLIs**: knappe, kombinierbare Befehle mit lokaler
+  History, gebaut für eine KI als Bediener. (RDC setzt das Muster framework-frei
+  um, ohne Code-Abhängigkeit.)
+- **[dex](https://github.com/davekilleen/dex)** — das Muster eines **lokalen,
+  persönlichen Wissenssystems** in Claude Code: Skills, Persona, Session-Kontext und
+  updatefeste Erweiterbarkeit. RDC überträgt das auf die medizinische Recherche.
+
+Danke an beide Projekte für die Vorarbeit und die Ideen.

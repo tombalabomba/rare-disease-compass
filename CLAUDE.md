@@ -10,7 +10,7 @@ persönliches Wissenssystem für genau einen Krankheitsfall.
 Architektur ist bewusst minimal:
 
 1. **Claude Code** als Oberfläche (läuft lokal, in VS Code/Codium oder Terminal).
-2. **Agenten-native CLIs** (Printing-Press-Muster) über öffentliche Medizin-APIs.
+2. **Agenten-native CLIs** über öffentliche Medizin-APIs.
 3. **Ein lokaler Ordner** mit der HPO-codierten, pseudonymisierten Fallakte.
 4. **Exomiser lokal** für die Genetik (VCF bleibt auf der Maschine).
 
@@ -41,16 +41,17 @@ Siehe [README.md](README.md) und [docs/architektur.md](docs/architektur.md).
 | Bereich | Wahl | Hinweis |
 |---|---|---|
 | Oberfläche | Claude Code | nutzt die CLIs via Shell, liest die Fallakte als Dateien |
-| Daten-CLIs | Python 3.11 + Typer + httpx + SQLite | Printing-Press-Muster, OSS-clean ohne proprietäre Abhängigkeit |
+| Daten-CLIs | Python 3.11 + Typer + httpx + SQLite | agenten-nativ (knappe Befehle, lokale History), OSS-clean ohne proprietäre Abhängigkeit |
 | CLI-History | lokale SQLite-DB | akkumulierter Recherche-Speicher, gitignored |
 | Genetik | Exomiser (Docker, **lokal**) | läuft gegen VCF auf der Maschine, nie remote |
 | Fallakte | Markdown im lokalen/geteilten Ordner (z. B. Dropbox) | HPO-codiert, pseudonymisiert |
 | Python-Tooling | `ruff`, `pytest`, `mypy` | |
 | Shell | `bash`, `shellcheck`-clean, `set -euo pipefail` | |
 
-> **Printing Press:** Die CLIs folgen dem PP-Muster, hängen aber nicht hart von
-> einer proprietären PP-Laufzeit ab (OSS-Sauberkeit). Falls PP offen lizenziert
-> ist, kann der CLI-Kern später direkt darauf aufsetzen — siehe `dev/backlog/PLAN.md`.
+> **CLI-Stil:** „Agenten-nativ" heißt: knappe, kombinierbare Befehle mit lokaler
+> SQLite-History, für eine KI als Bediener gebaut. Bewusst **framework-frei**
+> (Typer + httpx + SQLite), ohne proprietäre Laufzeit-Abhängigkeit — wichtig für
+> die OSS-Sauberkeit (GPL-3.0).
 
 ## Sprache
 - Doku, Tickets, Commit-Bodies, Nutzer-Texte: **Deutsch**.

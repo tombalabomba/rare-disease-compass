@@ -18,11 +18,10 @@ Das einmalige Einrichten auf einer Maschine (CLIs installieren, Claude Code
 konfigurieren, Fallakte anlegen) ist im Setup-/Onboarding-Epic dokumentiert und
 ein menschlicher, einmaliger Schritt — kein Server-Deployment.
 
-## Offene Entscheidung (vor CLI-01)
-**Printing-Press-Lizenz.** Default: der CLI-Kern wird framework-frei gebaut
-(Typer + httpx + SQLite, PP-*Muster*), damit das OSS-Repo keine proprietäre
-Abhängigkeit hat. Falls Printing Press offen lizenziert/redistribuierbar ist, kann
-der Kern direkt auf PP aufsetzen. Bis geklärt: framework-frei.
+## CLI-Stil
+Die Daten-CLIs sind **agenten-nativ** (knappe, kombinierbare Befehle mit lokaler
+SQLite-History) und bewusst **framework-frei** gebaut (Typer + httpx + SQLite),
+damit das OSS-Repo keine proprietäre Laufzeit-Abhängigkeit hat.
 
 ## Epics
 

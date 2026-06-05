@@ -47,7 +47,7 @@ Geringer Lock-in: Die wertvolle Logik ist die API-Anbindung. Sie ließe sich sp�
 mit überschaubarem Aufwand auch als MCP-Server verpacken (falls je eine Web-Tür
 für nicht-technische Nutzer gewünscht ist).
 
-## CLI-Design (Printing-Press-Muster)
+## CLI-Design (agenten-nativ)
 
 | Eigenschaft | Umsetzung |
 |---|---|
@@ -57,9 +57,9 @@ für nicht-technische Nutzer gewünscht ist).
 | Ausgabe | knappes, agenten-freundliches Format (Tabellen/JSON-Lines), Quellen-IDs |
 | Compound Queries | quellenübergreifende Abfragen, die die SQLite-History nutzen |
 
-OSS-Hinweis: Der CLI-Kern wird framework-frei gebaut (Typer + httpx + SQLite), damit
-das Repo keine proprietäre Abhängigkeit hat. Das PP-*Muster* wird übernommen, nicht
-zwingend eine PP-*Laufzeit*.
+OSS-Hinweis: Der CLI-Kern ist bewusst **framework-frei** (Typer + httpx + SQLite),
+damit das Repo keine proprietäre Abhängigkeit hat. Die agenten-nativen Eigenschaften
+(knappe, kombinierbare Befehle, lokale SQLite-History) sind selbst gebaut.
 
 ## Schnittstellen (öffentliche Quellen)
 

@@ -18,7 +18,7 @@ User-Agent) und der lokalen SQLite-History, die jede Abfrage über die Zeit
 durchsuchbar macht. Ohne diesen Kern hat keines der Folge-Tickets einen Ort, an dem
 es sich registrieren kann, und es gäbe keinen einheitlichen HTTP-Pfad — jede Quelle
 würde Cache/Rate-Limit/Retry neu erfinden. Dieses Ticket legt den framework-freien
-Kern an (kein proprietäres Printing-Press-Laufzeit-Paket, siehe `CLAUDE.md` und
+Kern an (kein proprietäres Framework-Laufzeit-Paket, siehe `CLAUDE.md` und
 `dev/backlog/PLAN.md`).
 
 ## Scope
@@ -123,7 +123,7 @@ cli/tests/test_history.py     (NEU)
 - [ ] History-Roundtrip getestet: `save_query` → `list_queries`/`search_queries`
       liefern den Eintrag zurück (in-memory).
 - [ ] **Negativ-Check (framework-frei):** kein Import eines proprietären
-      Printing-Press-/Framework-Pakets im Code —
+      proprietären Framework-Pakets im Code —
       `! grep -rniE 'import +printing|from +printing|import +pp_|printing_press' cli/`.
 - [ ] **Negativ-Check (Dependencies):** `pyproject.toml` deklariert genau
       `typer`, `httpx`, `pydantic` als Laufzeit-Dependencies (Dev-Tools separat) —
