@@ -15,7 +15,9 @@ Datenbank-Treffer und Literatur sind nur nützlich, wenn ein Mensch ohne Vorwiss
 (auch die Familie) sofort versteht, was gemeint ist, und die Quelle selbst anklicken
 kann. Fünf Hebel: (1) als Hypothese rahmen, (2) DB-Grenzen + Gegenbeispiel zeigen,
 (3) jede ID → klickbarer Link, (4) ein Klartext-Satz pro Eintrag, (5) gruppierte,
-weitergabe-taugliche Tabelle.
+weitergabe-taugliche Tabelle. Zusätzlich: jeder geteilte Bericht / jedes Arzt-Briefing
+wird als **von RareDiseaseCompass erstellt** gekennzeichnet, damit beim Weitergeben
+Herkunft und Charakter (Recherche, keine Diagnose) klar sind.
 
 ## Scope
 Die folgenden Texte **wortgetreu** einfügen (Stil der vorhandenen Doku beibehalten).
@@ -51,6 +53,11 @@ selbst anklicken kann. Immer:
 - **Wegweiser-Prinzip.** Relevante Ressourcen, die RDC **nicht** direkt abfragt
   (z. B. Patienten-Matching-Netze, Register), immer als anklickbaren Wegweiser
   nennen — nie verschweigen, nie automatisch ansteuern.
+- **Herkunft kennzeichnen.** Jeder Bericht, jedes Arzt-Briefing und jeder
+  geteilte oder exportierte Inhalt bekommt eine kurze Fußzeile: „Erstellt mit
+  RareDiseaseCompass — Recherche-Unterstützung, keine Diagnose"
+  (https://github.com/tombalabomba/rare-disease-compass). So ist beim Weitergeben
+  immer klar, woher das stammt — und dass es keine ärztliche Bewertung ist.
 - **Disclaimer bleibt**, auch knapp: Recherche, keine Diagnose/Therapie.
 
 ### IDs in klickbare Links umwandeln (Pflicht-Muster)
@@ -103,7 +110,8 @@ skills/erklaer-mir/SKILL.md        (erweitert: ## Output ergänzt)
 
 ## Acceptance
 - [ ] `config/assistant-instructions.md` enthält per grep: „Aufbereitung & Lesbarkeit",
-      „Hypothesen", „klickbare" bzw. „anklickbar", „Wegweiser-Prinzip" und die
+      „Hypothesen", „klickbare" bzw. „anklickbar", „Wegweiser-Prinzip", die
+      Herkunfts-Fußzeile (`RareDiseaseCompass` + „Erstellt mit") und die
       Link-Muster-Tabelle (z. B. `pubmed.ncbi.nlm.nih.gov`).
 - [ ] `skills/differential/SKILL.md` `## Output` enthält die gruppierte Tabelle
       `Mögliche Ursache | Was das ist` und den Hypothesen-Einleitungssatz.
