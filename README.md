@@ -125,13 +125,23 @@ What the tool still does to keep your data as private as possible:
 **Privacy as far as possible — but you decide.** If you or your child has a rare
 disease and you want to understand it and find help, you yourself should weigh how
 much data security matters against the value of letting an AI work through the data
-with you. That is a personal decision. This tool is built to give you that choice
-with open eyes, not to pretend the question away.
+with you. That is a personal decision, and a legitimate one. This tool is built to
+give you that choice with open eyes, not to pretend the question away.
 
-**On training:** Anthropic states that data sent via its **API** is **not** used
-to train its models. Whether the same applies to a **Claude subscription** (Pro/Max)
-used with Claude Code, you should check in the current Anthropic terms yourself —
-when in doubt, just ask the AI of your choice.
+**Is your data used to train Anthropic's models?** It depends on *how* you run
+Claude Code. See Anthropic's [Privacy Policy](https://www.anthropic.com/legal/privacy)
+and the article [Is my data used for model training?](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training):
+
+- **Via the API / a commercial plan** ([Commercial Terms](https://www.anthropic.com/legal/commercial-terms)) —
+  inputs and outputs are **not** used to train models by default.
+- **Via a Claude subscription** (Free / Pro / Max,
+  [Consumer Terms](https://www.anthropic.com/legal/consumer-terms)) — Anthropic
+  **may** use your conversations for training **unless** you turn off
+  *"Help improve Claude"* in your
+  [privacy settings](https://claude.ai/settings/data-privacy-controls). If you
+  don't want training, turn it off.
+
+When in doubt, just ask the AI of your choice about the current terms.
 
 Full details: [docs/security.md](docs/security.md).
 

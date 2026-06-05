@@ -127,15 +127,26 @@ Was das Werkzeug trotzdem tut, um deine Daten so privat wie möglich zu halten:
 **Datenschutz so weit wie möglich — entscheiden musst du.** Wenn du oder dein Kind
 eine seltene Krankheit hat und du sie verstehen und Hilfe finden willst, solltest
 du selbst abwägen, wie wichtig dir Datensicherheit ist gegenüber dem Wert, eine KI
-mit den Daten arbeiten zu lassen. Das ist eine persönliche Entscheidung. Dieses
-Werkzeug ist dafür gebaut, dir diese Wahl mit offenen Augen zu lassen, nicht so zu
-tun, als gäbe es die Frage nicht.
+mit den Daten arbeiten zu lassen. Das ist eine persönliche und legitime
+Entscheidung. Dieses Werkzeug ist dafür gebaut, dir diese Wahl mit offenen Augen zu
+lassen, nicht so zu tun, als gäbe es die Frage nicht.
 
-**Zum Training:** Anthropic sagt selbst, dass über die **API** übertragene Daten
-**nicht** zum Training der Modelle verwendet werden. Ob das auch für ein
-**Claude-Abo** (Pro/Max) gilt, das du mit Claude Code nutzt, prüfst du am besten in
-den aktuellen Anthropic-Bedingungen selbst — im Zweifel frag einfach die KI deiner
-Wahl danach.
+**Werden deine Daten zum Training von Anthropics Modellen genutzt?** Das hängt
+davon ab, *wie* du Claude Code betreibst. Siehe Anthropics
+[Datenschutzerklärung](https://www.anthropic.com/legal/privacy) und den Artikel
+[Is my data used for model training?](https://privacy.claude.com/en/articles/10023580-is-my-data-used-for-model-training):
+
+- **Über die API / einen Commercial-Plan**
+  ([Commercial Terms](https://www.anthropic.com/legal/commercial-terms)) — Ein- und
+  Ausgaben werden standardmäßig **nicht** zum Training verwendet.
+- **Über ein Claude-Abo** (Free / Pro / Max,
+  [Consumer Terms](https://www.anthropic.com/legal/consumer-terms)) — Anthropic
+  **darf** deine Konversationen zum Training nutzen, **außer** du schaltest
+  *„Help improve Claude"* in den
+  [Privatsphäre-Einstellungen](https://claude.ai/settings/data-privacy-controls)
+  aus. Willst du kein Training, schalte es ab.
+
+Im Zweifel frag einfach die KI deiner Wahl nach den aktuellen Bedingungen.
 
 Vollständig: [docs/security.md](docs/security.md).
 
