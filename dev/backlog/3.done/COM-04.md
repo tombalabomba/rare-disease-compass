@@ -1,7 +1,7 @@
 ---
 id: COM-04
 title: Skill /finde-deine-leute (Community-Workflow)
-status: todo
+status: done
 depends_on: [COM-01, COM-02, COM-03, EXP-01]
 stop_after: false
 epic: community
