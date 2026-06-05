@@ -35,6 +35,33 @@ Each CLI is built **agent-native**: concise, composable commands with a local
 SQLite history (you build up a searchable research store over time) and compound
 queries that a raw API cannot answer directly.
 
+## Quick start — let the AI install it
+
+You don't need to know GitHub or the command line. The entire technical setup can
+be done **by Claude Code itself** — you just talk to it.
+
+**1. Install Claude Code** (Anthropic's assistant for your computer). The
+[Desktop app](https://code.claude.com/docs/en/desktop-quickstart) needs no terminal
+and is the easiest start — see [all install options](https://code.claude.com/docs/en/setup).
+Claude Code requires a Claude **Pro / Max** subscription or an API key (it is not in
+the free plan).
+
+**2. Open Claude Code and paste this:**
+
+> Please set up RareDiseaseCompass for me from
+> `https://github.com/tombalabomba/rare-disease-compass`: download it, install its
+> CLIs by following its README, and then guide me step by step, in plain language,
+> through creating a private case file. I'm not technical — explain what you're
+> doing, and ask me before anything leaves my computer.
+
+Claude Code does the rest: it downloads the project, installs everything, then walks
+you through your case. You answer its questions; it handles the technical parts. When
+it's done, it will ask you to reopen Claude Code **inside** the new
+`rare-disease-compass` folder (that loads its medical-assistant persona) — then just
+say *"Help me create a case file."*
+
+*Prefer to do it yourself in a terminal? See [Manual setup](#manual-setup-terminal) below.*
+
 ## Components
 
 | Area | What | Epic |
@@ -91,7 +118,9 @@ and copy `skills/`, `config/` and the templates. The `dev/` directory is the
 workshop where the project is built — transparent in the repo, but not part of
 the usable product.
 
-## Getting started
+## Manual setup (terminal)
+
+For the technically inclined who'd rather run it themselves:
 
 ```bash
 # 1. Install the CLIs

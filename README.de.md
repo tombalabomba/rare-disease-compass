@@ -37,6 +37,34 @@ Jede CLI ist **agenten-nativ** gebaut: knappe, kombinierbare Befehle mit lokaler
 SQLite-History (du baust dir über die Zeit einen durchsuchbaren Recherche-Speicher
 auf) und zusammengesetzten Abfragen, die eine rohe API nicht direkt beantwortet.
 
+## Schnellstart — lass die KI es installieren
+
+Du musst weder GitHub noch die Kommandozeile kennen. Die komplette technische
+Einrichtung kann **Claude Code selbst** übernehmen — du redest einfach mit ihm.
+
+**1. Claude Code installieren** (Anthropics Assistent für deinen Rechner). Die
+[Desktop-App](https://code.claude.com/docs/en/desktop-quickstart) braucht kein
+Terminal und ist der einfachste Einstieg — siehe
+[alle Installationswege](https://code.claude.com/docs/en/setup). Claude Code setzt
+ein **Pro/Max**-Abo oder einen API-Key voraus (nicht im Gratis-Plan enthalten).
+
+**2. Claude Code öffnen und das hier einfügen:**
+
+> Bitte richte RareDiseaseCompass für mich ein, von
+> `https://github.com/tombalabomba/rare-disease-compass`: lade es herunter,
+> installiere die CLIs gemäß der README, und führe mich dann Schritt für Schritt und
+> in einfacher Sprache durch das Anlegen einer privaten Fallakte. Ich bin kein
+> Techniker — erklär mir, was du tust, und frag nach, bevor etwas meinen Rechner
+> verlässt.
+
+Claude Code macht den Rest: Es lädt das Projekt, installiert alles und führt dich
+dann durch deinen Fall. Du beantwortest die Fragen, das Technische übernimmt es. Am
+Ende bittet es dich, Claude Code **im** neuen Ordner `rare-disease-compass` neu zu
+öffnen (das lädt seine medizinische Assistenten-Persona) — dann sag einfach
+*„Hilf mir, eine Fallakte anzulegen."*
+
+*Lieber selbst im Terminal? Siehe [Manuelle Einrichtung](#manuelle-einrichtung-terminal) unten.*
+
 ## Komponenten
 
 | Bereich | Was | Epic |
@@ -92,7 +120,9 @@ und kopierst dir `skills/`, `config/` und die Vorlagen. Das `dev/`-Verzeichnis i
 die Werkstatt, in der das Projekt gebaut wird — transparent im Repo, aber kein Teil
 des nutzbaren Produkts.
 
-## Loslegen
+## Manuelle Einrichtung (Terminal)
+
+Für Technik-Affine, die es lieber selbst machen:
 
 ```bash
 # 1. CLIs installieren
