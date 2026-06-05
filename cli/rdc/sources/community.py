@@ -58,6 +58,67 @@ RARECONNECT_COMMUNITY_URL = "https://www.rareconnect.org/en/community"
 ORGS_HEADERS = ["name", "scope", "url"]
 RARECONNECT_HEADERS = ["community", "type", "url"]
 
+# -- Genetisches Matching: statische Wegweiser (COM-03) --------------------
+#
+# Stand 2026-06-06, Links beim Schreiben geprüft. Bewusst **kein** API-Zugriff:
+# Matching-Netze nehmen Gen-/Symptomdaten eines Kindes ENTGEGEN — eine
+# einwilligungs-gegatete Entscheidung, die über die Humangenetik läuft. RDC
+# reicht nichts ein und überträgt keine Daten; dieser Befehl ist ein reiner
+# Info-/Wegweiser-Befehl (siehe docs/connect-genetic-matching.md).
+
+# Verbund-Knoten des Matchmaker Exchange (live 2026): Einreichung über Klinik.
+MATCHMAKER_EXCHANGE_URL = "https://www.matchmakerexchange.org/"
+MATCHMAKER_PARTICIPANTS_URL = "https://www.matchmakerexchange.org/participants.html"
+GENEMATCHER_URL = "https://genematcher.org/"
+# Familien teilen selbst offen.
+MYGENE2_URL = "https://www.mygene2.org/"
+
+MATCHMAKING_HEADERS = ["resource", "audience", "url"]
+
+# Hinweis-Block, nur im Tabellen-Modus ausgegeben (JSON bleibt sauber).
+MATCHMAKING_NOTE = (
+    "Hinweis: RDC reicht nichts ein und überträgt keine Daten an diese Netze. "
+    "Eine Einreichung übermittelt Gen-/Symptomdaten (oft eines Kindes) — eine "
+    "bewusste Einwilligungs-Entscheidung der Sorgeberechtigten, üblicherweise "
+    "über die Humangenetik/behandelnde Klinik. Details, Einwilligung und "
+    "Datenschutz: docs/connect-genetic-matching.md, docs/consent-template.md, "
+    "docs/security.md."
+)
+
+
+def matchmaking_rows() -> list[dict[str, object]]:
+    """Statische Wegweiser-Zeilen zum genetischen Matching (ohne HTTP).
+
+    Jede Zeile trägt einen vollständigen ``https://``-Link. Reihenfolge: zuerst
+    der übliche Weg über die Humangenetik (Matchmaker Exchange + GeneMatcher),
+    dann der Selbst-Teil-Weg für Familien (MyGene2).
+    """
+    return [
+        {
+            "resource": "Matchmaker Exchange — Verbund, Einreichung über die "
+            "Humangenetik/Klinik",
+            "audience": "Kliniker:innen / Forschende",
+            "url": MATCHMAKER_EXCHANGE_URL,
+        },
+        {
+            "resource": "Matchmaker Exchange — teilnehmende Knoten "
+            "(GeneMatcher, DECIPHER, PhenomeCentral, MyGene2 …)",
+            "audience": "Kliniker:innen / Forschende",
+            "url": MATCHMAKER_PARTICIPANTS_URL,
+        },
+        {
+            "resource": "GeneMatcher — gen-basiertes Matching, Einreichung "
+            "durch Ärzt:innen",
+            "audience": "Kliniker:innen / Forschende",
+            "url": GENEMATCHER_URL,
+        },
+        {
+            "resource": "MyGene2 — für Familien, die selbst offen teilen wollen",
+            "audience": "Familien (Selbst-Einreichung)",
+            "url": MYGENE2_URL,
+        },
+    ]
+
 
 # -- Reine Funktionen (URLs/Slugs/Zeilen, ohne HTTP) ----------------------
 
@@ -284,3 +345,22 @@ def rareconnect(
         json_override=json_,
         empty="(kein RareConnect-Wegweiser)",
     )
+
+
+@community_app.command("matchmaking")
+def matchmaking(
+    json_: bool = typer.Option(False, "--json", help="Ausgabe als JSON-Lines."),
+) -> None:
+    """Wegweiser zum genetischen Matching (MME/GeneMatcher/MyGene2) — offline.
+
+    Reiner Info-Befehl: kein Netzwerk-Aufruf, keine Datenübertragung. Gibt die
+    Wegweiser-Links aus; im Tabellen-Modus zusätzlich den Einwilligungs-Hinweis.
+    """
+    from rdc import main
+
+    rows = matchmaking_rows()
+    main.render(rows, MATCHMAKING_HEADERS, json_override=json_)
+    is_jsonl = json_ or main._state["format"] is main.OutputFormat.jsonl
+    if not is_jsonl:
+        typer.echo("")
+        typer.echo(MATCHMAKING_NOTE)
