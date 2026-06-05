@@ -1,5 +1,3 @@
-
-
 # RareDiseaseCompass
 
 **English** · [Deutsch](README.de.md)
@@ -13,15 +11,6 @@ agent-native CLIs that you use directly in **Claude Code**.
 > **Not a medical device. Not medical advice. Not a diagnosis.**
 > This open-source tool is research and decision *support*. Every medical
 > conclusion belongs in the hands of qualified physicians. Use at your own risk.
-
-## Demo
-
-[![Watch the demo](docs/media/demo-poster.jpg)](https://github.com/tombalabomba/rare-disease-compass/blob/main/docs/media/RareDiseaseCompass_KI.mp4)
-
-
-
-
-▶ Click the image to play the demo.
 
 ## The idea in one sentence
 
