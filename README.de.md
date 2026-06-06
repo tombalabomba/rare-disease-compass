@@ -74,6 +74,7 @@ Ende bittet es dich, Claude Code **im** neuen Ordner `rare-disease-compass` neu 
 | Wissensbasis | HPO-codierte Fallakten-Struktur, PII-Guard, Assistenten-Instruktionen | `knowledge` |
 | Genetik | Exomiser lokal: VCF + HPO → priorisierte Kandidaten | `genetics` |
 | Experience | Companion-Persona, Ton-Adaption, Skills-Schicht, Onboarding-Flow | `experience` |
+| Community | Finde deine Leute: Patientenorgs, RareConnect, rekrutierende Studien, einwilligungs-gegatete Matching-Wegweiser | `community` |
 | Onboarding | Setup-Runbook, Nutzer-Guide, Einwilligungs-/Datenschutz-Vorlage | `onboarding` |
 
 ## Angeschlossene Datenbanken
@@ -92,9 +93,15 @@ SQLite-History, die den „seit-letzter-Sitzung-neu"-Hinweis speist.
 | **PubCaseFinder** | phänotyp-getriebene Differentialdiagnose: HPO-Symptome → gerankte Krankheiten | `rdc pubcasefinder` | keine |
 | **Phen2Gene** | HPO-Symptome → Kandidatengene | `rdc phen2gene` | keine |
 | **Exomiser** | Genetik **lokal**: VCF + HPO → priorisierte Varianten/Krankheiten | `genetics/` (Docker) | lokal |
+| **ClinicalTrials.gov** | rekrutierende Studien zu Krankheit/Gen | `rdc trials` | keine |
+| **Patientenorgs + RareConnect** | Communities zur eigenen Krankheit (über Orphanet + RareConnect) | `rdc community` | keine |
+| **Matchmaker Exchange / MyGene2** | genetisches Matching mit anderen — als **einwilligungs-gegateter Wegweiser**, nie automatisch eingereicht | `rdc community matchmaking` | nur Wegweiser |
 
 Die Befehle lassen sich kombinieren (`rdc compound`), und Claude Code ruft sie im
-Gespräch selbstständig auf, je nach Frage. Details: [docs/architektur.md](docs/architektur.md).
+Gespräch selbstständig auf, je nach Frage. Die letzten Einträge sind **Wegweiser**,
+nicht automatisch abgefragt: RDC verlinkt dich zu den passenden Communities und
+erklärt das genetische Matching, reicht aber niemals deine Daten irgendwo ein.
+Details: [docs/architektur.md](docs/architektur.md).
 
 ## Repo-Struktur: Produkt vs. Bau-Werkzeug
 

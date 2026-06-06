@@ -71,6 +71,7 @@ say *"Help me create a case file."*
 | Knowledge base | HPO-coded case-file structure, PII guard, assistant instructions | `knowledge` |
 | Genetics | Exomiser locally: VCF + HPO → prioritized candidates | `genetics` |
 | Experience | Companion persona, tone adaptation, skills layer, onboarding flow | `experience` |
+| Community | Find others like you: patient orgs, RareConnect, recruiting trials, consent-gated genetic-matching pointers | `community` |
 | Onboarding | Setup runbook, user guide, consent/privacy template | `onboarding` |
 
 ## Connected databases
@@ -89,9 +90,14 @@ data). Each query is also stored in a local SQLite history that powers the
 | **PubCaseFinder** | phenotype-driven differential diagnosis: HPO symptoms → ranked diseases | `rdc pubcasefinder` | none |
 | **Phen2Gene** | HPO symptoms → candidate genes | `rdc phen2gene` | none |
 | **Exomiser** | genetics **locally**: VCF + HPO → prioritized variants/diseases | `genetics/` (Docker) | local |
+| **ClinicalTrials.gov** | recruiting clinical trials by condition/gene | `rdc trials` | none |
+| **Patient orgs + RareConnect** | communities for your condition (via Orphanet + RareConnect) | `rdc community` | none |
+| **Matchmaker Exchange / MyGene2** | genetic matching with others — surfaced as a **consent-gated pointer**, never auto-submitted | `rdc community matchmaking` | pointer only |
 
 The commands can be combined (`rdc compound`), and Claude Code calls them on its
-own during the conversation, depending on the question. Details:
+own during the conversation, depending on the question. The last entries are
+**pointers**, not auto-queried: RDC links you to the right communities and explains
+genetic matching, but never submits your data anywhere. Details:
 [docs/architektur.md](docs/architektur.md).
 
 ## Repo structure: product vs. build tooling
