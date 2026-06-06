@@ -1,7 +1,7 @@
 ---
 id: COM-03
 title: Wegweiser zu genetischem Matching (Matchmaker Exchange / MyGene2) — kein Auto-Submit
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: community

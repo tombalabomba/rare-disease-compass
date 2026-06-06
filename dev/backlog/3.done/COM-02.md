@@ -1,7 +1,7 @@
 ---
 id: COM-02
 title: rdc trials — klinische Studien (ClinicalTrials.gov)
-status: todo
+status: done
 depends_on: [CLI-01]
 stop_after: false
 epic: community
