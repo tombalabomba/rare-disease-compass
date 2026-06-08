@@ -2,6 +2,10 @@
 
 **English** · [Deutsch](README.de.md)
 
+<p align="center">
+  <img src="assets/rare-disease-compass.jpg" alt="Rare Disease Compass — the research pipeline from a local, pseudonymized case file through live medical databases (PubMed, Monarch, Orphanet) to plain-language answers and doctor briefings" width="480">
+</p>
+
 A local, privacy-friendly AI research assistant for complex and rare disease
 cases. Like a personal knowledge system for a single case: it connects a
 **private, structured case file** (a local folder) with the **publicly available

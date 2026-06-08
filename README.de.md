@@ -2,6 +2,10 @@
 
 [English](README.md) · **Deutsch**
 
+<p align="center">
+  <img src="assets/rare-disease-compass.jpg" alt="Rare Disease Compass — die Recherche-Pipeline von einer lokalen, pseudonymisierten Fallakte über Live-Medizindatenbanken (PubMed, Monarch, Orphanet) zu verständlichen Antworten und Arzt-Briefings" width="480">
+</p>
+
 Ein lokaler, datenschutzfreundlicher KI-Recherche-Assistent für komplexe und
 seltene Krankheitsfälle. Wie ein persönliches Wissenssystem für genau einen
 Krankheitsfall: Er verknüpft eine **private, strukturierte Fallakte** (lokaler Ordner) mit dem
